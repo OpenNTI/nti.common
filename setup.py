@@ -23,10 +23,10 @@ setup(
 	version=VERSION,
 	author='Jason Madden',
 	author_email='jason@nextthought.com',
-	description="NTI Store",
+	description="NTI common utils",
 	long_description=codecs.open('README.rst', encoding='utf-8').read(),
 	license='Proprietary',
-	keywords='utils',
+	keywords='common utils',
 	classifiers=[
 		'Intended Audience :: Developers',
 		'Natural Language :: English',

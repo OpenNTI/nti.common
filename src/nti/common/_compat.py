@@ -18,6 +18,8 @@ logger = __import__('logging').getLogger(__name__)
 import sys
 import struct
 
+PY3 = sys.version_info[0] == 3
+
 try:
 	INT_MAX = sys.maxsize
 except AttributeError:

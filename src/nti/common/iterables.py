@@ -95,6 +95,95 @@ def flatten(iterable, ignore=None):
 		except StopIteration:
 			stack.pop()
 
+import itertools
+
+try:
+	from itertools import izip
+except ImportError:
+	izip = zip
+
+def izip_longest(*iterables, **kwargs):
+	"""
+	Make an iterator that aggregates elements from each of the iterables. If
+	the iterables are of uneven length, missing values are filled-in with
+	`fillvalue`. Iteration continues until the longest iterable is exhausted.
+	
+	If one of the iterables is potentially infinite, then the
+	:func:`izip_longest` function should be wrapped with something that limits
+	the number of calls (for example :func:`itertools.islice` or
+	:func:`itertools.takewhile`.) If not specified, `fillvalue` defaults to
+	``None``.
+	
+	.. note:: Software and documentation for this function are taken from
+	          CPython, :ref:`license details <psf-license>`.
+	"""
+	fillvalue = kwargs.get("fillvalue")
+	
+	def sentinel(counter=([fillvalue] * (len(iterables) - 1)).pop):
+		yield counter()
+
+	fillers = itertools.repeat(fillvalue)
+	iters = [itertools.chain(it, sentinel(), fillers) for it in iterables]
+	try:
+		for tup in izip(*iters):
+			yield tup
+	except IndexError:
+		pass
+
+def product(*iterables, **kwargs):
+	"""
+	Cartesian product of input iterables.
+	
+	Equivalent to nested for-loops in a generator expression. For example,
+	``product(A, B)`` returns the same as ``((x, y) for x in A for y in B)``.
+	
+	The nested loops cycle like an odometer with the rightmost element
+	advancing on every iteration. The pattern creates a lexicographic ordering
+	so that if the input's iterables are sorted, the product tuples are emitted
+	in sorted order.
+	
+	To compute the product of an iterable with itself, specify the number of
+	repetitions with the optional `repeat` keyword argument. For example,
+	``product(A, repeat=4)`` means the same as ``product(A, A, A, A)``.
+	
+	.. note:: Software and documentation for this function are taken from
+	          CPython, :ref:`license details <psf-license>`.
+	"""
+	pools = map(tuple, iterables) * kwargs.get("repeat", 1)
+	result = [[]]
+	for pool in pools:
+		result = [x + [y] for x in result for y in pool]
+	for prod in result:
+		yield tuple(prod)
+
+def permutations(iterable, r=None):
+	"""
+	Return successive `r` length permutations of elements in the `iterable`.
+	
+	If `r` is not specified or is ``None``, then `r` defaults to the length of
+	the `iterable` and all possible full-length permutations are generated.
+	
+	Permutations are emitted in lexicographic sort order. So, if the input
+	`iterable` is sorted, the permutation tuples will be produced in sorted
+	order.
+	
+	Elements are treated as unique based on their position, not on their
+	value. So if the input elements are unique, there will be no repeating
+	value in each permutation.
+	
+	The number of items returned is ``n! / (n - r)!`` when ``0 <= r <= n`` or
+	zero when `r > n`.
+	
+	.. note:: Software and documentation for this function are taken from
+	          CPython, :ref:`license details <psf-license>`.
+	"""
+	pool = tuple(iterable)
+	pool_length = len(pool)
+	r = pool_length if r is None else r
+	for indices in product(xrange(pool_length), repeat=r):
+		if len(set(indices)) == r:
+			yield tuple(pool[i] for i in indices)
+
 from ._compat import PY3
 
 if PY3: # pragma: no cover

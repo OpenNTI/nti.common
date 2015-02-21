@@ -14,8 +14,7 @@ TESTS_REQUIRE = [
 	'nose-timer',
 	'nose-progressive',
     'nose2[coverage_plugin]',
-	'pyhamcrest',
-	'zope.testing'
+	'pyhamcrest'
 ]
 
 setup(

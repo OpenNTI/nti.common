@@ -47,8 +47,11 @@ setup(
 		'zope.cachedescriptors',
 		'zope.deprecation',
 		'zope.deferredimport',
-		'zope.dottedname',
+		'zope.dottedname'
 	],
+	extras_require={
+		'test': TESTS_REQUIRE,
+	},
 	dependency_links=[],
 	entry_points=entry_points
 )

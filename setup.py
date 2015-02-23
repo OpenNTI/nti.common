@@ -10,10 +10,10 @@ entry_points = {
 
 TESTS_REQUIRE = [
 	'nose',
-    'nose-pudb',
+	'nose-pudb',
 	'nose-timer',
 	'nose-progressive',
-    'nose2[coverage_plugin]',
+	'nose2[coverage_plugin]',
 	'pyhamcrest'
 ]
 
@@ -45,7 +45,9 @@ setup(
 	install_requires=[
 		'setuptools',
 		'zope.cachedescriptors',
-		'zope.dottedname'
+		'zope.deprecation',
+		'zope.deferredimport',
+		'zope.dottedname',
 	],
 	dependency_links=[],
 	entry_points=entry_points

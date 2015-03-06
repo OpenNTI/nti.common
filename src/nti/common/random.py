@@ -251,7 +251,7 @@ def calculate_entropy(length, pool=ALPHANUMERIC):
 	entropy = length * (math.log(len(pool)) / log_of_2)
 	return entropy
 
-def generate_random_sequence_strong(entropy, pool,
+def generate_random_sequence_strong(entropy, pool=ASCII_PRINTABLE,
 									rand_func=generate_random_bytes):
 	"""
 	Generates a random sequence based on entropy.

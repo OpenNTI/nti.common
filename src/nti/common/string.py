@@ -33,18 +33,18 @@ def safestr(s):
     return unicode(s) if s is not None else None
 to_unicode=safestr
 
-def map_string_adjuster(m, func=safestr):
+def map_string_adjuster(m, recur=True, func=safestr):
     if isinstance(m, Mapping):
         for k in m:
             v = m[k]
             if isinstance(v, string_types):
                 m[k] = func(v)
-            else:
+            elif recur:
                 map_string_adjuster(v)
     elif is_nonstr_iter(m) and hasattr(m, '__setitem__'):
         for idx, v in enumerate(m):
             if isinstance(v, string_types):
                 m[idx] = func(v)
-            else:
+            elif recur:
                 map_string_adjuster(v)
     return m

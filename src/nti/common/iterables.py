@@ -194,3 +194,14 @@ if PY3: # pragma: no cover
 else:
 	def is_nonstr_iter(v):
 		return hasattr(v, '__iter__')
+
+def to_list(items=None, default=None):
+	if items is None:
+		result = default
+	elif isinstance(items, list):
+		result = items
+	elif isinstance(items, tuple):
+		result = list(items)
+	else:
+		result = [items]
+	return result

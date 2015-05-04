@@ -9,11 +9,6 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from collections import Mapping
-
-from ._compat import string_types
-from .iterables import is_nonstr_iter
-
 DIGITS = "0123456789"
 
 ASCII_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -32,19 +27,3 @@ def safestr(s):
     s = s.decode("utf-8") if isinstance(s, bytes) else s
     return unicode(s) if s is not None else None
 to_unicode=safestr
-
-def map_string_adjuster(m, recur=True, func=safestr):
-    if isinstance(m, Mapping):
-        for k in m:
-            v = m[k]
-            if isinstance(v, string_types):
-                m[k] = func(v)
-            elif recur:
-                map_string_adjuster(v)
-    elif is_nonstr_iter(m) and hasattr(m, '__setitem__'):
-        for idx, v in enumerate(m):
-            if isinstance(v, string_types):
-                m[idx] = func(v)
-            elif recur:
-                map_string_adjuster(v)
-    return m

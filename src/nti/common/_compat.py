@@ -202,3 +202,5 @@ def get_word_alignment(num, force_arch=64,
 	else:
 		# 8-bit unsigned integer.
 		return 8, 1, UINT8_MAX, "B"
+
+word_alignment = get_word_alignment

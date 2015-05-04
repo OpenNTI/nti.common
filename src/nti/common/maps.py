@@ -55,4 +55,3 @@ class CaseInsensitiveDict(dict):
 
         for key, value in kwargs.items():
             self.__setitem__(str(key), value)
-

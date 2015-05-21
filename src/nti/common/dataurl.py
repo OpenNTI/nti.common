@@ -39,15 +39,14 @@ def decode(data_url):
 		The mime_type string will not be parsed. See :func:`zope.contenttype.parse.parse` for that.
 	"""
 
-	if isinstance(data_url,DataURL):
+	if isinstance(data_url, DataURL):
 		return data_url.data, data_url.mimeType
 	return _do_decode(data_url)
 
 def _do_decode(data_url):
-
-	metadata, encoded = data_url.rsplit( b",", 1)
-	_, metadata = metadata.split( b"data:", 1 )
-	metadata_parts = metadata.rsplit( b";", 1 )
+	metadata, encoded = data_url.rsplit(b",", 1)
+	_, metadata = metadata.split(b"data:", 1)
+	metadata_parts = metadata.rsplit(b";", 1)
 	if metadata_parts[-1] == b"base64":
 		_decode = b64decode
 		metadata_parts = metadata_parts[:-1]
@@ -59,7 +58,7 @@ def _do_decode(data_url):
 	raw_bytes = _decode(encoded)
 	return raw_bytes, mime_type
 
-class DataURL(str): # native string on both py2 and py3
+class DataURL(str):  # native string on both py2 and py3
 	"""
 	Represents a data URL with convenient access
 	to its raw bytes and mime type.
@@ -102,7 +101,7 @@ def encode(raw_bytes,
 		is directly output as quoted ASCII bytes.
 	:returns: Data URL byte string
 	"""
-	if not isinstance( raw_bytes, str ):
+	if not isinstance(raw_bytes, str):
 		raise TypeError("only raw bytes can be encoded")
 
 	if encoder == "base64":
@@ -115,11 +114,11 @@ def encode(raw_bytes,
 	mime_type = mime_type or b""
 
 	if charset is _marker:
-		if mime_type.startswith( 'text/' ):
+		if mime_type.startswith('text/'):
 			charset = _def_charset
 		else:
 			charset = None
 
 	charset = b";charset=" + charset if charset else b""
 	encoded = _encode(raw_bytes)
-	return b''.join( (b"data:", mime_type, charset, codec, encoded) )
+	return b''.join((b"data:", mime_type, charset, codec, encoded))

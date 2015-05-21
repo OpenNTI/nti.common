@@ -18,7 +18,7 @@ from . import builtins
 def sha1_digest(*inputs):
 	"""
 	Calculates a SHA-1 digest of a variable number of inputs.
-	
+
 	:param inputs:
 		A variable number of inputs for which the digest will be calculated.
 	:returns:
@@ -35,7 +35,7 @@ def sha1_hex_digest(*inputs):
 	"""
 	Calculates hexadecimal representation of the SHA-1 digest of a variable
 	number of inputs.
-	
+
 	:param inputs:
 		A variable number of inputs for which the digest will be calculated.
 	:returns:
@@ -47,7 +47,7 @@ def sha1_base64_digest(*inputs):
 	"""
 	Calculates Base-64-encoded SHA-1 digest of a variable
 	number of inputs.
-	
+
 	:param inputs:
 		A variable number of inputs for which the digest will be calculated.
 	:returns:
@@ -58,7 +58,7 @@ def sha1_base64_digest(*inputs):
 def md5_digest(*inputs):
 	"""
 	Calculates a MD5 digest of a variable number of inputs.
-	
+
 	:param inputs:
 		A variable number of inputs for which the digest will be calculated.
 	:returns:
@@ -75,7 +75,7 @@ def md5_hex_digest(*inputs):
 	"""
 	Calculates hexadecimal representation of the MD5 digest of a variable
 	number of inputs.
-	
+
 	:param inputs:
 		A variable number of inputs for which the digest will be calculated.
 	:returns:
@@ -87,7 +87,7 @@ def md5_base64_digest(*inputs):
 	"""
 	Calculates Base-64-encoded MD5 digest of a variable
 	number of inputs.
-	
+
 	:param inputs:
 		A variable number of inputs for which the digest will be calculated.
 	:returns:
@@ -98,7 +98,7 @@ def md5_base64_digest(*inputs):
 def hmac_sha1_digest(key, data):
 	"""
 	Calculates a HMAC SHA-1 digest.
-	
+
 	:param key:
 		The key for the digest.
 	:param data:
@@ -113,7 +113,7 @@ def hmac_sha1_digest(key, data):
 def hmac_sha1_base64_digest(key, data):
 	"""
 	Calculates a base64-encoded HMAC SHA-1 signature.
-	
+
 	:param key:
 		The key for the signature.
 	:param data:

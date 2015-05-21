@@ -15,43 +15,43 @@ import collections
 
 class CaseInsensitiveDict(dict):
 
-    def __init__(self, *args, **kwargs):
-        super(CaseInsensitiveDict, self).__init__()
-        self.update(**kwargs)
-        for arg in args or ():
-            self.update(arg)
+	def __init__(self, *args, **kwargs):
+		super(CaseInsensitiveDict, self).__init__()
+		self.update(**kwargs)
+		for arg in args or ():
+			self.update(arg)
 
-    def has_key(self, key):
-        return super(CaseInsensitiveDict, self).has_key(key.lower())
+	def has_key(self, key):
+		return super(CaseInsensitiveDict, self).has_key(key.lower())
 
-    def __contains__(self, key):
-        return super(CaseInsensitiveDict, self).__contains__(key.lower())
+	def __contains__(self, key):
+		return super(CaseInsensitiveDict, self).__contains__(key.lower())
 
-    def __setitem__(self, key, value):
-        super(CaseInsensitiveDict, self).__setitem__(key.lower(), value)
+	def __setitem__(self, key, value):
+		super(CaseInsensitiveDict, self).__setitem__(key.lower(), value)
 
-    def get(self, key, default=None):
-        return super(CaseInsensitiveDict, self).get(key.lower(), default)
+	def get(self, key, default=None):
+		return super(CaseInsensitiveDict, self).get(key.lower(), default)
 
-    def __getitem__(self, key):
-        return super(CaseInsensitiveDict, self).__getitem__(key.lower())
+	def __getitem__(self, key):
+		return super(CaseInsensitiveDict, self).__getitem__(key.lower())
 
-    def __delitem__(self, key):
-        return super(CaseInsensitiveDict, self).__delitem__(key.lower())
+	def __delitem__(self, key):
+		return super(CaseInsensitiveDict, self).__delitem__(key.lower())
 
-    def update(self, *args, **kwargs):
+	def update(self, *args, **kwargs):
 
-        other = args[0] if len(args) >= 1 else ()
+		other = args[0] if len(args) >= 1 else ()
 
-        if isinstance(other, collections.Mapping):
-            for key in other:
-                self.__setitem__(str(key), other[key])
-        elif hasattr(other, "keys"):
-            for key in other.keys():
-                self.__setitem__(str(key), other[key])
-        else:
-            for key, value in other:
-                self.__setitem__(str(key), value)
+		if isinstance(other, collections.Mapping):
+			for key in other:
+				self.__setitem__(str(key), other[key])
+		elif hasattr(other, "keys"):
+			for key in other.keys():
+				self.__setitem__(str(key), other[key])
+		else:
+			for key, value in other:
+				self.__setitem__(str(key), value)
 
-        for key, value in kwargs.items():
-            self.__setitem__(str(key), value)
+		for key, value in kwargs.items():
+			self.__setitem__(str(key), value)

@@ -13,7 +13,7 @@ logger = __import__('logging').getLogger(__name__)
 
 import collections
 
-def discard( the_set, the_value ):
+def discard(the_set, the_value):
 	"""
 	A version of :meth:`set.discard` that works not just on :class:`set` objects,
 	but also on :class:`BTrees.OOBTree.OOTreeSet` (and the smaller :class:`BTrees.OOBTree.OOSet`,
@@ -25,13 +25,14 @@ def discard( the_set, the_value ):
 	:return: Undefined.
 	"""
 	try:
-		the_set.discard( the_value ) # python sets
+		the_set.discard(the_value)  # python sets
 	except AttributeError:
 		try:
-			the_set.remove( the_value ) # BTrees..[Tree]Set. Also, python list
-		except (KeyError,ValueError): pass
+			the_set.remove(the_value)  # BTrees..[Tree]Set. Also, python list
+		except (KeyError, ValueError): 
+			pass
 
-def discard_p( the_set, the_value ):
+def discard_p(the_set, the_value):
 	"""
 	A version of :meth:`set.discard` that functions as a predicate by returning
 	whether or not the object was removed from the set. In addition to working on :class:`set` objects,
@@ -46,8 +47,8 @@ def discard_p( the_set, the_value ):
 	"""
 	try:
 		# Both set and OOSet support remove with the same semantics
-		the_set.remove( the_value )
-		return True # TODO: Is there a more useful value to return? If so document it
+		the_set.remove(the_value)
+		return True  # TODO: Is there a more useful value to return? If so document it
 	except KeyError:
 		return False
 
@@ -71,9 +72,9 @@ class OrderedSet(collections.MutableSet):
 	"""
 	An OrderedSet is a custom MutableSet that remembers its order, so that
 	every entry has an index that can be looked up.
-	
-	based on 
-		https://pypi.python.org/pypi/ordered-set/1.3 
+
+	based on
+		https://pypi.python.org/pypi/ordered-set/1.3
 		http://code.activestate.com/recipes/576694-orderedset/
 	"""
 	def __init__(self, iterable=None):
@@ -119,7 +120,7 @@ class OrderedSet(collections.MutableSet):
 			return (None,)
 		else:
 			return list(self)
-	
+
 	def __setstate__(self, state):
 		if state == (None,):
 			self.__init__([])
@@ -141,7 +142,7 @@ class OrderedSet(collections.MutableSet):
 			self.items.append(key)
 		return self.map[key]
 	append = add
-	
+
 	def index(self, key):
 		"""
 		Get the index of a given entry, raising an IndexError if it's not

@@ -22,10 +22,10 @@ def alias(prop_name, doc=None):
 	"""
 	if doc is None:
 		doc = 'Alias for :attr:`' + prop_name + '`'
-	prop_name = str(prop_name) # native string
-	return property( lambda self: getattr( self, prop_name ),
-					 lambda self, nv: setattr( self, prop_name, nv ),
-					 doc=doc )
+	prop_name = str(prop_name)  # native string
+	return property(lambda self: getattr(self, prop_name),
+					lambda self, nv: setattr(self, prop_name, nv),
+					doc=doc)
 
 def read_alias(prop_name, doc=None):
 	"""
@@ -36,8 +36,8 @@ def read_alias(prop_name, doc=None):
 	"""
 	if doc is None:
 		doc = 'Read-only alias for :attr:`' + prop_name + '`'
-	return property( lambda self: getattr( self, prop_name ),
-					 doc=doc )
+	return property(lambda self: getattr(self, prop_name),
+					doc=doc)
 
 def dict_alias(key_name, doc=None):
 	"""
@@ -49,10 +49,10 @@ def dict_alias(key_name, doc=None):
 	"""
 	if doc is None:
 		doc = 'Alias for :attr:`' + key_name + '`'
-	key_name = str(key_name) # native string
-	return property( lambda self: self.__dict__[key_name],
-					 lambda self, nv: operator.setitem( self.__dict__, key_name, nv),
-					 doc=doc )
+	key_name = str(key_name)  # native string
+	return property(lambda self: self.__dict__[key_name],
+					lambda self, nv: operator.setitem(self.__dict__, key_name, nv),
+					doc=doc)
 
 def dict_read_alias(key_name, doc=None):
 	"""
@@ -64,13 +64,13 @@ def dict_read_alias(key_name, doc=None):
 	"""
 	if doc is None:
 		doc = 'Read-only alias for :attr:`' + key_name + '`'
-	return property( lambda self: self.__dict__[key_name],
-					 doc=doc )
+	return property(lambda self: self.__dict__[key_name],
+					doc=doc)
 
 from functools import update_wrapper
 
 from zope.cachedescriptors.property import readproperty
-readproperty = readproperty # export
+readproperty = readproperty  # export
 
 from zope.cachedescriptors.property import Lazy as _Lazy
 from zope.cachedescriptors.property import CachedProperty as _CachedProperty
@@ -86,9 +86,9 @@ class Lazy(_Lazy):
 # Actually, we do this by default, but encourage
 # the proper importing
 _Lazy_init__ = _Lazy.__init__
-def _patch_Lazy_init(self,func,*args,**kwargs):
-	_Lazy_init__(self,func,*args,**kwargs)
-	update_wrapper(self,func)
+def _patch_Lazy_init(self, func, *args, **kwargs):
+	_Lazy_init__(self, func, *args, **kwargs)
+	update_wrapper(self, func)
 _Lazy.__init__ = _patch_Lazy_init
 
 def CachedProperty(*args):
@@ -103,26 +103,26 @@ def CachedProperty(*args):
 
 	"""
 
-	if not args: # @CachedProperty()
-		return _CachedProperty # A callable that produces the decorated function
+	if not args:  # @CachedProperty()
+		return _CachedProperty  # A callable that produces the decorated function
 
 	arg1 = args[0]
 	names = args[1:]
-	if callable(arg1): # @CachedProperty
-		return _CachedProperty( arg1 )
+	if callable(arg1):  # @CachedProperty
+		return _CachedProperty(arg1)
 
 	# @CachedProperty( 'n' )
 	# Ok, must be a list of string names. Which means we are used like a factory
 	# so we return a callable object to produce the actual decorated function
 	def factory(function):
-		return _CachedProperty( function, arg1, *names )
+		return _CachedProperty(function, arg1, *names)
 	return factory
 
 # Like the above, preserve docs
 _CachedProperty_init__ = _CachedProperty.__init__
-def _patch_CachedProperty_init(self,func,*names):
+def _patch_CachedProperty_init(self, func, *names):
 	_CachedProperty_init__(self, func, *names)
-	update_wrapper(self,func)
+	update_wrapper(self, func)
 _CachedProperty.__init__ = _patch_CachedProperty_init
 
 class LazyOnClass(object):
@@ -133,11 +133,11 @@ class LazyOnClass(object):
 	independent of any other state.
 	"""
 
-	def __init__( self, func ):
+	def __init__(self, func):
 		self._func = func
 		self.klass_cache_name = '_v__LazyOnClass_' + self._func.__name__
 
-	def __get__( self, inst, klass ):
+	def __get__(self, inst, klass):
 		if inst is None:
 			return self
 
@@ -145,8 +145,8 @@ class LazyOnClass(object):
 		# to this object and the original function, we
 		# use a different name
 		klass_cache_name = self.klass_cache_name
-		val = getattr( klass, klass_cache_name, self )
+		val = getattr(klass, klass_cache_name, self)
 		if val is self:
 			val = self._func(inst)
-			setattr( klass, klass_cache_name, val )
+			setattr(klass, klass_cache_name, val)
 		return val

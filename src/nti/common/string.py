@@ -24,6 +24,6 @@ TRUE_VALUES = ('1', 'y', 'yes', 't', 'true')
 FALSE_VALUES = ('0', 'n', 'no', 'f', 'false')
 
 def safestr(s):
-    s = s.decode("utf-8") if isinstance(s, bytes) else s
-    return unicode(s) if s is not None else None
-to_unicode=safestr
+	s = s.decode("utf-8") if isinstance(s, bytes) else s
+	return unicode(s) if s is not None else None
+to_unicode = safestr

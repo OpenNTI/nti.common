@@ -34,7 +34,7 @@ def make_cache_dir(cache_name, env_var=None):
 	result = None
 
 	if env_var:
-		result = os.environ.get( env_var )
+		result = os.environ.get(env_var)
 
 	if result is None:
 		child_parts = ('var', 'caches', cache_name)
@@ -42,31 +42,31 @@ def make_cache_dir(cache_name, env_var=None):
 		for env_var in ('DATASERVER_ENV', 'DATASERVER_DIR', 'VIRTUAL_ENV'):
 			if env_var in os.environ:
 				parent = os.environ[env_var]
-				result = os.path.join( parent, *child_parts )
+				result = os.path.join(parent, *child_parts)
 				break
 
 	# Ok, no environment to be found. How about some system specific stuff?
 	if result is None:
-		for system_loc in ( "~/Library/Caches/", # OS x
-							"~/.cache" ): # Linux
-			system_loc = os.path.expanduser( system_loc )
-			if os.path.isdir( system_loc ):
-				result = os.path.join( system_loc, "com.nextthought", 
-									   "nti.dataserver", cache_name )
+		for system_loc in ("~/Library/Caches/",  # OS x
+							"~/.cache"):  # Linux
+			system_loc = os.path.expanduser(system_loc)
+			if os.path.isdir(system_loc):
+				result = os.path.join(system_loc, "com.nextthought",
+									   "nti.dataserver", cache_name)
 				break
 
 	if result is None:
-		result = os.path.join( os.getcwd(), '.caches', cache_name )
+		result = os.path.join(os.getcwd(), '.caches', cache_name)
 
 	try:
-		os.makedirs( result )
+		os.makedirs(result)
 	except OSError:
 		pass
 
-	if not os.path.isdir( result ):
-		raise ValueError( "Unable to find cache location for " + cache_name + 
-						  " using " + result )
-	return os.path.abspath( os.path.expanduser( result ) )
+	if not os.path.isdir(result):
+		raise ValueError("Unable to find cache location for " + cache_name +
+						  " using " + result)
+	return os.path.abspath(os.path.expanduser(result))
 
 def setup_chameleon_cache(config=False):
 	"""
@@ -82,20 +82,20 @@ def setup_chameleon_cache(config=False):
 
 	cache_dir = None
 	if 	not 'CHAMELEON_CACHE' in os.environ or \
-		not os.path.isdir( os.path.expanduser( os.environ['CHAMELEON_CACHE'] ) ):
+		not os.path.isdir(os.path.expanduser(os.environ['CHAMELEON_CACHE'])):
 		os.environ['CHAMELEON_CACHE'] = cache_dir = make_cache_dir('chameleon_cache')
 	else:
 		cache_dir = os.environ['CHAMELEON_CACHE']
 
 	if config:
-		logger.debug( "Configuring chamelean to cache at %s", cache_dir )
+		logger.debug("Configuring chamelean to cache at %s", cache_dir)
 		conf_mod = dottedname.resolve('chameleon.config')
-		if conf_mod.CACHE_DIRECTORY != cache_dir: # previously imported before we set the environment
+		if conf_mod.CACHE_DIRECTORY != cache_dir:  # previously imported before we set the environment
 			conf_mod.CACHE_DIRECTORY = cache_dir
 			# Which, crap, means the template is probably also screwed up.
 			# It imports all of this stuff statically, and BaseTemplate
 			# statically creates a default loader at import time
-			temp_mod = dottedname.resolve( 'chameleon.template' )
+			temp_mod = dottedname.resolve('chameleon.template')
 			if temp_mod.CACHE_DIRECTORY != conf_mod.CACHE_DIRECTORY:
 
 				temp_mod.CACHE_DIRECTORY = conf_mod.CACHE_DIRECTORY

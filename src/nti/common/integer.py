@@ -21,10 +21,10 @@ EMPTY_BYTE = _compat.EMPTY_BYTE
 def bytes_to_uint(raw_bytes):
 	"""
 	Converts a series of bytes into an unsigned integer.
-	
+
 	:param raw_bytes:
 		Raw bytes (base-256 representation).
-	
+
 	:returns:
 		Unsigned integer.
 	"""
@@ -37,19 +37,19 @@ def bytes_to_uint(raw_bytes):
 def uint_to_bytes(number, fill_size=0, chunk_size=0, overflow=False):
 	"""
 	Convert an unsigned integer to bytes (base-256 representation).
-	
+
 	Leading zeros are not preserved for positive integers unless a
 	chunk size or a fill size is specified. A single zero byte is
 	returned if the number is 0 and no padding is specified.
-	
+
 	When a chunk size or a fill size is specified, the resulting bytes
 	are prefix-padded with zero bytes to satisfy the size. The total
 	size of the number in bytes is either the fill size or an integral
 	multiple of the chunk size.
-	
+
 	.. NOTE:
 	  You cannot specify both the fill size and the chunk size.
-	
+
 	:param number:
 	  Integer value
 	:param fill_size:
@@ -78,15 +78,15 @@ def uint_to_bytes(number, fill_size=0, chunk_size=0, overflow=False):
 	"""
 	if number < 0:
 		raise ValueError("Number must be an unsigned integer: %d" % number)
-	
+
 	if fill_size and chunk_size:
 		raise ValueError("You can either fill or pad chunks, but not both")
-	
+
 	# Ensure these are integers.
 	_ = number & 1 and chunk_size & 1 and fill_size & 1
-	
+
 	raw_bytes = EMPTY_BYTE
-	
+
 	# Pack the integer one machine word at a time into bytes.
 	num = number
 	word_bits, _, max_uint, pack_type = _compat.get_word_alignment(num)
@@ -100,7 +100,7 @@ def uint_to_bytes(number, fill_size=0, chunk_size=0, overflow=False):
 		raw_bytes = ZERO_BYTE
 	# De-padding.
 	raw_bytes = raw_bytes[zero_leading:]
-	
+
 	length = len(raw_bytes)
 	if fill_size > 0:
 		if not overflow and length > fill_size:

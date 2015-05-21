@@ -11,11 +11,11 @@ logger = __import__('logging').getLogger(__name__)
 
 def make_repr(default=None):
 	if default is None:
-		default = lambda self: "%s().__dict__.update( %s )" % (self.__class__.__name__, self.__dict__ )
-	def __repr__( self ):
+		default = lambda self: "%s().__dict__.update( %s )" % (self.__class__.__name__, self.__dict__)
+	def __repr__(self):
 		try:
 			return default(self)
-		except (ValueError,LookupError) as e:
+		except (ValueError, LookupError) as e:
 			return '%s(%s)' % (self.__class__.__name__, e)
 		except Exception:
 			return '%s(Ghost)' % self.__class__.__name__

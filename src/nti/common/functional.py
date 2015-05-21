@@ -15,15 +15,15 @@ from functools import reduce
 def compose(function, *functions):
 	"""
 	Composes a sequence of functions such that::
-	
+
 		compose(g, f, s) -> g(f(s()))
-	
+
 	:param functions:
 		An iterable of functions.
 	:returns:
 		A composition function.
 	"""
-	
+
 	def _composition(a_func, b_func):
 		def _wrap(*args, **kwargs):
 			return a_func(b_func(*args, **kwargs))
@@ -34,13 +34,13 @@ def complement(predicate):
 	"""
 	Generates a complementary predicate function for the given predicate
 	function.
-	
+
 	:param predicate:
 		Predicate function.
 	:returns:
 		Complementary predicate function.
 	"""
-	
+
 	def _negate(*args, **kwargs):
 		return not predicate(*args, **kwargs)
 	return _negate
@@ -49,17 +49,17 @@ def partition(predicate, iterable):
 	"""
 	Partitions an iterable into two iterables where for the elements of
 	one iterable the predicate is true and for those of the other it is false.
-	
+
 	:param predicate:
 		Function of the format::
-	
+
 			f(x) -> bool
 	:param iterable:
 		Iterable sequence.
 	:returns:
 		Tuple (selected, rejected)
 	"""
-	
+
 	def _partitioner(memo, item):
 		part = memo[0] if predicate(item) else memo[1]
 		part.append(item)
@@ -76,14 +76,14 @@ def _get_iter_next(iterator):
 def round_robin(*iterables):
 	"""
 	Returns items from the iterables in a round-robin fashion.
-	
+
 	Taken from the Python documentation. Under the PSF license.
 	Recipe credited to George Sakkis
-	
+
 	Example::
-	
+
 		round_robin("ABC", "D", "EF") --> A D E B F C"
-	
+
 	:param iterables:
 		Variable number of inputs for iterable sequences.
 	:yields:
@@ -102,9 +102,9 @@ def round_robin(*iterables):
 def ncycles(iterable, times):
 	"""
 	Yields the sequence elements n times.
-	
+
 	Taken from the Python documentation. Under the PSF license.
-	
+
 	:param iterable:
 		Iterable sequence.
 	:param times:
@@ -117,7 +117,7 @@ def ncycles(iterable, times):
 
 def identity(arg):
 	"""Identity function. Produces what it consumes.
-	
+
 	:param arg:
 		Argument
 	:returns:

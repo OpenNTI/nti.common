@@ -16,9 +16,9 @@ from . import builtins
 def hex_encode(raw_bytes):
 	"""
 	Encodes raw bytes into hexadecimal representation.
-	
+
 	Encode your Unicode strings to a byte encoding before hex-encoding them.
-	
+
 	:param raw_bytes:
 		Bytes.
 	:returns:
@@ -34,9 +34,9 @@ def base64_encode(raw_bytes):
 	"""
 	Encodes raw bytes into base64 representation without appending a trailing
 	newline character. Not URL-safe.
-	
+
 	Encode your Unicode strings to a byte encoding before base64-encoding them.
-	
+
 	:param raw_bytes:
 		Bytes to encode.
 	:returns:

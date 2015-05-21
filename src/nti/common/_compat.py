@@ -3,7 +3,7 @@
 """
 Deals with a lot of cross-version issues.
 
-Taken from 
+Taken from
 
 https://github.com/gorakhargosh/mom
 
@@ -21,7 +21,7 @@ import struct
 
 PY3 = sys.version_info[0] == 3
 
-if PY3: # pragma: no cover
+if PY3:  # pragma: no cover
 	string_types = str,
 	integer_types = int,
 	class_types = type,
@@ -34,7 +34,7 @@ else:
 	text_type = unicode
 	binary_type = str
 
-if PY3: # pragma: no cover
+if PY3:  # pragma: no cover
 	def native_(s, encoding='latin-1', errors='strict'):
 		"""
 		If ``s`` is an instance of ``text_type``, return
@@ -45,7 +45,7 @@ if PY3: # pragma: no cover
 		return str(s, encoding, errors)
 else:
 	def native_(s, encoding='latin-1', errors='strict'):
-		""" 
+		"""
 		If ``s`` is an instance of ``text_type``, return
 		``s.encode(encoding, errors)``, otherwise return ``str(s)``
 		"""
@@ -60,10 +60,10 @@ except AttributeError:
 INT64_MAX = (1 << 63) - 1
 INT32_MAX = (1 << 31) - 1
 INT16_MAX = (1 << 15) - 1
-UINT128_MAX = (1 << 128) - 1		# 340282366920938463463374607431768211455L
-UINT64_MAX = 0xffffffffffffffff		# ((1 << 64) - 1)
-UINT32_MAX = 0xffffffff				# ((1 << 32) - 1)
-UINT16_MAX = 0xffff					# ((1 << 16) - 1)
+UINT128_MAX = (1 << 128) - 1  # 340282366920938463463374607431768211455L
+UINT64_MAX = 0xffffffffffffffff  # ((1 << 64) - 1)
+UINT32_MAX = 0xffffffff  # ((1 << 32) - 1)
+UINT16_MAX = 0xffff  # ((1 << 16) - 1)
 UINT8_MAX = 0xff
 
 # Determine the word size of the processor.
@@ -105,7 +105,7 @@ try:
 		"""
 		Returns the ordinal value of the given byte.
 
-		:param byte_: 
+		:param byte_:
 			The byte.
 		:returns:
 			Integer representing ordinal value of the byte.
@@ -149,7 +149,7 @@ if getattr(dict, "iteritems", None):
 	def dict_each(func, iterable):
 		"""
 		Portably iterate through a dictionary's items.
-	
+
 		:param func:
 			The function that will receive two arguments: key, value.
 		:param iterable:
@@ -161,7 +161,7 @@ else:
 	def dict_each(func, iterable):
 		"""
 		Portably iterate through a dictionary's items.
-	
+
 		:param func:
 			The function that will receive two arguments: key, value.
 		:param iterable:
@@ -175,7 +175,7 @@ def get_word_alignment(num, force_arch=64,
 	"""
 	Returns alignment details for the given number based on the platform
 	Python is running on.
-	
+
 	:param num:
 	  Unsigned integral number.
 	:param force_arch:
@@ -186,7 +186,7 @@ def get_word_alignment(num, force_arch=64,
 	  (Internal) The machine word size used for alignment.
 	:returns:
 	  4-tuple::
-	
+
 		  (word_bits, word_bytes,
 		   max_uint, packing_format_type)
 	"""

@@ -15,13 +15,13 @@ import functools
 import zope.deprecation
 import zope.deferredimport.deferredmodule
 
-def deprecated(replacement=None): # annotation factory
+def deprecated(replacement=None):  # annotation factory
 
 	def outer(oldfun):
-		im_class = getattr( oldfun, 'im_class', None )
+		im_class = getattr(oldfun, 'im_class', None)
 		if im_class:
 			n = '%s.%s.%s' % (im_class.__module__,
-							  im_class.__name__, 
+							  im_class.__name__,
 							  oldfun.__name__)
 		else:
 			n = oldfun.__name__
@@ -29,7 +29,7 @@ def deprecated(replacement=None): # annotation factory
 		msg = "%s is deprecated" % n
 		if replacement is not None:
 			msg += "; use %s instead" % (replacement.__name__)
-		return zope.deprecation.deprecate( msg )(oldfun)
+		return zope.deprecation.deprecate(msg)(oldfun)
 	return outer
 
 zope.deprecation.deprecation.__dict__['DeprecationWarning'] = FutureWarning
@@ -40,17 +40,17 @@ zope.deprecation.deprecation.__dict__['DeprecationWarning'] = FutureWarning
 # uses one method
 class _warnings(object):
 
-	def warn(self, msg, typ, stacklevel=0 ):
+	def warn(self, msg, typ, stacklevel=0):
 		if zope.deprecation.__show__():
-			warnings.warn( msg, typ, stacklevel + 1 )
+			warnings.warn(msg, typ, stacklevel + 1)
 
-	def __getattr__( self, name ):
+	def __getattr__(self, name):
 		# Let everything else flow through to the real module
-		return getattr( warnings, name )
+		return getattr(warnings, name)
 
 zope.deprecation.deprecation.__dict__['warnings'] = _warnings()
 
-moved = zope.deprecation.moved # encourage importing from here so we're sure our patch is applied
+moved = zope.deprecation.moved  # encourage importing from here so we're sure our patch is applied
 
 # deferred import has the same problems
 zope.deferredimport.deferredmodule.__dict__['warnings'] = _warnings()
@@ -68,7 +68,7 @@ class hiding_warnings(object):
 	def __enter__(self):
 		zope.deprecation.__show__.off()
 
-	def __exit__( self, *args ):
+	def __exit__(self, *args):
 		zope.deprecation.__show__.on()
 
 def hides_warnings(f):
@@ -79,5 +79,5 @@ def hides_warnings(f):
 	@functools.wraps(f)
 	def inner(*args, **kwargs):
 		with hiding_warnings():
-			return f(*args,**kwargs)
+			return f(*args, **kwargs)
 	return inner

@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import sys
+import types
 import warnings
 import functools
 
@@ -81,3 +83,22 @@ def hides_warnings(f):
 		with hiding_warnings():
 			return f(*args, **kwargs)
 	return inner
+
+def moved(from_location, to_location):
+	try:
+		__import__(from_location)
+	except ImportError:
+		sys.modules[from_location] = types.ModuleType(str(from_location), "Create module")
+
+	message = '%s has moved to %s.' % (from_location, to_location)    
+	warnings.warn(message, DeprecationWarning, 3)
+	__import__(to_location)
+
+	fromdict = sys.modules[to_location].__dict__
+	to_mod = sys.modules[from_location]
+	to_mod.__doc__ = message
+
+	for name, v in fromdict.items():
+		if name not in to_mod.__dict__:
+			setattr(to_mod, name, v)
+	return to_mod

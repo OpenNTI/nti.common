@@ -20,6 +20,8 @@ _AVATAR_SERVICES = {'gravatar': { True: b'secure.gravatar.com',
 GENERATED_GRAVATAR_TYPES = ('retro', 'identicon', 'monsterid', 'wavatar')  # : Constants identifying the various generated gravatar types
 KNOWN_GRAVATAR_TYPES = GENERATED_GRAVATAR_TYPES + ('mm', '404')  # : Constants for all types of gravatars, generated or static
 
+MYSTERY_MAN_URL = "https://www.gravatar.com/avatar/0?d=mm&s=80"
+
 def create_gravatar_url(username,
 						 defaultGravatarType='mm',
 						 secure=False,

@@ -18,7 +18,6 @@ def NoPickle(cls):
 	.. warning:: If you subclass something that used this
 		decorator, you should override ``__reduce_ex__``
 		(or both it and ``__reduce__``).
-
 	"""
 
 	msg = "Not allowed to pickle %s" % cls

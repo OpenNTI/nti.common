@@ -67,7 +67,9 @@ def partition(predicate, iterable):
 	return tuple(reduce(_partitioner, iterable, [[], []]))
 
 def _get_iter_next(iterator):
-	"""Gets the next item in the iterator."""
+	"""
+	Gets the next item in the iterator.
+	"""
 	attr = getattr(iterator, "next", None)
 	if not attr:
 		attr = getattr(iterator, "__next__")

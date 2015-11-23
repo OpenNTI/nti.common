@@ -80,7 +80,6 @@ class Lazy(_Lazy):
 	Just like :class:`zope.cachedescriptors.property.Lazy`, except
 	properly preserves documentation and other attributes.
 	"""
-
 	pass
 
 # Actually, we do this by default, but encourage

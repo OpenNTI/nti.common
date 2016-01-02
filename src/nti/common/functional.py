@@ -118,7 +118,8 @@ def ncycles(iterable, times):
 	return chain.from_iterable(itertools.repeat(tuple(iterable), times))
 
 def identity(arg):
-	"""Identity function. Produces what it consumes.
+	"""
+	Identity function. Produces what it consumes.
 
 	:param arg:
 		Argument
@@ -126,3 +127,9 @@ def identity(arg):
 		Argument.
 	"""
 	return arg
+
+def setattribute(obj, name, value):
+	"""
+	Set a named attribute on an object;
+	"""
+	setattr(obj, name, value)

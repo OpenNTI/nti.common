@@ -46,15 +46,14 @@ def safestr(s):
 	return unicode(s) if s is not None else None
 to_unicode = safestr
 
-_emoji_ranges = None
-
-def emoji_ranges(*args):
+_emoji_chars = None
+def emoji_chars(*args):
 	"""
 	return a sequence with emoji ranges
 	"""
-	global _emoji_ranges
-	if _emoji_ranges is None:
-		data = []
+	global _emoji_chars
+	if _emoji_chars is None:
+		data = set()
 		source = resource_filename(__name__, 'EmojiSources.txt')
 		with open(source, "rU") as f:
 			for s in f.readlines():
@@ -62,14 +61,18 @@ def emoji_ranges(*args):
 				if not s or s.startswith('#'):
 					continue
 				sequence = s.split(';')[0] # 0: Unicode code point or sequence
-				sequence = sequence.split()
-				if len(sequence) == 1:
-					sequence.append(sequence[0])
-				l = '\\U' + sequence[0].rjust(8, '0')
-				r = '\\U' + sequence[1].rjust(8, '0')
-				data.append((l.decode('unicode-escape'), r.decode('unicode-escape')))
-		_emoji_ranges = tuple(data)	
-	return _emoji_ranges
+				for s in sequence.split():
+					s = '\\U' + s.rjust(8, '0') # pad to 10 char length 
+					data.add(s.decode('unicode-escape')) # UTF-8
+		_emoji_chars = frozenset(data)	
+	return _emoji_chars
 
-if __name__ == '__main__':
-	emoji_ranges()
+def has_emoji_chars(s):
+	try:
+		s = s.decode('utf-8')
+	except UnicodeEncodeError:
+		pass
+	for c in emoji_chars():
+		if c in s:
+			return True
+	return False

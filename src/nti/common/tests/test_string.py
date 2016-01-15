@@ -7,15 +7,24 @@ __docformat__ = "restructuredtext en"
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
+from hamcrest import is_
 from hamcrest import has_length
 from hamcrest import assert_that
 
 import unittest
 
-from nti.common.string import emoji_ranges
-        
+from nti.common.string import emoji_chars
+from nti.common.string import has_emoji_chars
+
 class TestString(unittest.TestCase):
-    
-    def test_emoji_ranges(self):
-        ranges = emoji_ranges()
-        assert_that(ranges, has_length(722))
+
+	def test_emoji_chars(self):
+		ranges = emoji_chars()
+		assert_that(ranges, has_length(728))
+
+	def test_has_emoji(self):
+		assert_that(has_emoji_chars(u"ichigo"), is_(False))
+		assert_that(has_emoji_chars(u"ichigo #"), is_(True))
+		assert_that(has_emoji_chars(u'ichigo \U0001f383'), is_(True))
+		assert_that(has_emoji_chars(r'ichigo \xf0\x9f\x8e\x83'), is_(True))
+		assert_that(has_emoji_chars(b'ichigo \xf0\x9f\x8e\x83'), is_(True))

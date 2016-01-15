@@ -69,10 +69,10 @@ def emoji_chars(*args):
 
 def has_emoji_chars(s):
 	try:
-		s = s.decode('utf-8')
+		source = s.decode('utf-8')
 	except UnicodeEncodeError:
-		pass
+		source = s
 	for c in emoji_chars():
-		if c in s:
+		if c in source:
 			return True
 	return False

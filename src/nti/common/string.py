@@ -61,9 +61,11 @@ def emoji_chars(*args):
 				if not s or s.startswith('#'):
 					continue
 				sequence = s.split(';')[0] # 0: Unicode code point or sequence
+				splits = []
 				for s in sequence.split():
 					s = '\\U' + s.rjust(8, '0') # pad to 10 char length 
-					data.add(s.decode('unicode-escape')) # UTF-8
+					splits.append(s.decode('unicode-escape')) # UTF-8
+				data.add(' '.join(splits))
 		_emoji_chars = frozenset(data)	
 	return _emoji_chars
 

@@ -20,11 +20,11 @@ class TestString(unittest.TestCase):
 
 	def test_emoji_chars(self):
 		ranges = emoji_chars()
-		assert_that(ranges, has_length(728))
+		assert_that(ranges, has_length(722))
 
 	def test_has_emoji(self):
 		assert_that(has_emoji_chars(u"ichigo"), is_(False))
-		assert_that(has_emoji_chars(u"ichigo #"), is_(True))
+		assert_that(has_emoji_chars(u"ichigo #"), is_(False))
 		assert_that(has_emoji_chars(u'ichigo \U0001f383'), is_(True))
-		assert_that(has_emoji_chars(r'ichigo \xf0\x9f\x8e\x83'), is_(True))
+		assert_that(has_emoji_chars(b'San\xf0\x9f\x98\x81chez'), is_(True))
 		assert_that(has_emoji_chars(b'ichigo \xf0\x9f\x8e\x83'), is_(True))

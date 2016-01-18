@@ -65,7 +65,7 @@ def emoji_chars(*args):
 				for s in sequence.split():
 					s = '\\U' + s.rjust(8, '0') # pad to 10 char length 
 					splits.append(s.decode('unicode-escape')) # UTF-8
-				data.add(' '.join(splits))
+				data.add(''.join(splits))
 		_emoji_chars = frozenset(data)	
 	return _emoji_chars
 
@@ -78,3 +78,4 @@ def has_emoji_chars(s):
 		if c in source:
 			return True
 	return False
+has_emoji = has_emoji_chars

@@ -38,13 +38,13 @@ TRUE_VALUES = ('1', 'y', 'yes', 't', 'true')
 #: False values chars
 FALSE_VALUES = ('0', 'n', 'no', 'f', 'false')
 
-def safestr(s):
+def to_unicode(s, encoding='utf-8', err='strict'):
 	"""
 	UTF-8 decode a byte sequence and unicode result
 	"""
-	s = s.decode("utf-8") if isinstance(s, bytes) else s
+	s = s.decode(encoding, err) if isinstance(s, bytes) else s
 	return unicode(s) if s is not None else None
-to_unicode = safestr
+safestr = to_unicode # BWC
 
 _emoji_chars = None
 def emoji_chars(*args):

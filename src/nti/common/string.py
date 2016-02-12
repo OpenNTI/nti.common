@@ -40,7 +40,7 @@ FALSE_VALUES = ('0', 'n', 'no', 'f', 'false')
 
 def to_unicode(s, encoding='utf-8', err='strict'):
 	"""
-	UTF-8 decode a byte sequence and unicode result
+	Decode a byte sequence and unicode result
 	"""
 	s = s.decode(encoding, err) if isinstance(s, bytes) else s
 	return unicode(s) if s is not None else None
@@ -78,4 +78,5 @@ def has_emoji_chars(s):
 		if c in source:
 			return True
 	return False
-has_emoji = has_emoji_chars
+has_emoji = has_emoji_chars # BWC
+

@@ -11,7 +11,7 @@ logger = __import__('logging').getLogger(__name__)
 
 import binascii
 
-from . import builtins
+from nti.common import builtins
 
 def hex_encode(raw_bytes):
 	"""

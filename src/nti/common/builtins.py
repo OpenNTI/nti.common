@@ -13,7 +13,7 @@ logger = __import__('logging').getLogger(__name__)
 
 import struct
 
-from . import _compat
+from nti.common import _compat
 
 # rexport
 byte_ord = _compat.byte_ord

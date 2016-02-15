@@ -12,8 +12,8 @@ logger = __import__('logging').getLogger(__name__)
 import struct
 import binascii
 
-from . import _compat
-from . import builtins
+from nti.common import _compat
+from nti.common  import builtins
 
 ZERO_BYTE = _compat.ZERO_BYTE
 EMPTY_BYTE = _compat.EMPTY_BYTE

@@ -12,8 +12,8 @@ logger = __import__('logging').getLogger(__name__)
 import hmac
 import hashlib
 
-from . import codec
-from . import builtins
+from nti.common import codec
+from nti.common import builtins
 
 def sha1_digest(*inputs):
 	"""

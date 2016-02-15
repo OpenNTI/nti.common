@@ -12,10 +12,10 @@ logger = __import__('logging').getLogger(__name__)
 import os
 import math
 
-from . import codec
-from . import string
-from . import integer
-from . import builtins
+from nti.common import codec
+from nti.common import string
+from nti.common import integer
+from nti.common import builtins
 
 ALPHA = string.ASCII_LETTERS
 ALPHANUMERIC = ALPHA + string.DIGITS
@@ -24,6 +24,8 @@ UPPERCASE_ALPHA = string.ASCII_UPPERCASE
 UPPERCASE_ALPHANUMERIC = UPPERCASE_ALPHA + string.DIGITS
 
 ASCII_PRINTABLE = ALPHA + string.DIGITS + string.PUNCTUATION
+
+LOG_OF_2 = 0.6931471805599453
 
 # INIT
 os.urandom(1)
@@ -247,8 +249,7 @@ def calculate_entropy(length, pool=ALPHANUMERIC):
 		The entropy (in bits) of the random sequence.
 	"""
 	pool = set(pool)
-	log_of_2 = 0.6931471805599453
-	entropy = length * (math.log(len(pool)) / log_of_2)
+	entropy = length * (math.log(len(pool)) / LOG_OF_2)
 	return entropy
 
 def generate_random_sequence_strong(entropy, pool=ASCII_PRINTABLE,
@@ -267,8 +268,7 @@ def generate_random_sequence_strong(entropy, pool=ASCII_PRINTABLE,
 		Randomly generated sequence with specified entropy.
 	"""
 	pool = list(set(pool))
-	log_of_2 = 0.6931471805599453
-	length = int(math.ceil((log_of_2 / math.log(len(pool))) * entropy))
+	length = int(math.ceil((LOG_OF_2 / math.log(len(pool))) * entropy))
 	return generate_random_sequence(length, pool, rand_func)
 
 def generate_random_password(entropy, pool=ASCII_PRINTABLE,

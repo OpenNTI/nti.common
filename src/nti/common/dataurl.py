@@ -24,7 +24,7 @@ logger = __import__('logging').getLogger(__name__)
 from urllib import unquote, quote
 from base64 import b64decode, b64encode
 
-from .property import CachedProperty
+from nti.common.property import CachedProperty
 
 # Originally inspired by http://code.google.com/p/python-mom/source/browse/mom/net/scheme/dataurl.py?
 

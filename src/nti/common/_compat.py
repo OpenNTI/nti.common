@@ -225,12 +225,12 @@ try:
 except ImportError:
 	class Base(object):
 		pass
-Base = Base # pylint
+Base = Base  # pylint
 
 try:
 	from Acquisition import aq_base
 except ImportError:
-	def aq_base( o ):
+	def aq_base(o):
 		return o
 
 def patch_acquisition():

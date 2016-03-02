@@ -3,10 +3,6 @@
 """
 Deals with a lot of cross-version issues.
 
-Taken from
-
-https://github.com/gorakhargosh/mom
-
 .. $Id$
 """
 
@@ -14,6 +10,8 @@ from __future__ import print_function, unicode_literals, absolute_import, divisi
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
+
+# Taken from https://github.com/gorakhargosh/mom
 
 import sys
 import types
@@ -61,6 +59,7 @@ INT64_MAX = (1 << 63) - 1
 INT32_MAX = (1 << 31) - 1
 INT16_MAX = (1 << 15) - 1
 UINT128_MAX = (1 << 128) - 1  # 340282366920938463463374607431768211455L
+
 UINT64_MAX = 0xffffffffffffffff  # ((1 << 64) - 1)
 UINT32_MAX = 0xffffffff  # ((1 << 32) - 1)
 UINT16_MAX = 0xffff  # ((1 << 16) - 1)
@@ -170,8 +169,7 @@ else:
 		for key, value in iterable.items():
 			func(key, value)
 
-def get_word_alignment(num, force_arch=64,
-					   _machine_word_size=MACHINE_WORD_SIZE):
+def get_word_alignment(num, force_arch=64, _machine_word_size=MACHINE_WORD_SIZE):
 	"""
 	Returns alignment details for the given number based on the platform
 	Python is running on.
@@ -204,3 +202,57 @@ def get_word_alignment(num, force_arch=64,
 		return 8, 1, UINT8_MAX, "B"
 
 word_alignment = get_word_alignment
+
+# python3/pypy compatibility shims.
+
+from zope import interface
+
+try:
+	from Acquisition.interfaces import IAcquirer
+except ImportError:
+	class IAcquirer(interface.Interface):
+		pass
+
+try:
+	from Acquisition import Implicit
+except ImportError:
+	@interface.implementer(IAcquirer)
+	class Implicit(object):
+		pass
+
+try:
+	from ExtensionClass import Base
+except ImportError:
+	class Base(object):
+		pass
+Base = Base # pylint
+
+try:
+	from Acquisition import aq_base
+except ImportError:
+	def aq_base( o ):
+		return o
+
+def patch_acquisition():
+	if 'Acquisition' not in sys.modules:
+		Acquisition = types.ModuleType(str("Acquisition"))
+		Acquisition.Implicit = Implicit
+		Acquisition.aq_base = aq_base
+		sys.modules[Acquisition.__name__] = Acquisition
+
+try:
+	from gevent import sleep
+	from gevent import Greenlet
+	from gevent.queue import Queue
+except ImportError:
+	from Queue import Queue
+	try:
+		from greenlet import greenlet as Greenlet
+	except ImportError:
+		class Greenlet(object):
+			pass
+	from time import sleep
+
+slee = sleep
+Queue = Queue
+Greenlet = Greenlet

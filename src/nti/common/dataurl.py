@@ -21,8 +21,11 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from urllib import unquote, quote
-from base64 import b64decode, b64encode
+from urllib import quote
+from urllib import unquote
+
+from base64 import b64decode
+from base64 import b64encode
 
 from nti.common.property import CachedProperty
 

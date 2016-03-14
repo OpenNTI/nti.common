@@ -11,9 +11,14 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from collections import Iterable
+
 from itertools import tee
 from itertools import islice
 from itertools import ifilter
+
+from nti.common._compat import PY3
+from nti.common._compat import string_types
 
 class IterableWrapper(object):
 
@@ -186,8 +191,6 @@ def permutations(iterable, r=None):
 		if len(set(indices)) == r:
 			yield tuple(pool[i] for i in indices)
 
-from nti.common._compat import PY3
-
 if PY3:  # pragma: no cover
 	def is_nonstr_iter(v):
 		if isinstance(v, str):
@@ -200,9 +203,11 @@ else:
 def to_list(items=None, default=None):
 	if items is None:
 		result = default
+	elif isinstance(items, string_types):
+		result = [items]
 	elif isinstance(items, list):
 		result = items
-	elif isinstance(items, tuple):
+	elif isinstance(items, Iterable):
 		result = list(items)
 	else:
 		result = [items]

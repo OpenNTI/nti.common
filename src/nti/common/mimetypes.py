@@ -12,6 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 import mimetypes as p_mimetypes
 
 def _add_ngnix_types():
+	p_mimetypes.add_type('application/xml', '.xml')
 	p_mimetypes.add_type('text/html', '.shtml')
 	p_mimetypes.add_type('text/mathml', '.mml')
 	p_mimetypes.add_type('text/x-component', '.htc')

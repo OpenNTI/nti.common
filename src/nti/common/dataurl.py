@@ -79,7 +79,7 @@ class DataURL(str):  # native string on both py2 and py3
 	def mimeType(self):
 		return self._decoded[1]
 
-_def_charset = b'US-ASCII',
+_def_charset = b'US-ASCII'
 _marker = object()
 
 def encode(raw_bytes,

@@ -33,4 +33,5 @@ _add_ngnix_types()
 del _add_ngnix_types
 
 def guess_type(url, strict=True):
-	return p_mimetypes.guess_type(url, strict)
+	return p_mimetypes.guess_type(url, strict) if url else (None, None)
+

@@ -29,6 +29,8 @@ def _add_ngnix_types():
 	p_mimetypes.add_type('application/x-tcl', '.tk')
 	p_mimetypes.add_type('application/x-x509-ca-cert', '.pem')
 	p_mimetypes.add_type('video/3gpp', '.3gpp')
+	p_mimetypes.add_type('application/x-gzip', '.gz')
+	p_mimetypes.add_type('application/x-gzip', '.gzip')
 _add_ngnix_types()
 del _add_ngnix_types
 

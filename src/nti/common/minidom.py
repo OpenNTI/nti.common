@@ -12,7 +12,7 @@ logger = __import__('logging').getLogger(__name__)
 
 import io
 
-def minidom_writexml(document, outfile):
+def minidom_writexml(document, outfile, encoding=u'utf-8'):
 	"""
 	Papers over some very bad Unicode issues
 	that crop up with xml.dom.minidom.
@@ -27,6 +27,6 @@ def minidom_writexml(document, outfile):
 				x = unicode(x)
 			self._under.write(x)
 
-	with io.open(outfile, "w", encoding='utf-8') as f:
+	with io.open(outfile, "w", encoding=encoding) as f:
 		document.writexml(_StupidIOPackageCannotDealWithBothStrAndUnicodeObjects(f),
-						  encoding=u'utf-8')
+						  encoding=encoding)

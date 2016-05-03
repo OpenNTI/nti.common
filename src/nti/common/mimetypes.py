@@ -20,7 +20,7 @@ def _add_local_types():
 		reader = csv.reader(fp)
 		for row in reader:
 			mimeType = row[0]
-			for ext in [e.strip() for e in row[2].split(',')]:
+			for ext in [e.strip().lower() for e in row[2].split(',')]:
 				ext = '.' + ext if not ext.startswith('.') else ext
 				if not p_mimetypes.guess_type('archive' + ext)[0]:
 					p_mimetypes.add_type(mimeType, ext)

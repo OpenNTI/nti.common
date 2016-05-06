@@ -8,6 +8,7 @@ application/i-deas,SDRC I-DEAS,unv
 application/iges,IGES graphics format,"iges, igs"
 application/java-archive,Java archive,jar
 application/java-archive,Java archive,"war, ear"
+application/javascript,JavaScript,js
 application/mac-binhex40,Macintosh binary BinHex 4.0,hqx
 application/msaccess,Microsoft Access,mdb
 application/msexcel,Microsoft Excel,"xla, xls, xlt, xlw"
@@ -37,7 +38,6 @@ application/x-gtar,GNU tar,gtar
 application/x-gzip,GNU ZIP,"gz, gzip"
 application/x-hdf,NCSA HDF Data File,hdf
 application/x-java-archive-diff,JAR diff archive,jardiff
-application/x-javascript,JavaScript,js
 application/x-latex,LaTeX source,latex
 application/x-macbinary,Macintosh compressed,bin
 application/x-makeself,Make fun rile,run

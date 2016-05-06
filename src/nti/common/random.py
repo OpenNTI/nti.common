@@ -190,7 +190,7 @@ def generate_random_sequence(length, pool, rand_func=generate_random_bytes):
 		raise ValueError("length must be a positive integer: got %d" % length)
 	return [random_choice(pool, rand_func) for _ in xrange(length)]
 
-def generate_random_string(length, pool=ALPHANUMERIC,
+def generate_random_string(length=10, pool=ALPHANUMERIC,
 						   rand_func=generate_random_bytes):
 	"""
 	Generates a random string of given length using the sequence

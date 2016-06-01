@@ -38,6 +38,14 @@ TRUE_VALUES = ('1', 'y', 'yes', 't', 'true')
 #: False values chars
 FALSE_VALUES = ('0', 'n', 'no', 'f', 'false')
 
+def is_true(t):
+	result = bool(t and str(t).lower() in TRUE_VALUES)
+	return result
+
+def is_false(t):
+	result = bool(t and str(t).lower() in FALSE_VALUES)
+	return result
+
 def to_unicode(s, encoding='utf-8', err='strict'):
 	"""
 	Decode a byte sequence and unicode result

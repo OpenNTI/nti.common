@@ -77,7 +77,7 @@ def unique(iterable, seen=None):
 				seen_unhashable.append(item)
 				yield item
 
-from . import builtins
+from nti.common import builtins
 
 def flatten(iterable, ignore=None):
 	"""

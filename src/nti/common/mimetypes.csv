@@ -115,3 +115,13 @@ x-conference/x-cooltalk,CoolTalk,ice
 x-world/x-svr,Virtual reality,svr
 x-world/x-vrml,VRML Worlds,wrl
 x-world/x-vrt,Virtual reality,vrt
+audio/adpcm,Adaptive differential pulse-code modulation,adp
+application/x-ms-application,Microsoft ClickOnce,"app, application"
+application/vnd.ms-htmlhelp,Microsoft Html Help File,chm
+text/asp,Active Server Page,asp
+text/bas,BASIC Source Code,bas
+text/bat,Batch Processing,bat
+text/cmd,DOS CP/M Command File,cmd
+application/octet-stream,Command,com
+text/x-script.csh,csh Script,csh
+application/x-x509-ca-cert,Internet Security Certificate File,cer

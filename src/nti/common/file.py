@@ -20,4 +20,11 @@ def name_finder(filename):
 nameFinder = name_finder
 
 def safe_filename(s):
-	return re.sub(r'[/<>:"\\|?*]+', '_', s) if s else s
+	if s:
+		try:
+			s = s.encode("ascii", 'xmlcharrefreplace')
+		except Exception:
+			pass
+		s = re.sub(r'[/<>:;"\\|#?*\s]+', '_', s)
+		s = re.sub(r'&', '_', s)
+	return s

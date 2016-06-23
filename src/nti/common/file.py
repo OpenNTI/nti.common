@@ -26,5 +26,5 @@ def safe_filename(s):
 		except Exception:
 			pass
 		s = re.sub(r'[/<>:;"\\|#?*\s]+', '_', s)
-		s = re.sub(r'&', '_', s)
+		s = unicode(re.sub(r'&', '_', s))
 	return s

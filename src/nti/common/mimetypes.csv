@@ -16,6 +16,7 @@ application/mspowerpoint,Microsoft PowerPoint,"pot, pps, ppt"
 application/msproject,Microsoft Project,mpp
 application/msword,Microsoft Word,"doc, word, w6w"
 application/mswrite,Microsoft Write,wri
+application/octet-stream,Command,com
 application/octet-stream,uninterpreted binary,bin
 application/oda,ODA,oda
 application/pdf,Adobe Acrobat,pdf
@@ -27,6 +28,7 @@ application/sla,stereolithography,stl
 application/solids,MATRA Prelude Solids,sol
 application/STEP,ISO-10303 STEP data,"st, step, stp"
 application/vda,VDA-FS Surface data,vda
+application/vnd.ms-htmlhelp,Microsoft Html Help File,chm
 application/x-bcpio,binary CPIO,bcpio
 application/x-cocoa,Cocoa archive,cco
 application/x-cpio,POSIX CPIO,cpio
@@ -43,6 +45,9 @@ application/x-macbinary,Macintosh compressed,bin
 application/x-makeself,Make fun rile,run
 application/x-midi,MIDI,mid
 application/x-mif,FrameMaker MIF,mif
+application/x-ms-application,Microsoft ClickOnce,"app, application"
+application/x-msaccess,Microsoft Access,mdb
+application/x-msdownload,Microsoft Application,exe
 application/x-netcdf,Unidata netCDF,"cdf, nc"
 application/x-perl,Perl archive,pm
 application/x-redhat-package-manager,RedHat package manager,rpm
@@ -65,9 +70,11 @@ application/x-troff-ms,Troff with MS macros,ms
 application/x-ustar,POSIX tar format,ustar
 application/x-wais-source,WAIS source,src
 application/x-winhelp,Microsoft Windows help,hlp
+application/x-x509-ca-cert,Internet Security Certificate File,cer
 application/x-x509-ca-cert,X509 certificate,pem
 application/xml,XML archive,xml
 application/zip,ZIP archive,zip
+audio/adpcm,Adaptive differential pulse-code modulation,adp
 audio/basic,BASIC audio (u-law),"au, snd"
 audio/midi,MIDI,"mid, midi"
 audio/x-aiff,AIFF audio,"aif, aifc, aiff"
@@ -95,6 +102,10 @@ image/x-xpixmap,X Pixmap,xpm
 image/x-xwindowdump,X Window System dump,xwd
 multipart/x-gzip,GNU ZIP archive,gzip
 multipart/x-zip,PKZIP archive,zip
+text/asp,Active Server Page,asp
+text/bas,BASIC Source Code,bas
+text/bat,Batch Processing,bat
+text/cmd,DOS CP/M Command File,cmd
 text/html,HTML,"htm, html"
 text/html,SHTML archive,shtml
 text/mathml,MATHML,mml
@@ -102,6 +113,7 @@ text/plain,plain text,"C, cc, h, txt"
 text/richtext,MIME Richtext,rtx
 text/tab-separated-values,text with tabs,tsv
 text/x-component,Component,htc
+text/x-script.csh,csh Script,csh
 text/x-setext,Structurally Enhanced Text,etx
 text/x-sgml,SGML,"sgm, sgml"
 video/3gpp,3GPP media archoive,3gpp
@@ -115,13 +127,3 @@ x-conference/x-cooltalk,CoolTalk,ice
 x-world/x-svr,Virtual reality,svr
 x-world/x-vrml,VRML Worlds,wrl
 x-world/x-vrt,Virtual reality,vrt
-audio/adpcm,Adaptive differential pulse-code modulation,adp
-application/x-ms-application,Microsoft ClickOnce,"app, application"
-application/vnd.ms-htmlhelp,Microsoft Html Help File,chm
-text/asp,Active Server Page,asp
-text/bas,BASIC Source Code,bas
-text/bat,Batch Processing,bat
-text/cmd,DOS CP/M Command File,cmd
-application/octet-stream,Command,com
-text/x-script.csh,csh Script,csh
-application/x-x509-ca-cert,Internet Security Certificate File,cer

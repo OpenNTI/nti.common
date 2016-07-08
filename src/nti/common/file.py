@@ -20,6 +20,7 @@ def name_finder(filename):
 nameFinder = name_finder
 
 def safe_filename(s):
+	__traceback_info__ = s
 	if s:
 		try:
 			s = s.encode("ascii", 'xmlcharrefreplace')

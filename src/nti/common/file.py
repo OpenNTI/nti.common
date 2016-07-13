@@ -27,5 +27,9 @@ def safe_filename(s):
 		except Exception:
 			pass
 		s = re.sub(r'[/<>:;"\\|#?*\s]+', '_', s)
-		s = unicode(re.sub(r'&', '_', s))
+		s = re.sub(r'&', '_', s)
+		try:
+			s = unicode( s )
+		except UnicodeDecodeError:
+			s = s.decode( 'utf-8' )
 	return s

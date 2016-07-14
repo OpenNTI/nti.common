@@ -43,7 +43,7 @@ def is_true(t):
 	return result
 
 def is_false(t):
-	result = bool(t and str(t).lower() in FALSE_VALUES)
+	result = bool(t is not None and str(t).lower() in FALSE_VALUES)
 	return result
 
 def to_unicode(s, encoding='utf-8', err='strict'):

@@ -21,13 +21,13 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from zope.cachedescriptors.property import CachedProperty
+
 from urllib import quote
 from urllib import unquote
 
 from base64 import b64decode
 from base64 import b64encode
-
-from nti.common.property import CachedProperty
 
 # Originally inspired by http://code.google.com/p/python-mom/source/browse/mom/net/scheme/dataurl.py?
 

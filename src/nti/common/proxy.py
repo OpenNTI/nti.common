@@ -9,9 +9,5 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-import zope.deferredimport
-zope.deferredimport.initialize()
-zope.deferredimport.deprecatedFrom(
-	"Moved to nti.externalization.proxy",
-	"nti.externalization.proxy",
-	"removeAllProxies")
+import zope.deprecation
+zope.deprecation.moved('nti.externalization.proxy')

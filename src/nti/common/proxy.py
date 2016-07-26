@@ -9,9 +9,9 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-try:
-	from nti.externalization.proxy import removeAllProxies
-except ImportError:
-	from nti.common._proxy import removeAllProxies
-
-removeAllProxies = removeAllProxies # pylint
+import zope.deferredimport
+zope.deferredimport.initialize()
+zope.deferredimport.deprecatedFrom(
+	"Moved to nti.externalization.proxy",
+	"nti.externalization.proxy",
+	"removeAllProxies")

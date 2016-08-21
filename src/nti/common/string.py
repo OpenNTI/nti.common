@@ -38,6 +38,11 @@ TRUE_VALUES = ('1', 'y', 'yes', 't', 'true')
 #: False values chars
 FALSE_VALUES = ('0', 'n', 'no', 'f', 'false')
 
+try:
+	_unicode = unicode
+except NameError: # python 3
+	_unicode = lambda s: str(s)
+
 def is_true(t):
 	result = bool(t and str(t).lower() in TRUE_VALUES)
 	return result
@@ -51,7 +56,7 @@ def to_unicode(s, encoding='utf-8', err='strict'):
 	Decode a byte sequence and unicode result
 	"""
 	s = s.decode(encoding, err) if isinstance(s, bytes) else s
-	return unicode(s) if s is not None else None
+	return _unicode(s) if s is not None else None
 safestr = to_unicode # BWC
 
 _emoji_chars = None

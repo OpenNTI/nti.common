@@ -51,7 +51,7 @@ def to_unicode(s, encoding='utf-8', err='strict'):
 	Decode a byte sequence and unicode result
 	"""
 	s = s.decode(encoding, err) if isinstance(s, bytes) else s
-	return s if s is not None else None
+	return unicode(s) if s is not None else None
 safestr = to_unicode # BWC
 
 _emoji_chars = None

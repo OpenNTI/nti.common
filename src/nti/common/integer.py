@@ -13,7 +13,7 @@ import struct
 import binascii
 
 from nti.common import _compat
-from nti.common  import builtins
+from nti.common import builtins
 
 ZERO_BYTE = _compat.ZERO_BYTE
 EMPTY_BYTE = _compat.EMPTY_BYTE

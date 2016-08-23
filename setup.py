@@ -44,6 +44,7 @@ setup(
 	tests_require=TESTS_REQUIRE,
 	install_requires=[
 		'setuptools',
+		'six',
 		'zope.cachedescriptors',
 		'zope.deprecation',
 		'zope.deferredimport',

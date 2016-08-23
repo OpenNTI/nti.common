@@ -89,4 +89,3 @@ def has_emoji_chars(s):
 			return True
 	return False
 has_emoji = has_emoji_chars # BWC
-

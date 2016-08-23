@@ -252,7 +252,7 @@ def calculate_entropy(length, pool=ALPHANUMERIC):
 	entropy = length * (math.log(len(pool)) / LOG_OF_2)
 	return entropy
 
-def generate_random_sequence_strong(entropy, pool=ASCII_PRINTABLE,
+def generate_random_sequence_strong(entropy=64, pool=ASCII_PRINTABLE,
 									rand_func=generate_random_bytes):
 	"""
 	Generates a random sequence based on entropy.
@@ -271,7 +271,7 @@ def generate_random_sequence_strong(entropy, pool=ASCII_PRINTABLE,
 	length = int(math.ceil((LOG_OF_2 / math.log(len(pool))) * entropy))
 	return generate_random_sequence(length, pool, rand_func)
 
-def generate_random_password(entropy, pool=ASCII_PRINTABLE,
+def generate_random_password(entropy=64, pool=ASCII_PRINTABLE,
 							 rand_func=generate_random_bytes):
 	"""
 	Generates a password based on entropy.

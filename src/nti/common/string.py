@@ -41,7 +41,7 @@ FALSE_VALUES = ('0', 'n', 'no', 'f', 'false')
 try:
 	_unicode = unicode
 except NameError: # python 3
-	_unicode = lambda s: str(s)
+	_unicode = lambda s: s
 
 def is_true(t):
 	result = bool(t and str(t).lower() in TRUE_VALUES)

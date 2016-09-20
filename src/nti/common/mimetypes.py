@@ -29,3 +29,6 @@ del _add_local_types
 
 def guess_type(url, strict=True):
 	return p_mimetypes.guess_type(url, strict) if url else (None, None)
+
+def guess_extension(name, strict=True):
+	return p_mimetypes.guess_extension(name, strict)

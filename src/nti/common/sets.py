@@ -29,7 +29,7 @@ def discard(the_set, the_value):
 	except AttributeError:
 		try:
 			the_set.remove(the_value)  # BTrees..[Tree]Set. Also, python list
-		except (KeyError, ValueError): 
+		except (KeyError, ValueError):
 			pass
 
 def discard_p(the_set, the_value):
@@ -142,6 +142,11 @@ class OrderedSet(collections.MutableSet):
 			self.items.append(key)
 		return self.map[key]
 	append = add
+
+	def update(self, items):
+		for x in items or ():
+			self.add(x)
+	extend = update
 
 	def index(self, key):
 		"""

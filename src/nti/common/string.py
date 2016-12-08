@@ -33,10 +33,10 @@ PUNCTUATION = """!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~"""
 PRINTABLE = """0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n\r\x0b\x0c"""
 
 #: True values chars
-TRUE_VALUES = ('1', 'y', 'yes', 't', 'true')
+TRUE_VALUES = ('1', 'y', 'yes', 't', 'true', 'on')
 
 #: False values chars
-FALSE_VALUES = ('0', 'n', 'no', 'f', 'false')
+FALSE_VALUES = ('0', 'n', 'no', 'f', 'false', 'off')
 
 try:
 	_unicode = unicode

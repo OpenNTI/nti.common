@@ -113,6 +113,7 @@ text/plain,plain text,"C, cc, h, txt"
 text/richtext,MIME Richtext,rtx
 text/tab-separated-values,text with tabs,tsv
 text/x-component,Component,htc
+text/x-rst,reStructuredText,rst
 text/x-script.csh,csh Script,csh
 text/x-setext,Structurally Enhanced Text,etx
 text/x-sgml,SGML,"sgm, sgml"

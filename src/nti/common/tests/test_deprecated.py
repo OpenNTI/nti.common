@@ -25,7 +25,7 @@ class TestDeprecated(unittest.TestCase):
 	def test_moved(self):
 		old = moved('nti.common.oldsets', 'nti.common.sets')
 		assert_that(old, is_not(none()))
-		assert_that(old, has_property('OrderedSet', is_not(none())))		
+		assert_that(old, has_property('discard', is_not(none())))
 		assert_that(sys.modules, has_entry('nti.common.oldsets', is_(old)))
 
 		__import__('nti.common.oldsets')

@@ -9,27 +9,5 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-import re
-
-_nameFinder = re.compile(r'(.*[\\/:])?(.+)')
-
-def name_finder(filename):
-	match = _nameFinder.match(filename) if filename else None
-	result = match.group(2) if match else None
-	return result
-nameFinder = name_finder
-
-def safe_filename(s):
-	__traceback_info__ = s
-	if s:
-		try:
-			s = s.encode("ascii", 'xmlcharrefreplace')
-		except Exception:
-			pass
-		s = re.sub(r'[/<>:;"\\|#?*\s]+', '_', s)
-		s = re.sub(r'&', '_', s)
-		try:
-			s = unicode( s )
-		except UnicodeDecodeError:
-			s = s.decode( 'utf-8' )
-	return s
+import zope.deprecation
+zope.deprecation.moved('nti.namedfile.file')

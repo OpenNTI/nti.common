@@ -9,26 +9,5 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-def NoPickle(cls):
-	"""
-	A class decorator that prevents an object
-	from being pickled. Useful for ensuring certain
-	objects do not get pickled
-
-	.. warning:: If you subclass something that used this
-		decorator, you should override ``__reduce_ex__``
-		(or both it and ``__reduce__``).
-	"""
-
-	msg = "Not allowed to pickle %s" % cls
-
-	def __reduce_ex__(self, protocol):
-		raise TypeError(msg)
-
-	def __reduce__(self):
-		return self.__reduce_ex__(0)
-
-	cls.__reduce__ = __reduce__
-	cls.__reduce_ex__ = __reduce_ex__
-
-	return cls
+import zope.deprecation
+zope.deprecation.moved('nti.externalization.persistence')

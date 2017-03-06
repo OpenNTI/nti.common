@@ -13,6 +13,9 @@ logger = __import__('logging').getLogger(__name__)
 
 import collections
 
+from zope.deprecation import deprecate
+
+@deprecate('Use requests.structures.CaseInsensitiveDict')
 class CaseInsensitiveDict(dict):
 
 	def __init__(self, *args, **kwargs):

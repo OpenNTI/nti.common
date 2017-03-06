@@ -15,13 +15,14 @@ import unittest
 
 from nti.common.maps import CaseInsensitiveDict
 
+
 class TestMaps(unittest.TestCase):
 
-	def test_case_insensitive_dict(self):
-		d1 = CaseInsensitiveDict(ONE=1, two=2)
-		d2 = CaseInsensitiveDict({'One':1, 'Two':2})
-		for m in (d1, d2):
-			assert_that(m, has_length(2))
-			assert_that(m['OnE'], is_(1))
-			assert_that(m['one'], is_(1))
-			assert_that(m['TWO'], is_(2))
+    def test_case_insensitive_dict(self):
+        d1 = CaseInsensitiveDict(ONE=1, two=2)
+        d2 = CaseInsensitiveDict({'One': 1, 'Two': 2})
+        for m in (d1, d2):
+            assert_that(m, has_length(2))
+            assert_that(m['OnE'], is_(1))
+            assert_that(m['one'], is_(1))
+            assert_that(m['TWO'], is_(2))

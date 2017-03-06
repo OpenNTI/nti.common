@@ -14,15 +14,19 @@ import unittest
 
 from nti.common.path import caller_name
 
+
 def B(skip=1):
     return caller_name(skip=skip)
 
+
 def A(skip=1):
     return B(skip=skip)
-        
+
+
 class TestPath(unittest.TestCase):
-    
+
     def test_caller_name(self):
         assert_that(A(1), is_('nti.common.tests.test_path.B'))
         assert_that(A(2), is_('nti.common.tests.test_path.A'))
-        assert_that(A(3), is_('nti.common.tests.test_path.TestPath.test_caller_name'))
+        assert_that(A(3),
+                    is_('nti.common.tests.test_path.TestPath.test_caller_name'))

@@ -73,7 +73,7 @@ def md5_digest(*inputs):
     for i in inputs:
         if not builtins.is_bytes(i):
             raise TypeError("input type must be bytes: got %r" % 
-							type(i).__name__)
+                            type(i).__name__)
         hash_func.update(i)
     return hash_func.digest()
 

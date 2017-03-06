@@ -13,49 +13,45 @@ logger = __import__('logging').getLogger(__name__)
 
 # Taken from https://github.com/gorakhargosh/mom
 
+import six
 import sys
 import types
 import struct
 
 PY3 = sys.version_info[0] == 3
 
-if PY3:  # pragma: no cover
-	string_types = str,
-	integer_types = int,
-	class_types = type,
-	text_type = str
-	binary_type = bytes
-else:
-	string_types = basestring,
-	integer_types = (int, long)
-	class_types = (type, types.ClassType)
-	text_type = unicode
-	binary_type = str
+text_type = six.text_type
+binary_type = six.binary_type
+class_types = six.class_types
+string_types = six.string_types
+integer_types = six.integer_types
+
 
 if PY3:  # pragma: no cover
-	def native_(s, encoding='latin-1', errors='strict'):
-		"""
-		If ``s`` is an instance of ``text_type``, return
-		``s``, otherwise return ``str(s, encoding, errors)``
-		"""
-		if isinstance(s, text_type):
-			return s
-		return str(s, encoding, errors)
+    def native_(s, encoding='utf-8', errors='strict'):
+        """
+        If ``s`` is an instance of ``text_type``, return
+        ``s``, otherwise return ``str(s, encoding, errors)``
+        """
+        if isinstance(s, text_type):
+            return s
+        return str(s, encoding, errors)
 else:
-	def native_(s, encoding='latin-1', errors='strict'):
-		"""
-		If ``s`` is an instance of ``text_type``, return
-		``s.encode(encoding, errors)``, otherwise return ``str(s)``
-		"""
-		if isinstance(s, text_type):
-			return s.encode(encoding, errors)
-		return str(s)
+    def native_(s, encoding='utf-8', errors='strict'):
+        """
+        If ``s`` is an instance of ``text_type``, return
+        ``s.encode(encoding, errors)``, otherwise return ``str(s)``
+        """
+        if isinstance(s, text_type):
+            return s.encode(encoding, errors)
+        return str(s)
+
 try:
-	INT_MAX = sys.maxsize
+    INT_MAX = sys.maxsize
 except AttributeError:
-	INT_MAX = sys.maxint
+    INT_MAX = sys.maxint
 
-INT64_MAX = (1 << 63) - 1
+INT64_MAX = six.MAXSIZE
 INT32_MAX = (1 << 31) - 1
 INT16_MAX = (1 << 15) - 1
 UINT128_MAX = (1 << 128) - 1  # 340282366920938463463374607431768211455L
@@ -67,72 +63,71 @@ UINT8_MAX = 0xff
 
 # Determine the word size of the processor.
 if INT_MAX == INT64_MAX:
-	# 64-bit processor.
-	MACHINE_WORD_SIZE = 64
-	UINT_MAX = UINT64_MAX
+    # 64-bit processor.
+    MACHINE_WORD_SIZE = 64
+    UINT_MAX = UINT64_MAX
 elif INT_MAX == INT32_MAX:
-	# 32-bit processor.
-	MACHINE_WORD_SIZE = 32
-	UINT_MAX = UINT32_MAX
+    # 32-bit processor.
+    MACHINE_WORD_SIZE = 32
+    UINT_MAX = UINT32_MAX
 else:
-	MACHINE_WORD_SIZE = 64
-	UINT_MAX = UINT64_MAX
+    MACHINE_WORD_SIZE = 64
+    UINT_MAX = UINT64_MAX
 
 try:
-	LONG_TYPE = long
+    LONG_TYPE = long
 except NameError:
-	LONG_TYPE = int
+    LONG_TYPE = int
 
 try:
-	INT_TYPE = long
-	INTEGER_TYPES = (int, long)
+    INT_TYPE = long
 except NameError:
-	INT_TYPE = int
-	INTEGER_TYPES = (int,)
+    INT_TYPE = int
+INTEGER_TYPES = six.integer_types
 
 try:
-	BYTES_TYPE = bytes
+    BYTES_TYPE = bytes
 except NameError:
-	BYTES_TYPE = str
+    BYTES_TYPE = str
 
 try:
-	HAVE_PYTHON3 = False
-	UNICODE_TYPE = unicode
-	BASESTRING_TYPE = basestring
+    HAVE_PYTHON3 = False
+    UNICODE_TYPE = unicode
+    BASESTRING_TYPE = basestring
 
-	def byte_ord(byte_):
-		"""
-		Returns the ordinal value of the given byte.
+    def byte_ord(byte_):
+        """
+        Returns the ordinal value of the given byte.
 
-		:param byte_:
-			The byte.
-		:returns:
-			Integer representing ordinal value of the byte.
-		"""
-		return ord(byte_)
+        :param byte_:
+                The byte.
+        :returns:
+                Integer representing ordinal value of the byte.
+        """
+        return ord(byte_)
 except NameError:
-	def byte_ord(byte_):
-		"""
-		Returns the ordinal value of the given byte.
+    def byte_ord(byte_):
+        """
+        Returns the ordinal value of the given byte.
 
-		:param byte_:
-			The byte.
-		:returns:
-			Integer representing ordinal value of the byte.
-		"""
-		return byte_
+        :param byte_:
+                The byte.
+        :returns:
+                Integer representing ordinal value of the byte.
+        """
+        return byte_
 
-	UNICODE_TYPE = str
-	HAVE_PYTHON3 = True
-	BASESTRING_TYPE = (str, bytes)
+    UNICODE_TYPE = str
+    HAVE_PYTHON3 = True
+    BASESTRING_TYPE = (str, bytes)
 
 # Fake byte literals for python2.5
 if str is UNICODE_TYPE:
-	def byte_literal(literal):
-		return literal.encode("latin1")
+    def byte_literal(literal):
+        return literal.encode("latin1")
 else:
-	def byte_literal(literal):
-		return literal
+    def byte_literal(literal):
+        return literal
 
 EMPTY_BYTE = byte_literal("")
 EQUAL_BYTE = byte_literal("=")
@@ -145,61 +140,62 @@ FORWARD_SLASH_BYTE = byte_literal("/")
 HAVE_LITTLE_ENDIAN = bool(struct.pack(b"h", 1) == "\x01\x00")
 
 if getattr(dict, "iteritems", None):
-	def dict_each(func, iterable):
-		"""
-		Portably iterate through a dictionary's items.
+    def dict_each(func, iterable):
+        """
+        Portably iterate through a dictionary's items.
 
-		:param func:
-			The function that will receive two arguments: key, value.
-		:param iterable:
-			The dictionary iterable.
-		"""
-		for key, value in iterable.iteritems():
-			func(key, value)
+        :param func:
+                The function that will receive two arguments: key, value.
+        :param iterable:
+                The dictionary iterable.
+        """
+        for key, value in iterable.iteritems():
+            func(key, value)
 else:
-	def dict_each(func, iterable):
-		"""
-		Portably iterate through a dictionary's items.
+    def dict_each(func, iterable):
+        """
+        Portably iterate through a dictionary's items.
 
-		:param func:
-			The function that will receive two arguments: key, value.
-		:param iterable:
-			The dictionary iterable.
-		"""
-		for key, value in iterable.items():
-			func(key, value)
+        :param func:
+                The function that will receive two arguments: key, value.
+        :param iterable:
+                The dictionary iterable.
+        """
+        for key, value in iterable.items():
+            func(key, value)
+
 
 def get_word_alignment(num, force_arch=64, _machine_word_size=MACHINE_WORD_SIZE):
-	"""
-	Returns alignment details for the given number based on the platform
-	Python is running on.
+    """
+    Returns alignment details for the given number based on the platform
+    Python is running on.
 
-	:param num:
-	  Unsigned integral number.
-	:param force_arch:
-	  If you don't want to use 64-bit unsigned chunks, set this to
-	  anything other than 64. 32-bit chunks will be preferred then.
-	  Default 64 will be used when on a 64-bit machine.
-	:param _machine_word_size:
-	  (Internal) The machine word size used for alignment.
-	:returns:
-	  4-tuple::
+    :param num:
+      Unsigned integral number.
+    :param force_arch:
+      If you don't want to use 64-bit unsigned chunks, set this to
+      anything other than 64. 32-bit chunks will be preferred then.
+      Default 64 will be used when on a 64-bit machine.
+    :param _machine_word_size:
+      (Internal) The machine word size used for alignment.
+    :returns:
+      4-tuple::
 
-		  (word_bits, word_bytes,
-		   max_uint, packing_format_type)
-	"""
-	if force_arch == 64 and _machine_word_size >= 64 and num > UINT32_MAX:
-		# 64-bit unsigned integer.
-		return 64, 8, UINT64_MAX, "Q"
-	elif num > UINT16_MAX:
-		# 32-bit unsigned integer
-		return 32, 4, UINT32_MAX, "L"
-	elif num > UINT8_MAX:
-		# 16-bit unsigned integer.
-		return 16, 2, UINT16_MAX, "H"
-	else:
-		# 8-bit unsigned integer.
-		return 8, 1, UINT8_MAX, "B"
+              (word_bits, word_bytes,
+               max_uint, packing_format_type)
+    """
+    if force_arch == 64 and _machine_word_size >= 64 and num > UINT32_MAX:
+        # 64-bit unsigned integer.
+        return 64, 8, UINT64_MAX, "Q"
+    elif num > UINT16_MAX:
+        # 32-bit unsigned integer
+        return 32, 4, UINT32_MAX, "L"
+    elif num > UINT8_MAX:
+        # 16-bit unsigned integer.
+        return 16, 2, UINT16_MAX, "H"
+    else:
+        # 8-bit unsigned integer.
+        return 8, 1, UINT8_MAX, "B"
 
 word_alignment = get_word_alignment
 
@@ -208,50 +204,51 @@ word_alignment = get_word_alignment
 from zope import interface
 
 try:
-	from Acquisition.interfaces import IAcquirer
+    from Acquisition.interfaces import IAcquirer
 except ImportError:
-	class IAcquirer(interface.Interface):
-		pass
+    class IAcquirer(interface.Interface):
+        pass
 
 try:
-	from Acquisition import Implicit
+    from Acquisition import Implicit
 except ImportError:
-	@interface.implementer(IAcquirer)
-	class Implicit(object):
-		pass
+    @interface.implementer(IAcquirer)
+    class Implicit(object):
+        pass
 
 try:
-	from ExtensionClass import Base
+    from ExtensionClass import Base
 except ImportError:
-	class Base(object):
-		pass
+    class Base(object):
+        pass
 Base = Base  # pylint
 
 try:
-	from Acquisition import aq_base
+    from Acquisition import aq_base
 except ImportError:
-	def aq_base(o):
-		return o
+    def aq_base(o):
+        return o
+
 
 def patch_acquisition():
-	if 'Acquisition' not in sys.modules:
-		Acquisition = types.ModuleType(str("Acquisition"))
-		Acquisition.Implicit = Implicit
-		Acquisition.aq_base = aq_base
-		sys.modules[Acquisition.__name__] = Acquisition
+    if 'Acquisition' not in sys.modules:
+        Acquisition = types.ModuleType(str("Acquisition"))
+        Acquisition.Implicit = Implicit
+        Acquisition.aq_base = aq_base
+        sys.modules[Acquisition.__name__] = Acquisition
 
 try:
-	from gevent import sleep
-	from gevent import Greenlet
-	from gevent.queue import Queue
+    from gevent import sleep
+    from gevent import Greenlet
+    from gevent.queue import Queue
 except ImportError:
-	from Queue import Queue
-	try:
-		from greenlet import greenlet as Greenlet
-	except ImportError:
-		class Greenlet(object):
-			pass
-	from time import sleep
+    from Queue import Queue
+    try:
+        from greenlet import greenlet as Greenlet
+    except ImportError:
+        class Greenlet(object):
+            pass
+    from time import sleep
 
 slee = sleep
 Queue = Queue

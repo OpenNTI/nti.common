@@ -13,6 +13,7 @@ resource_filename = __import__('pkg_resources').resource_filename
 
 _emoji_chars = None
 
+
 def emoji_chars(*args):
     """
     return a sequence with emoji ranges

@@ -222,4 +222,8 @@ import zope.deferredimport
 zope.deferredimport.initialize()
 zope.deferredimport.deprecated(
     "Import from nti.monkey.patch_acquisition instead",
+    Base='nti.monkey.patch_acquisition:Base',
+    Implicit='nti.monkey.patch_acquisition:Implicit',
+    IAcquirer='nti.monkey.patch_acquisition:IAcquirer',
+    aq_base='nti.monkey.patch_acquisition:aq_base',
     patch_acquisition='nti.monkey.patch_acquisition:patch')

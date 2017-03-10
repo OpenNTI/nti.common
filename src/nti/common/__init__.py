@@ -9,9 +9,6 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-from nti.common.chameleon import make_cache_dir
-from nti.common.chameleon import setupChameleonCache
-
 from nti.common.gravatar import _AVATAR_SERVICES
 from nti.common.gravatar import KNOWN_GRAVATAR_TYPES
 from nti.common.gravatar import GENERATED_GRAVATAR_TYPES

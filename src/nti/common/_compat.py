@@ -15,7 +15,6 @@ logger = __import__('logging').getLogger(__name__)
 
 import six
 import sys
-import types
 import struct
 
 PY3 = sys.version_info[0] == 3
@@ -201,42 +200,6 @@ word_alignment = get_word_alignment
 
 # python3/pypy compatibility shims.
 
-from zope import interface
-
-try:
-    from Acquisition.interfaces import IAcquirer
-except ImportError:
-    class IAcquirer(interface.Interface):
-        pass
-
-try:
-    from Acquisition import Implicit
-except ImportError:
-    @interface.implementer(IAcquirer)
-    class Implicit(object):
-        pass
-
-try:
-    from ExtensionClass import Base
-except ImportError:
-    class Base(object):
-        pass
-Base = Base  # pylint
-
-try:
-    from Acquisition import aq_base
-except ImportError:
-    def aq_base(o):
-        return o
-
-
-def patch_acquisition():
-    if 'Acquisition' not in sys.modules:
-        Acquisition = types.ModuleType(str("Acquisition"))
-        Acquisition.Implicit = Implicit
-        Acquisition.aq_base = aq_base
-        sys.modules[Acquisition.__name__] = Acquisition
-
 try:
     from gevent import sleep
     from gevent import Greenlet
@@ -253,3 +216,10 @@ except ImportError:
 slee = sleep
 Queue = Queue
 Greenlet = Greenlet
+
+
+import zope.deferredimport
+zope.deferredimport.initialize()
+zope.deferredimport.deprecated(
+    "Import from nti.monkey.patch_acquisition instead",
+    patch_acquisition='nti.monkey.patch_acquisition:patch')

@@ -200,6 +200,36 @@ word_alignment = get_word_alignment
 
 # python3/pypy compatibility shims.
 
+from zope import interface
+
+try:
+    from Acquisition.interfaces import IAcquirer
+except ImportError:
+    class IAcquirer(interface.Interface):
+        pass
+
+try:
+    from Acquisition import Implicit
+except ImportError:
+    @interface.implementer(IAcquirer)
+    class Implicit(object):
+        pass
+Implicit = Implicit
+
+try:
+    from ExtensionClass import Base
+except ImportError:
+    class Base(object):
+        pass
+Base = Base  # pylint
+
+try:
+    from Acquisition import aq_base
+except ImportError:
+    def aq_base(o):
+        return o
+aq_base = aq_base
+
 try:
     from gevent import sleep
     from gevent import Greenlet
@@ -216,14 +246,3 @@ except ImportError:
 slee = sleep
 Queue = Queue
 Greenlet = Greenlet
-
-
-import zope.deferredimport
-zope.deferredimport.initialize()
-zope.deferredimport.deprecated(
-    "Import from nti.monkey.patch_acquisition instead",
-    Base='nti.monkey.patch_acquisition:Base',
-    Implicit='nti.monkey.patch_acquisition:Implicit',
-    IAcquirer='nti.monkey.patch_acquisition:IAcquirer',
-    aq_base='nti.monkey.patch_acquisition:aq_base',
-    patch_acquisition='nti.monkey.patch_acquisition:patch')

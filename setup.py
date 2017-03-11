@@ -44,6 +44,7 @@ setup(
 	tests_require=TESTS_REQUIRE,
 	install_requires=[
 		'setuptools',
+		'emoji',
 		'six',
 		'zope.deprecation',
 		'zope.deferredimport',

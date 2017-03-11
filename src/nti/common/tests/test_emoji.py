@@ -8,20 +8,14 @@ __docformat__ = "restructuredtext en"
 # pylint: disable=W0212,R0904
 
 from hamcrest import is_
-from hamcrest import has_length
 from hamcrest import assert_that
 
 import unittest
 
-from nti.common.emoji import emoji_chars
 from nti.common.emoji import has_emoji_chars
 
 
 class TestString(unittest.TestCase):
-
-    def test_emoji_chars(self):
-        ranges = emoji_chars()
-        assert_that(ranges, has_length(722))
 
     def test_has_emoji(self):
         assert_that(has_emoji_chars(u"ichigo"), is_(False))

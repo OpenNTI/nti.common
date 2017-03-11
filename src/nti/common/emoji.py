@@ -21,7 +21,7 @@ def emoji_chars(*args):
     global _emoji_chars
     if _emoji_chars is None:
         data = set()
-        source = resource_filename(__name__, 'data/EmojiSources.txt')
+        source = resource_filename(__name__, 'resources/EmojiSources.txt')
         with open(source, "rU") as f:
             for s in f.readlines():
                 s = s.strip()

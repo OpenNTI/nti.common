@@ -59,9 +59,6 @@ def unicode_(s, encoding='utf-8', err='strict'):
     return _unicode(s) if s is not None else None
 safestr = to_unicode = unicode_  # BWC
 
-_emoji_chars = None
-
-
 import zope.deferredimport
 zope.deferredimport.initialize()
 

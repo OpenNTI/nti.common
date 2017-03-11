@@ -50,17 +50,16 @@ def is_false(t):
     result = bool(t is not None and str(t).lower() in FALSE_VALUES)
     return result
 
-
-def unicode_(s, encoding='utf-8', err='strict'):
-    """
-    Decode a byte sequence and unicode result
-    """
-    s = s.decode(encoding, err) if isinstance(s, bytes) else s
-    return _unicode(s) if s is not None else None
-safestr = to_unicode = unicode_  # BWC
-
 import zope.deferredimport
 zope.deferredimport.initialize()
+
+zope.deferredimport.deprecatedFrom(
+    "Moved to nti.common._compat",
+    "nti.common._compat",
+    "safestr",
+    "unicode_",
+    "to_unicode",
+)
 
 zope.deferredimport.deprecatedFrom(
     "Moved to nti.common.emoji",

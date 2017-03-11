@@ -27,6 +27,8 @@ integer_types = six.integer_types
 
 
 if PY3:  # pragma: no cover
+    _unicode = lambda x: x
+
     def native_(s, encoding='utf-8', errors='strict'):
         """
         If ``s`` is an instance of ``text_type``, return
@@ -35,7 +37,10 @@ if PY3:  # pragma: no cover
         if isinstance(s, text_type):
             return s
         return str(s, encoding, errors)
+
 else:
+    _unicode = unicode
+
     def native_(s, encoding='utf-8', errors='strict'):
         """
         If ``s`` is an instance of ``text_type``, return
@@ -44,6 +49,16 @@ else:
         if isinstance(s, text_type):
             return s.encode(encoding, errors)
         return str(s)
+
+
+def unicode_(s, encoding='utf-8', err='strict'):
+    """
+    Decode a byte sequence and unicode result
+    """
+    s = s.decode(encoding, err) if isinstance(s, bytes) else s
+    return _unicode(s) if s is not None else None
+safestr = to_unicode = unicode_  # BWC
+
 
 try:
     INT_MAX = sys.maxsize

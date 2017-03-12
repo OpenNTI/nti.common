@@ -11,7 +11,7 @@ logger = __import__('logging').getLogger(__name__)
 
 from emoji import demojize
 
-from nti.common.string import unicode_
+from nti.common._compat import unicode_
 
 
 def has_emoji_chars(s):

@@ -70,10 +70,10 @@ INT32_MAX = (1 << 31) - 1
 INT16_MAX = (1 << 15) - 1
 UINT128_MAX = (1 << 128) - 1  # 340282366920938463463374607431768211455L
 
-UINT64_MAX = 0xffffffffffffffff  # ((1 << 64) - 1)
-UINT32_MAX = 0xffffffff  # ((1 << 32) - 1)
-UINT16_MAX = 0xffff  # ((1 << 16) - 1)
 UINT8_MAX = 0xff
+UINT16_MAX = 0xffff  # ((1 << 16) - 1)
+UINT32_MAX = 0xffffffff  # ((1 << 32) - 1)
+UINT64_MAX = 0xffffffffffffffff  # ((1 << 64) - 1)
 
 # Determine the word size of the processor.
 if INT_MAX == INT64_MAX:
@@ -99,10 +99,7 @@ except NameError:
     INT_TYPE = int
 INTEGER_TYPES = six.integer_types
 
-try:
-    BYTES_TYPE = bytes
-except NameError:
-    BYTES_TYPE = str
+BYTES_TYPE = six.binary_type
 
 try:
     HAVE_PYTHON3 = False

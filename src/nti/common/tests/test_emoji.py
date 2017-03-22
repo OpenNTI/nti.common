@@ -15,7 +15,7 @@ import unittest
 from nti.common.emoji import has_emoji_chars
 
 
-class TestString(unittest.TestCase):
+class TestEmoji(unittest.TestCase):
 
     def test_has_emoji(self):
         assert_that(has_emoji_chars(u"ichigo"), is_(False))

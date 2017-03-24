@@ -176,6 +176,40 @@ else:
             func(key, value)
 
 
+def get_word_alignment(num, force_arch=64, _machine_word_size=MACHINE_WORD_SIZE):
+    """
+    Returns alignment details for the given number based on the platform
+    Python is running on.
+
+    :param num:
+      Unsigned integral number.
+    :param force_arch:
+      If you don't want to use 64-bit unsigned chunks, set this to
+      anything other than 64. 32-bit chunks will be preferred then.
+      Default 64 will be used when on a 64-bit machine.
+    :param _machine_word_size:
+      (Internal) The machine word size used for alignment.
+    :returns:
+      4-tuple::
+
+              (word_bits, word_bytes,
+               max_uint, packing_format_type)
+    """
+    if force_arch == 64 and _machine_word_size >= 64 and num > UINT32_MAX:
+        # 64-bit unsigned integer.
+        return 64, 8, UINT64_MAX, "Q"
+    elif num > UINT16_MAX:
+        # 32-bit unsigned integer
+        return 32, 4, UINT32_MAX, "L"
+    elif num > UINT8_MAX:
+        # 16-bit unsigned integer.
+        return 16, 2, UINT16_MAX, "H"
+    else:
+        # 8-bit unsigned integer.
+        return 8, 1, UINT8_MAX, "B"
+
+word_alignment = get_word_alignment
+
 # python3/pypy compatibility shims.
 
 from zope import interface

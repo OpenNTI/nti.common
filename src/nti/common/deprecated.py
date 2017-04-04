@@ -97,12 +97,16 @@ def moved(from_location, to_location):
     try:
         __import__(from_location)
     except ImportError:
-        sys.modules[from_location] = types.ModuleType(
-            str(from_location), "Create module")
+        module = types.ModuleType(str(from_location), "Created module")
+        sys.modules[from_location] = module
 
     message = '%s has moved to %s.' % (from_location, to_location)
     warnings.warn(message, DeprecationWarning, 3)
-    __import__(to_location)
+    try:
+        __import__(to_location)
+    except ImportError:
+        module = types.ModuleType(str(to_location), "Created module")
+        sys.modules[to_location] = module
 
     fromdict = sys.modules[to_location].__dict__
     to_mod = sys.modules[from_location]

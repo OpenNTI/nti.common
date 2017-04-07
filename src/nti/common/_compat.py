@@ -27,7 +27,7 @@ integer_types = six.integer_types
 
 
 if PY3:  # pragma: no cover
-    _unicode = lambda x: x
+    def _unicode(s): return str(s)
 else:
     _unicode = unicode
 

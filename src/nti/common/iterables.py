@@ -80,6 +80,7 @@ def unique(iterable, seen=None):
                 seen_unhashable.append(item)
                 yield item
 
+
 from nti.common import builtins
 
 
@@ -105,6 +106,7 @@ def flatten(iterable, ignore=None):
                     yield item
         except StopIteration:
             stack.pop()
+
 
 import itertools
 
@@ -197,6 +199,7 @@ def permutations(iterable, r=None):
     for indices in product(xrange(pool_length), repeat=r):
         if len(set(indices)) == r:
             yield tuple(pool[i] for i in indices)
+
 
 if PY3:  # pragma: no cover
     def is_nonstr_iter(v):

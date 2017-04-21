@@ -38,7 +38,7 @@ FALSE_VALUES = ('0', 'n', 'no', 'f', 'false', 'off')
 try:
     _unicode = unicode
 except NameError:  # python 3
-    _unicode = lambda s: s
+    def _unicode(s): return str(s)
 
 
 def is_true(t):
@@ -49,6 +49,7 @@ def is_true(t):
 def is_false(t):
     result = bool(t is not None and str(t).lower() in FALSE_VALUES)
     return result
+
 
 import zope.deferredimport
 zope.deferredimport.initialize()

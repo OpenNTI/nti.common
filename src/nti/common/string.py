@@ -24,7 +24,7 @@ ASCII_LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
 ASCII_LETTERS = ASCII_LOWERCASE + ASCII_UPPERCASE
 
 #: White space chars
-WHITESPACE = "\t\n\x0b\x0c\r "
+WHITESPACE = u"\t\n\x0b\x0c\r "
 
 #: Regular punk chars
 PUNCTUATION = """!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~"""
@@ -34,11 +34,6 @@ TRUE_VALUES = ('1', 'y', 'yes', 't', 'true', 'on')
 
 #: False values chars
 FALSE_VALUES = ('0', 'n', 'no', 'f', 'false', 'off')
-
-try:
-    _unicode = unicode
-except NameError:  # python 3
-    def _unicode(s): return str(s)
 
 
 def is_true(t):
@@ -65,7 +60,6 @@ zope.deferredimport.deprecatedFrom(
 zope.deferredimport.deprecatedFrom(
     "Moved to nti.common.emoji",
     "nti.common.emoji",
-    "emoji_chars",
     "has_emoji",
     "has_emoji_chars"
 )

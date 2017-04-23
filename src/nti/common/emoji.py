@@ -4,17 +4,16 @@
 .. $Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
+from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
 from emoji import demojize
 
-from nti.common._compat import unicode_
-
 
 def has_emoji_chars(s):
-    source = unicode_(s)
-    return demojize(source) != source
+    if isinstance(s, bytes):
+        s = s.decode("utf-8")
+    return demojize(s) != s
 has_emoji = has_emoji_chars  # BWC

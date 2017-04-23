@@ -4,7 +4,7 @@
 .. $Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
+from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
@@ -14,12 +14,12 @@ from urlparse import urlunparse
 
 _AVATAR_SERVICES = {
     'gravatar': {
-        True: b'secure.gravatar.com',
-        False: b'www.gravatar.com'
+        True: 'secure.gravatar.com',
+        False: 'www.gravatar.com'
     },
     'libravatar': {
-        True: b'seccdn.libravatar.org',
-        False: b'cdn.libravatar.org'
+        True: 'seccdn.libravatar.org',
+        False: 'cdn.libravatar.org'
     }
 }
 
@@ -51,11 +51,11 @@ def create_gravatar_url(username,
              See http://en.gravatar.com/site/implement/images/
     """
     md5str = hashlib.md5(username.lower()).hexdigest()
-    scheme = b'https' if secure else b'http'
+    scheme = 'https' if secure else 'http'
     netloc = _AVATAR_SERVICES[service][secure]
-    path = b'/avatar/' + md5str
+    path = '/avatar/' + md5str
     params = ''
-    query = b's=%s&d=%s' % (size, defaultGravatarType)
+    query = 's=%s&d=%s' % (size, defaultGravatarType)
     fragment = ''
     result = str(urlunparse((scheme, netloc, path, params, query, fragment)))
     return result

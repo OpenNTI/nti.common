@@ -15,10 +15,6 @@ import struct
 
 from nti.common import _compat
 
-# rexport
-byte_ord = _compat.byte_ord
-dict_each = _compat.dict_each
-
 
 def byte(number):
     """
@@ -63,33 +59,6 @@ def bytes_leading(raw_bytes, needle=_compat.ZERO_BYTE):
         else:
             break
     return leading
-
-
-def bytes_trailing(raw_bytes, needle=_compat.ZERO_BYTE):
-    """
-    Finds the number of suffixed byte occurrences in the haystack.
-
-    Useful when you want to deal with padding.
-
-    :param raw_bytes:
-            Raw bytes.
-    :param needle:
-            The byte to count. Default \000.
-    :returns:
-            The number of trailing needle bytes.
-    """
-    if not is_bytes(raw_bytes):
-        raise TypeError("argument must be raw bytes: got %r" %
-                        type(raw_bytes).__name__)
-    trailing = 0
-    # Indexing keeps compatibility between Python 2.x and Python 3.x
-    needle_byte = needle[0]
-    for raw_byte in reversed(raw_bytes):
-        if raw_byte == needle_byte:
-            trailing += 1
-        else:
-            break
-    return trailing
 
 
 def bin_(number, prefix="0b"):
@@ -139,25 +108,6 @@ def hex_(number, prefix="0x"):
     _ = number & 1
     hex_num = "%x" % number
     return prefix + hex_num.lower()
-
-
-def is_sequence(obj):
-    """
-    Determines whether the given value is a sequence.
-
-    Sets, lists, tuples, bytes, dicts, and strings are treated as sequence.
-
-    :param obj:
-            The value to test.
-    :returns:
-            ``True`` if value is a sequence; ``False`` otherwise.
-    """
-    try:
-        list(obj)
-        return True
-    except TypeError:  # , exception:
-        # assert "is not iterable" in bytes(exception)
-        return False
 
 
 def is_unicode(obj):
@@ -220,21 +170,6 @@ def integer_byte_length(number):
     """
     quanta, remainder = divmod(integer_bit_length(number), 8)
     if remainder:
-        quanta += 1
-    return quanta
-
-
-def integer_byte_size(number):
-    """
-    Size in bytes of an integer.
-
-    :param number:
-            Integer value. If num is 0, returns 1.
-    :returns:
-            Size in bytes of an integer.
-    """
-    quanta, remainder = divmod(integer_bit_length(number), 8)
-    if remainder or number == 0:
         quanta += 1
     return quanta
 

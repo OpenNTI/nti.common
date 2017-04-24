@@ -17,7 +17,6 @@ from itertools import tee
 from itertools import islice
 from itertools import ifilter
 
-from nti.common._compat import PY3
 from nti.common._compat import string_types
 
 
@@ -201,16 +200,6 @@ def permutations(iterable, r=None):
             yield tuple(pool[i] for i in indices)
 
 
-if PY3:  # pragma: no cover
-    def is_nonstr_iter(v):
-        if isinstance(v, str):
-            return False
-        return hasattr(v, '__iter__')
-else:
-    def is_nonstr_iter(v):
-        return hasattr(v, '__iter__')
-
-
 def to_list(items=None, default=None):
     if items is None:
         result = default
@@ -223,3 +212,13 @@ def to_list(items=None, default=None):
     else:
         result = [items]
     return result
+
+
+import zope.deferredimport
+zope.deferredimport.initialize()
+
+zope.deferredimport.deprecatedFrom(
+    "Use to pyramid.compat",
+    "pyramid.compat",
+    "is_nonstr_iter",
+)

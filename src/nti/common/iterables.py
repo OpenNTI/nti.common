@@ -7,17 +7,19 @@ Utilities for working with iterables/sequences.
 """
 
 from __future__ import print_function, absolute_import, division
+from __builtin__ import isinstance
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
+
+from six import binary_type
+from six import string_types
 
 from collections import Iterable
 
 from itertools import tee
 from itertools import islice
 from itertools import ifilter
-
-from nti.common._compat import string_types
 
 
 class IterableWrapper(object):
@@ -80,9 +82,6 @@ def unique(iterable, seen=None):
                 yield item
 
 
-from nti.common import builtins
-
-
 def flatten(iterable, ignore=None):
     """
     Flattens a nested `iterable`.
@@ -96,7 +95,8 @@ def flatten(iterable, ignore=None):
             item = stack[-1].next()
             if ignore and isinstance(item, ignore):
                 yield item
-            elif builtins.is_bytes_or_unicode(item) and len(item) == 1:
+            elif    (isinstance(item, string_types) or isinstance(item, binary_type)) \
+                and len(item) == 1:
                 yield item
             else:
                 try:
@@ -105,43 +105,6 @@ def flatten(iterable, ignore=None):
                     yield item
         except StopIteration:
             stack.pop()
-
-
-import itertools
-
-try:
-    from itertools import izip
-except ImportError:
-    izip = zip
-
-
-def izip_longest(*iterables, **kwargs):
-    """
-    Make an iterator that aggregates elements from each of the iterables. If
-    the iterables are of uneven length, missing values are filled-in with
-    `fillvalue`. Iteration continues until the longest iterable is exhausted.
-
-    If one of the iterables is potentially infinite, then the
-    :func:`izip_longest` function should be wrapped with something that limits
-    the number of calls (for example :func:`itertools.islice` or
-    :func:`itertools.takewhile`.) If not specified, `fillvalue` defaults to
-    ``None``.
-
-    .. note:: Software and documentation for this function are taken from
-                      CPython, :ref:`license details <psf-license>`.
-    """
-    fillvalue = kwargs.get("fillvalue")
-
-    def sentinel(counter=([fillvalue] * (len(iterables) - 1)).pop):
-        yield counter()
-
-    fillers = itertools.repeat(fillvalue)
-    iters = [itertools.chain(it, sentinel(), fillers) for it in iterables]
-    try:
-        for tup in izip(*iters):
-            yield tup
-    except IndexError:
-        pass
 
 
 def to_list(items=None, default=None):

@@ -72,3 +72,5 @@ class TestIterables(unittest.TestCase):
         assert_that(to_list(l), is_(['ichigo']))
         l = [1, 2, 3]
         assert_that(to_list(l), is_(same_instance(l)))
+        l = object()
+        assert_that(to_list(l), is_([l]))

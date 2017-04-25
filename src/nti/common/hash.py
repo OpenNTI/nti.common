@@ -13,6 +13,8 @@ import six
 import hmac
 import hashlib
 
+from nti.common._compat import bytes_
+
 from nti.common.codec import hex_encode
 from nti.common.codec import base64_encode
 
@@ -28,10 +30,7 @@ def sha1_digest(*inputs):
     """
     hash_func = hashlib.sha1()
     for i in inputs:
-        if not isinstance(i, six.binary_type):
-            raise TypeError("input must be native string: got %r" %
-                            type(i).__name__)
-        hash_func.update(i)
+        hash_func.update(bytes_(i))
     return hash_func.digest()
 
 
@@ -72,10 +71,7 @@ def md5_digest(*inputs):
     """
     hash_func = hashlib.md5()
     for i in inputs:
-        if not isinstance(i, six.binary_type):
-            raise TypeError("input must be native string: got %r" %
-                            type(i).__name__)
-        hash_func.update(i)
+        hash_func.update(bytes_(i))
     return hash_func.digest()
 
 

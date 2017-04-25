@@ -160,25 +160,6 @@ def random_choice(sequence, rand_func=generate_random_bytes):
     return sequence[generate_random_uint_between(0, len(sequence), rand_func)]
 
 
-def random_shuffle(sequence, rand_func=generate_random_bytes):
-    """
-    Randomly shuffles the sequence in-place.
-
-    :param sequence:
-            Sequence to shuffle in-place.
-    :returns:
-            The shuffled sequence itself (for convenience).
-    """
-    copy = list(sequence)
-    # Choose a random item (without replacement) until all the items have been
-    # chosen.
-    for i in range(len(sequence)):
-        random_uint = generate_random_uint_between(0, len(copy), rand_func)
-        sequence[i] = copy[random_uint]
-        del copy[random_uint]
-    return sequence
-
-
 def generate_random_sequence(length, pool, rand_func=generate_random_bytes):
     """
     Generates a random sequence of given length using the sequence
@@ -246,22 +227,6 @@ def generate_random_string(length=10, pool=ALPHANUMERIC,
     """
     result = "".join(generate_random_sequence(length, pool, rand_func))
     return result
-
-
-def calculate_entropy(length, pool=ALPHANUMERIC):
-    """
-    Determines the entropy of the given sequence length and the pool.
-
-    :param length:
-            The length of the generated random sequence.
-    :param pool:
-            The pool of unique elements used to generate the sequence.
-    :returns:
-            The entropy (in bits) of the random sequence.
-    """
-    pool = set(pool)
-    entropy = length * (math.log(len(pool)) / LOG_OF_2)
-    return entropy
 
 
 def generate_random_sequence_strong(entropy=64, pool=ASCII_PRINTABLE,

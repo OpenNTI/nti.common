@@ -15,7 +15,7 @@ import unittest
 from nti.common.random import generate_random_bits
 from nti.common.random import generate_random_string
 from nti.common.random import generate_random_password
-
+from nti.common.random import generate_random_hex_string
 
 class TestRandom(unittest.TestCase):
 
@@ -27,3 +27,6 @@ class TestRandom(unittest.TestCase):
 
     def test_generate_random_string(self):
         assert_that(generate_random_string(15), has_length(15))
+    
+    def test_generate_random_hex_string(self):
+        assert_that(generate_random_hex_string(8), has_length(8))

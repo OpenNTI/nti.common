@@ -6,7 +6,7 @@ Taken from https://github.com/gorakhargosh/mom
 .. $Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
+from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
@@ -31,7 +31,7 @@ def byte(number):
     :returns:
             A single byte.
     """
-    return struct.pack(b"B", number)
+    return struct.pack("B", number)
 
 
 def bytes_leading(raw_bytes, needle=_compat.ZERO_BYTE):
@@ -108,18 +108,6 @@ def hex_(number, prefix="0x"):
     _ = number & 1
     hex_num = "%x" % number
     return prefix + hex_num.lower()
-
-
-def is_unicode(obj):
-    """
-    Determines whether the given value is a Unicode string.
-
-    :param obj:
-            The value to test.
-    :returns:
-            ``True`` if value is a Unicode string; ``False`` otherwise.
-    """
-    return isinstance(obj, _compat.UNICODE_TYPE)
 
 
 def is_bytes(obj):
@@ -235,8 +223,8 @@ def integer_bit_count(number):
     """
     # Licensed under the PSF License.
     # Taken from http://wiki.python.org/moin/BitManipulation
-    number = abs(number)
     count = 0
+    number = abs(number)
     while number:
         number &= number - 1
         count += 1

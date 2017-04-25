@@ -67,7 +67,7 @@ class TestIterables(unittest.TestCase):
         l = (5, 5)
         assert_that(to_list(l), is_([5, 5]))
         l = {5, 4}
-        assert_that(to_list(l), is_([4, 5]))
+        assert_that(sorted(to_list(l)), is_([4, 5]))
         l = 'ichigo'
         assert_that(to_list(l), is_(['ichigo']))
         l = [1, 2, 3]

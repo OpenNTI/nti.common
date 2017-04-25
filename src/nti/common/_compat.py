@@ -206,7 +206,10 @@ try:
     from gevent import Greenlet
     from gevent.queue import Queue
 except ImportError:
-    from Queue import Queue
+    try:
+        from Queue import Queue
+    except ImportError:
+        from asyncio import Queue
     try:
         from greenlet import greenlet as Greenlet
     except ImportError:

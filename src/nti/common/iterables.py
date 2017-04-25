@@ -7,7 +7,6 @@ Utilities for working with iterables/sequences.
 """
 
 from __future__ import print_function, absolute_import, division
-from __builtin__ import isinstance
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)

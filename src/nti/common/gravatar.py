@@ -9,8 +9,12 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import six
 import hashlib
-from urlparse import urlunparse
+try:
+    from urlparse import urlunparse
+except ImportError:
+    from urllib.parse import urlunparse
 
 _AVATAR_SERVICES = {
     'gravatar': {
@@ -50,6 +54,8 @@ def create_gravatar_url(username,
     :return: A gravatar URL for the given username. 
              See http://en.gravatar.com/site/implement/images/
     """
+    if isinstance(username, six.text_type):
+        username = username.encode("utf-8")
     md5str = hashlib.md5(username.lower()).hexdigest()
     scheme = 'https' if secure else 'http'
     netloc = _AVATAR_SERVICES[service][secure]

@@ -52,7 +52,7 @@ def isorted(iterable, comparator=None):
     """
     try:
         iterable = iter(iterable)
-        pivot = iterable.next()
+        pivot = next(iterable)
     except (TypeError, StopIteration):
         return
 

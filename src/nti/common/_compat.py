@@ -6,7 +6,7 @@ Deals with a lot of cross-version issues.
 .. $Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
+from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
@@ -14,7 +14,6 @@ logger = __import__('logging').getLogger(__name__)
 # Taken from https://github.com/gorakhargosh/mom
 
 import six
-import sys
 
 PY3 = six.PY3
 
@@ -22,7 +21,6 @@ text_type = six.text_type
 binary_type = six.binary_type
 class_types = six.class_types
 string_types = six.string_types
-integer_types = six.integer_types
 
 
 def bytes_(s, encoding='utf-8', errors='strict'):
@@ -34,24 +32,6 @@ def bytes_(s, encoding='utf-8', errors='strict'):
         return s.encode(encoding, errors)
     return s
 
-
-try:
-    INT_MAX = sys.maxsize
-except AttributeError:
-    INT_MAX = sys.maxint
-
-try:
-    LONG_TYPE = long
-except NameError:
-    LONG_TYPE = int
-
-try:
-    INT_TYPE = long
-except NameError:
-    INT_TYPE = int
-INTEGER_TYPES = six.integer_types
-
-BYTES_TYPE = six.binary_type
 
 try:
     UNICODE_TYPE = unicode

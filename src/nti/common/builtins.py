@@ -11,9 +11,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import six
 import struct
-
-from nti.common import _compat
 
 
 def byte(number):
@@ -34,107 +33,6 @@ def byte(number):
     return struct.pack("B", number)
 
 
-def bytes_leading(raw_bytes, needle=_compat.ZERO_BYTE):
-    """
-    Finds the number of prefixed byte occurrences in the haystack.
-
-    Useful when you want to deal with padding.
-
-    :param raw_bytes:
-            Raw bytes.
-    :param needle:
-            The byte to count. Default \000.
-    :returns:
-            The number of leading needle bytes.
-    """
-    if not is_bytes(raw_bytes):
-        raise TypeError("argument must be raw bytes: got %r" %
-                        type(raw_bytes).__name__)
-    leading = 0
-    # Indexing keeps compatibility between Python 2.x and Python 3.x
-    needle_byte = needle[0]
-    for raw_byte in raw_bytes:
-        if raw_byte == needle_byte:
-            leading += 1
-        else:
-            break
-    return leading
-
-
-def bin_(number, prefix="0b"):
-    """
-    Converts a long value to its binary representation.
-
-    :param number:
-            Long value.
-    :param prefix:
-            The prefix to use for the bitstring. Default "0b" to mimic Python
-            builtin ``bin()``.
-    :returns:
-            Bit string.
-    """
-    if number is None:
-        raise TypeError("'%r' object cannot be interpreted as an index" %
-                        type(number).__name__)
-    prefix = prefix or ""
-    if number < 0:
-        number = -number
-        prefix = "-" + prefix
-    bit_string = ""
-    while number > 1:
-        bit_string = str(number & 1) + bit_string
-        number >>= 1
-    bit_string = str(number) + bit_string
-    return prefix + bit_string
-
-
-def hex_(number, prefix="0x"):
-    """
-    Converts a integer value to its hexadecimal representation.
-
-    :param number:
-            Integer value.
-    :param prefix:
-            The prefix to use for the hexadecimal string. Default "0x" to mimic
-            ``hex()``.
-    :returns:
-            Hexadecimal string.
-    """
-    prefix = prefix or ""
-    if number < 0:
-        number = -number
-        prefix = "-" + prefix
-    # Make sure this is an int and not float.
-    _ = number & 1
-    hex_num = "%x" % number
-    return prefix + hex_num.lower()
-
-
-def is_bytes(obj):
-    """
-    Determines whether the given value is a bytes instance.
-
-    :param obj:
-            The value to test.
-    :returns:
-            ``True`` if value is a bytes instance; ``False`` otherwise.
-    """
-    return isinstance(obj, _compat.BYTES_TYPE)
-
-
-def is_bytes_or_unicode(obj):
-    """
-    Determines whether the given value is an instance of a string irrespective
-    of whether it is a byte string or a Unicode string.
-
-    :param obj:
-            The value to test.
-    :returns:
-            ``True`` if value is any type of string; ``False`` otherwise.
-    """
-    return isinstance(obj, _compat.BASESTRING_TYPE)
-
-
 def is_integer(obj):
     """
     Determines whether the object value is actually an integer and not a bool.
@@ -144,22 +42,7 @@ def is_integer(obj):
     :returns:
             ``True`` if yes; ``False`` otherwise.
     """
-    return isinstance(obj, _compat.INTEGER_TYPES) and not isinstance(obj, bool)
-
-
-def integer_byte_length(number):
-    """
-    Number of bytes needed to represent a integer excluding any prefix 0 bytes.
-
-    :param number:
-            Integer value. If num is 0, returns 0.
-    :returns:
-            The number of bytes in the integer.
-    """
-    quanta, remainder = divmod(integer_bit_length(number), 8)
-    if remainder:
-        quanta += 1
-    return quanta
+    return isinstance(obj, six.integer_types) and not isinstance(obj, bool)
 
 
 def integer_bit_length(number):
@@ -209,23 +92,3 @@ def integer_bit_size(number):
     if number == 0:
         return 1
     return integer_bit_length(number)
-
-
-def integer_bit_count(number):
-    """
-    Returns the number of set (1) bits in an unsigned integer.
-
-    :param number:
-            An integer. If this is a negative integer, its absolute
-            value will be considered.
-    :returns:
-            The number of set bits in an unsigned integer.
-    """
-    # Licensed under the PSF License.
-    # Taken from http://wiki.python.org/moin/BitManipulation
-    count = 0
-    number = abs(number)
-    while number:
-        number &= number - 1
-        count += 1
-    return count

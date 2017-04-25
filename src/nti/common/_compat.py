@@ -17,48 +17,13 @@ import six
 import sys
 import struct
 
-PY3 = sys.version_info[0] == 3
+PY3 = six.PY3
 
 text_type = six.text_type
 binary_type = six.binary_type
 class_types = six.class_types
 string_types = six.string_types
 integer_types = six.integer_types
-
-
-if PY3:  # pragma: no cover
-    def _unicode(s): return str(s)
-else:
-    _unicode = unicode
-
-
-def unicode_(s, encoding='utf-8', err='strict'):
-    """
-    Decode a byte sequence and unicode result
-    """
-    s = s.decode(encoding, err) if isinstance(s, bytes) else s
-    return _unicode(s) if s is not None else None
-safestr = to_unicode = unicode_  # BWC
-
-
-if PY3:  # pragma: no cover
-    def native_(s, encoding='latin-1', errors='strict'):
-        """
-        If ``s`` is an instance of ``text_type``, return
-        ``s``, otherwise return ``str(s, encoding, errors)``
-        """
-        if isinstance(s, text_type):
-            return s
-        return str(s, encoding, errors)
-else:
-    def native_(s, encoding='latin-1', errors='strict'):
-        """
-        If ``s`` is an instance of ``text_type``, return
-        ``s.encode(encoding, errors)``, otherwise return ``str(s)``
-        """
-        if isinstance(s, text_type):
-            return s.encode(encoding, errors)
-        return str(s)
 
 try:
     INT_MAX = sys.maxsize
@@ -150,31 +115,6 @@ DIGIT_ZERO_BYTE = byte_literal("0")
 FORWARD_SLASH_BYTE = byte_literal("/")
 HAVE_LITTLE_ENDIAN = bool(struct.pack(b"h", 1) == "\x01\x00")
 
-if getattr(dict, "iteritems", None):
-    def dict_each(func, iterable):
-        """
-        Portably iterate through a dictionary's items.
-
-        :param func:
-                The function that will receive two arguments: key, value.
-        :param iterable:
-                The dictionary iterable.
-        """
-        for key, value in iterable.iteritems():
-            func(key, value)
-else:
-    def dict_each(func, iterable):
-        """
-        Portably iterate through a dictionary's items.
-
-        :param func:
-                The function that will receive two arguments: key, value.
-        :param iterable:
-                The dictionary iterable.
-        """
-        for key, value in iterable.items():
-            func(key, value)
-
 
 def get_word_alignment(num, force_arch=64, _machine_word_size=MACHINE_WORD_SIZE):
     """
@@ -210,7 +150,26 @@ def get_word_alignment(num, force_arch=64, _machine_word_size=MACHINE_WORD_SIZE)
 
 word_alignment = get_word_alignment
 
-# python3/pypy compatibility shims.
+
+# Deprecations
+
+
+import zope.deferredimport
+zope.deferredimport.initialize()
+
+zope.deferredimport.deprecated(
+    "Import from nti.base._compat instead",
+    safestr='nti.base._compat:text_',
+    unicode_='nti.base._compat:text_',
+    to_unicode='nti.base._compat:text_',)
+
+zope.deferredimport.deprecated(
+    "Import from nti.base._compat instead",
+    native_='nti.base._compat:native_',)
+
+
+# BWC
+
 
 from zope import interface
 

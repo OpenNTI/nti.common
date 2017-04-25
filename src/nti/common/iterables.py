@@ -94,7 +94,7 @@ def flatten(iterable, ignore=None):
     stack = [iter(iterable)]
     while stack:
         try:
-            item = stack[-1].next()
+            item = next(stack[-1])
             if ignore and isinstance(item, ignore):
                 yield item
             elif    (isinstance(item, string_types) or isinstance(item, binary_type)) \

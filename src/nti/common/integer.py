@@ -23,7 +23,7 @@ def bytes_to_uint(raw_bytes):
             Unsigned integer.
     """
     if not isinstance(raw_bytes, str):
-        raise ValueError("raw_bytes must be native string: got %r" %
+        raise TypeError("raw_bytes must be native string: got %r" %
                         type(raw_bytes).__name__)
     # binascii.b2a_hex is written in C as is int.
     return int(binascii.b2a_hex(raw_bytes), 16)

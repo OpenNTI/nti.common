@@ -28,8 +28,8 @@ def sha1_digest(*inputs):
     hash_func = hashlib.sha1()
     for i in inputs:
         if not isinstance(i, str):
-            raise ValueError("input must be native string: got %r" %
-                              type(i).__name__)
+            raise TypeError("input must be native string: got %r" %
+                            type(i).__name__)
         hash_func.update(i)
     return hash_func.digest()
 
@@ -72,8 +72,8 @@ def md5_digest(*inputs):
     hash_func = hashlib.md5()
     for i in inputs:
         if not isinstance(i, str):
-            raise ValueError("input must be native string: got %r" %
-                              type(i).__name__)
+            raise TypeError("input must be native string: got %r" %
+                            type(i).__name__)
         hash_func.update(i)
     return hash_func.digest()
 
@@ -116,8 +116,8 @@ def hmac_sha1_digest(key, data):
             HMAC SHA-1 Digest.
     """
     if not isinstance(data, str):
-        raise ValueError("data must be native string: got %r" %
-                          type(data).__name__)
+        raise TypeError("data must be native string: got %r" %
+                        type(data).__name__)
     return hmac.new(key, data, hashlib.sha1).digest()
 
 

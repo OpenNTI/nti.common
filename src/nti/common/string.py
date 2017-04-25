@@ -49,13 +49,12 @@ def is_false(t):
 import zope.deferredimport
 zope.deferredimport.initialize()
 
-zope.deferredimport.deprecatedFrom(
-    "Moved to nti.common._compat",
-    "nti.common._compat",
-    "safestr",
-    "unicode_",
-    "to_unicode",
-)
+zope.deferredimport.deprecated(
+    "Import from nti.base._compat instead",
+    safestr='nti.base._compat:text_',
+    unicode_='nti.base._compat:text_',
+    to_unicode='nti.base._compat:text_',)
+
 
 zope.deferredimport.deprecatedFrom(
     "Moved to nti.common.emoji",

@@ -49,7 +49,7 @@ def generate_random_bits(n_bits, rand_func=generate_random_bytes):
     For example::
 
             f(x) -> y such that
-            f(16) ->		   1111 1111 1111 1111; bytes_to_integer(y) => 65535L
+            f(16) ->           1111 1111 1111 1111; bytes_to_integer(y) => 65535L
             f(17) -> 0000 0001 1111 1111 1111 1111; bytes_to_integer(y) => 131071L
 
     :param n_bits: Number of random bits.
@@ -172,7 +172,7 @@ def random_shuffle(sequence, rand_func=generate_random_bytes):
     copy = list(sequence)
     # Choose a random item (without replacement) until all the items have been
     # chosen.
-    for i in xrange(len(sequence)):
+    for i in range(len(sequence)):
         random_uint = generate_random_uint_between(0, len(copy), rand_func)
         sequence[i] = copy[random_uint]
         del copy[random_uint]
@@ -221,19 +221,19 @@ def generate_random_string(length=10, pool=ALPHANUMERIC,
     Entropy chart::
 
             -----------------------------------------------------------------
-            Symbol set			  Symbol Count (N)  Entropy per symbol (H)
+            Symbol set              Symbol Count (N)  Entropy per symbol (H)
             -----------------------------------------------------------------
-            HEXADECIMAL_DIGITS	  16				4.0000 bits
-            DIGITS				  10				3.3219 bits
-            LOWERCASE_ALPHA		 26				4.7004 bits
-            UPPERCASE_ALPHA		 26				4.7004 bits
-            PUNCTUATION			 32				5.0000 bits
-            LOWERCASE_ALPHANUMERIC  36				5.1699 bits
-            UPPERCASE_ALPHANUMERIC  36				5.1699 bits
-            ALPHA				   52				5.7004 bits
-            ALPHANUMERIC			62				5.9542 bits
-            ASCII_PRINTABLE		 94				6.5546 bits
-            ALL_PRINTABLE		   100			   6.6438 bits
+            HEXADECIMAL_DIGITS        16              4.0000 bits
+            DIGITS                    10              3.3219 bits
+            LOWERCASE_ALPHA           26              4.7004 bits
+            UPPERCASE_ALPHA           26              4.7004 bits
+            PUNCTUATION               32              5.0000 bits
+            LOWERCASE_ALPHANUMERIC    36              5.1699 bits
+            UPPERCASE_ALPHANUMERIC    36              5.1699 bits
+            ALPHA                     52              5.7004 bits
+            ALPHANUMERIC              62              5.9542 bits
+            ASCII_PRINTABLE           94              6.5546 bits
+            ALL_PRINTABLE             100             6.6438 bits
 
     :param length:
             The length of the random sequence.

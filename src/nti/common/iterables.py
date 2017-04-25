@@ -18,7 +18,10 @@ from collections import Iterable
 
 from itertools import tee
 from itertools import islice
-from itertools import ifilter
+try:
+    from itertools import ifilter as filter
+except ImportError:
+    pass
 
 
 class IterableWrapper(object):
@@ -56,10 +59,10 @@ def isorted(iterable, comparator=None):
     comparator = comparator if comparator else lambda x, y: x < y
 
     a, b = tee(iterable)
-    for x in isorted(ifilter(lambda x: comparator(x, pivot), a), comparator):
+    for x in isorted(filter(lambda x: comparator(x, pivot), a), comparator):
         yield x
     yield pivot
-    for x in isorted(ifilter(lambda x: not comparator(x, pivot), b), comparator):
+    for x in isorted(filter(lambda x: not comparator(x, pivot), b), comparator):
         yield x
 
 

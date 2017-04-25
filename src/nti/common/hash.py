@@ -9,6 +9,7 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import six
 import hmac
 import hashlib
 
@@ -27,7 +28,7 @@ def sha1_digest(*inputs):
     """
     hash_func = hashlib.sha1()
     for i in inputs:
-        if not isinstance(i, str):
+        if not isinstance(i, six.binary_type):
             raise TypeError("input must be native string: got %r" %
                             type(i).__name__)
         hash_func.update(i)
@@ -71,7 +72,7 @@ def md5_digest(*inputs):
     """
     hash_func = hashlib.md5()
     for i in inputs:
-        if not isinstance(i, str):
+        if not isinstance(i, six.binary_type):
             raise TypeError("input must be native string: got %r" %
                             type(i).__name__)
         hash_func.update(i)
@@ -115,7 +116,7 @@ def hmac_sha1_digest(key, data):
     :returns:
             HMAC SHA-1 Digest.
     """
-    if not isinstance(data, str):
+    if not isinstance(data, six.binary_type):
         raise TypeError("data must be native string: got %r" %
                         type(data).__name__)
     return hmac.new(key, data, hashlib.sha1).digest()

@@ -9,6 +9,7 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import six
 import binascii
 
 
@@ -22,7 +23,7 @@ def bytes_to_uint(raw_bytes):
     :returns:
             Unsigned integer.
     """
-    if not isinstance(raw_bytes, str):
+    if not isinstance(raw_bytes, six.binary_type):
         raise TypeError("raw_bytes must be native string: got %r" %
                         type(raw_bytes).__name__)
     # binascii.b2a_hex is written in C as is int.

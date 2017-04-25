@@ -11,16 +11,7 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-# Taken from https://github.com/gorakhargosh/mom
-
 import six
-
-PY3 = six.PY3
-
-text_type = six.text_type
-binary_type = six.binary_type
-class_types = six.class_types
-string_types = six.string_types
 
 
 def bytes_(s, encoding='utf-8', errors='strict'):
@@ -28,7 +19,7 @@ def bytes_(s, encoding='utf-8', errors='strict'):
     If ``s`` is an instance of ``text_type``, return
     ``s.encode(encoding, errors)``, otherwise return ``s``
     """
-    if isinstance(s, text_type):
+    if isinstance(s, six.text_type):
         return s.encode(encoding, errors)
     return s
 

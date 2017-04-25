@@ -40,29 +40,6 @@ try:
 except AttributeError:
     INT_MAX = sys.maxint
 
-INT64_MAX = six.MAXSIZE
-INT32_MAX = (1 << 31) - 1
-INT16_MAX = (1 << 15) - 1
-UINT128_MAX = (1 << 128) - 1
-
-UINT8_MAX = 0xff
-UINT16_MAX = 0xffff  # ((1 << 16) - 1)
-UINT32_MAX = 0xffffffff  # ((1 << 32) - 1)
-UINT64_MAX = 0xffffffffffffffff  # ((1 << 64) - 1)
-
-# Determine the word size of the processor.
-if INT_MAX == INT64_MAX:
-    # 64-bit processor.
-    MACHINE_WORD_SIZE = 64
-    UINT_MAX = UINT64_MAX
-elif INT_MAX == INT32_MAX:
-    # 32-bit processor.
-    MACHINE_WORD_SIZE = 32
-    UINT_MAX = UINT32_MAX
-else:
-    MACHINE_WORD_SIZE = 64
-    UINT_MAX = UINT64_MAX
-
 try:
     LONG_TYPE = long
 except NameError:

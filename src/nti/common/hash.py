@@ -9,7 +9,6 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
-import six
 import hmac
 import hashlib
 
@@ -112,10 +111,7 @@ def hmac_sha1_digest(key, data):
     :returns:
             HMAC SHA-1 Digest.
     """
-    if not isinstance(data, six.binary_type):
-        raise TypeError("data must be native string: got %r" %
-                        type(data).__name__)
-    return hmac.new(key, data, hashlib.sha1).digest()
+    return hmac.new(key, bytes_(data), hashlib.sha1).digest()
 
 
 def hmac_sha1_base64_digest(key, data):

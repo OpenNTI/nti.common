@@ -9,6 +9,8 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+from nameparser import HumanName
+
 from nameparser.config import prefixes
 from nameparser.config import suffixes
 from nameparser.config import Constants
@@ -34,10 +36,19 @@ def all_prefixes():
     return prefixes.PREFIXES
 
 
-def constants(prefixes=(), extra_suffixes=()):
+def constants(prefixes=(), extra_suffixes=(), emoji=False):
     not_acronyms = suffix_not_acronyms()
     acronyms = suffix_acronyms() | set(extra_suffixes)
     constants = Constants(prefixes=prefixes,
                           suffix_acronyms=acronyms,
                           suffix_not_acronyms=not_acronyms)
+    try:
+        constants.regexes.emoji = emoji
+    except AttributeError:
+        pass
     return constants
+
+
+def human_name(realname, prefixes=(), extra_suffixes=(), emoji=False):
+    return HumanName(realname, 
+                     constants=constants(prefixes, extra_suffixes, emoji=emoji))

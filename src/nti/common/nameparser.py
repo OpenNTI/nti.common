@@ -49,6 +49,6 @@ def constants(prefixes=(), extra_suffixes=(), emoji=False):
     return constants
 
 
-def human_name(realname, prefixes=(), extra_suffixes=(), emoji=False):
-    return HumanName(realname, 
-                     constants=constants(prefixes, extra_suffixes, emoji=emoji))
+def human_name(realname, prefixes=(), extra_suffixes=(), remove_emoji=False):
+    return HumanName(realname,
+                     constants=constants(prefixes, extra_suffixes, emoji=remove_emoji))

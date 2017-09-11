@@ -33,11 +33,11 @@ class IRegisterAWSKey(interface.Interface):
     name = fields.TextLine(title=u"key name", required=False)
     bucket_name = fields.TextLine(title=u"Bucket name", required=False)
     purpose = fields.TextLine(title=u"Key purpose", required=True)
-    access_key_id = fields.TextLine(title=u"Bucket name", required=True)
-    secret_access_key = fields.TextLine(title=u"Bucket name", required=True)
+    access_key = fields.TextLine(title=u"Access key", required=True)
+    secret_key = fields.TextLine(title=u"Secret key", required=True)
 
 
-def registerAWSKey(_context, access_key_id, secret_access_key, purpose, 
+def registerAWSKey(_context, access_key, secret_key, purpose, 
                    bucket_name=None, name=''):
     """
     Register an aws key
@@ -47,6 +47,6 @@ def registerAWSKey(_context, access_key_id, secret_access_key, purpose,
     factory = functools.partial(AWSKey, 
                                 Bucket=bucket_name,
                                 Purpose=text_(purpose),
-                                PublicAccessKey=text_(access_key_id), 
-                                SecretAccessKey=text_(secret_access_key))
+                                PublicAccessKey=text_(access_key), 
+                                SecretAccessKey=text_(secret_key))
     utility(_context, provides=IAWSKey, factory=factory, name=name)

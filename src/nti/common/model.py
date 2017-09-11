@@ -31,5 +31,5 @@ class AWSKey(SchemaConfigured):
 
     purpose = alias('Purpose')
     bucket_name = alias('Bucket')
-    access_key_id = alias('PublicAccessKey')
-    secret_access_key = alias('SecretAccessKey')
+    access_key = alias('PublicAccessKey')
+    secret_key = alias('SecretAccessKey')

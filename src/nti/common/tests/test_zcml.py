@@ -34,8 +34,8 @@ KEY_ZCML_STRING = u"""
 	<aws:registerAWSKey
 		purpose="S3"
 		bucket_name="nti-dataserver-dev"
-		access_key_id="AKIAIYVGOCPVO6AQRILQ"
-		secret_access_key="aws_s3_secret_access_key" />
+		access_key="AKIAIYVGOCPVO6AQRILQ"
+		secret_key="aws_s3_secret_access_key" />
 </configure>
 """
 

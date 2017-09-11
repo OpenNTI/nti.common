@@ -46,7 +46,7 @@ def registerAWSKey(_context, access_key, secret_key, purpose,
     bucket_name = text_(bucket_name) if bucket_name else bucket_name
     factory = functools.partial(AWSKey, 
                                 Grant=grant,
-                                Bucket=bucket_name,
+                                BucketName=bucket_name,
                                 Purpose=text_(purpose),
                                 PublicAccessKey=text_(access_key), 
                                 SecretAccessKey=text_(secret_key))

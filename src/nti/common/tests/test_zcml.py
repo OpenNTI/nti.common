@@ -53,7 +53,7 @@ class TestZcml(nti.testing.base.ConfiguringTestBase):
 		assert_that(awskey, 
 					has_property('Grant', "private-read-write"))
 		assert_that(awskey, 
-					has_property('Bucket', "nti-dataserver-dev"))
+					has_property('BucketName', "nti-dataserver-dev"))
 		assert_that(awskey, 
 					has_property('PublicAccessKey', "AKIAIYVGOCPVO6AQRILQ"))
 		assert_that(awskey, 

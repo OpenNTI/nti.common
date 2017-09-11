@@ -14,7 +14,7 @@ from nti.schema.field import TextLine as ValidTextLine
 
 class IAWSKey(interface.Interface):
     Grant = ValidTextLine(title=u"Grant type", required=False)
-    Bucket = ValidTextLine(title=u"Bucket name", required=False)
     Purpose = ValidTextLine(title=u"Key Purpose", required=True)
+    BucketName = ValidTextLine(title=u"Bucket name", required=False)
     PublicAccessKey = ValidTextLine(title=u"Public Access Key", required=True)
     SecretAccessKey = ValidTextLine(title=u"Secret access Key", required=True)

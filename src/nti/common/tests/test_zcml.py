@@ -33,6 +33,7 @@ KEY_ZCML_STRING = u"""
 
 	<aws:registerAWSKey
 		purpose="S3"
+		grant="private-read-write"
 		bucket_name="nti-dataserver-dev"
 		access_key="AKIAIYVGOCPVO6AQRILQ"
 		secret_key="aws_s3_secret_access_key" />
@@ -42,13 +43,15 @@ KEY_ZCML_STRING = u"""
 
 class TestZcml(nti.testing.base.ConfiguringTestBase):
 
-	def test_awd_registration(self):
+	def test_aws_registration(self):
 		self.configure_string(KEY_ZCML_STRING)
-		awskey = component.queryUtility(IAWSKey)
+		awskey = component.queryUtility(IAWSKey, "S3")
 		assert_that(awskey, is_not(none()))
 		assert_that(awskey, verifiably_provides(IAWSKey))
 		assert_that(awskey, 
 					has_property('Purpose', "S3"))
+		assert_that(awskey, 
+					has_property('Grant', "private-read-write"))
 		assert_that(awskey, 
 					has_property('Bucket', "nti-dataserver-dev"))
 		assert_that(awskey, 

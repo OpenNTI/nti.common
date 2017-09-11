@@ -30,7 +30,7 @@ class IRegisterAWSKey(interface.Interface):
     """
     The arguments needed for registering an AWS key
     """
-    name = fields.TextLine(title=u"key name", required=False)
+    grant = fields.TextLine(title=u"rant type", required=False)
     bucket_name = fields.TextLine(title=u"Bucket name", required=False)
     purpose = fields.TextLine(title=u"Key purpose", required=True)
     access_key = fields.TextLine(title=u"Access key", required=True)
@@ -38,15 +38,16 @@ class IRegisterAWSKey(interface.Interface):
 
 
 def registerAWSKey(_context, access_key, secret_key, purpose, 
-                   bucket_name=None, name=''):
+                   bucket_name=None, grant=None):
     """
     Register an aws key
     """
-    name = name or ''
+    grant = text_(grant or 'public-read-write')
     bucket_name = text_(bucket_name) if bucket_name else bucket_name
     factory = functools.partial(AWSKey, 
+                                Grant=grant,
                                 Bucket=bucket_name,
                                 Purpose=text_(purpose),
                                 PublicAccessKey=text_(access_key), 
                                 SecretAccessKey=text_(secret_key))
-    utility(_context, provides=IAWSKey, factory=factory, name=name)
+    utility(_context, provides=IAWSKey, factory=factory, name=purpose)

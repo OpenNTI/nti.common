@@ -29,6 +29,7 @@ from nti.schema.schema import SchemaConfigured
 class AWSKey(SchemaConfigured):
     createDirectFieldProperties(IAWSKey)
 
+    grant = alias('Grant')
     purpose = alias('Purpose')
     bucket_name = alias('Bucket')
     access_key = alias('PublicAccessKey')

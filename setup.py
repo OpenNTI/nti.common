@@ -8,6 +8,8 @@ entry_points = {
 
 TESTS_REQUIRE = [
     'nti.testing',
+    'z3c.baseregistry',
+    'zope.dottedname',
     'zope.testrunner',
 ]
 
@@ -37,6 +39,7 @@ setup(
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
+    url="https://github.com/NextThought/nti.common",
     zip_safe=True,
     packages=find_packages('src'),
     package_dir={'': 'src'},
@@ -47,11 +50,15 @@ setup(
 		'setuptools',
 		'emoji',
 		'nameparser',
+        'nti.property',
+        'nti.schema',
 		'six',
+        'zope.component',
+        'zope.configuration',
 		'zope.deprecation',
 		'zope.deferredimport',
 		'zope.dottedname',
-		'zope.interface'
+		'zope.interface',
     ],
     extras_require={
         'test': TESTS_REQUIRE,

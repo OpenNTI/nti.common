@@ -10,7 +10,7 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 
-def choose(n, k, *args):
+def choose(n, k, *unused_args):
     """
     A fast way to calculate binomial coefficients.
     """
@@ -26,7 +26,7 @@ def choose(n, k, *args):
         return 0
 
 
-def combinations(N, k, *args):
+def combinations(N, k, *unused_args):
     """
     The number of combinations of N things taken k at a time
     """

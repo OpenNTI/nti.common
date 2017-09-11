@@ -4,7 +4,7 @@
 .. $Id$
 """
 
-from __future__ import print_function, unicode_literals, absolute_import, division
+from __future__ import print_function, absolute_import, division
 __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
@@ -12,13 +12,13 @@ logger = __import__('logging').getLogger(__name__)
 resource_filename = __import__('pkg_resources').resource_filename
 
 #: Digit chars
-DIGITS = "0123456789"
+DIGITS = u"0123456789"
 
 #: ASCII uppercase chars
-ASCII_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+ASCII_UPPERCASE = u"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 #: ASCII lowercase chars
-ASCII_LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+ASCII_LOWERCASE = u"abcdefghijklmnopqrstuvwxyz"
 
 #: ASCII letter chars
 ASCII_LETTERS = ASCII_LOWERCASE + ASCII_UPPERCASE
@@ -27,7 +27,7 @@ ASCII_LETTERS = ASCII_LOWERCASE + ASCII_UPPERCASE
 WHITESPACE = u"\t\n\x0b\x0c\r "
 
 #: Regular punk chars
-PUNCTUATION = """!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~"""
+PUNCTUATION = u"""!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~"""
 
 #: True values chars
 TRUE_VALUES = ('1', 'y', 'yes', 't', 'true', 'on')

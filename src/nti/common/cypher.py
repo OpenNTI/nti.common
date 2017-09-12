@@ -9,8 +9,27 @@ __docformat__ = "restructuredtext en"
 
 logger = __import__('logging').getLogger(__name__)
 
+import six
 import base64
 from itertools import cycle
+
+from nti.common._compat import text_
+from nti.common._compat import bytes_
+
+if six.PY3:
+    def _ord(x): return x
+    def _convert(x): return bytes_(x)
+else:
+    _ord = ord
+    def _convert(x): return x
+
+
+def is_base64(s):
+    try:
+        return text_(base64.b64encode(_convert(base64.b64decode(s)))) == text_(s)
+    except Exception:
+        pass
+    return False
 
 
 def _XOR(text, key):
@@ -20,11 +39,12 @@ def _XOR(text, key):
     security matters.
     """
     result = []
-    key = cycle(key)
-    for t in text:
-        t = chr(ord(t) ^ ord(next(key)))
+    key = cycle(_convert(key))
+    for t in _convert(text):
+        t = chr(_ord(t) ^ _ord(next(key)))
         result.append(t)
-    return u''.join(result)
+    result = u''.join(result)
+    return result
 
 
 DEFAULT_PASSPHRASE = base64.b64decode('TjN4dFRoMHVnaHQhIUM=')
@@ -36,7 +56,7 @@ def make_ciphertext(plaintext, passphrase=DEFAULT_PASSPHRASE):
     and then base64 encode a sequence of bytes.
     """
     encoded = _XOR(plaintext, passphrase)
-    result = base64.b64encode(encoded)
+    result = base64.b64encode(_convert(encoded))
     return result
 
 

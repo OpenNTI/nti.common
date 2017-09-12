@@ -13,6 +13,7 @@ from hamcrest import assert_that
 
 import unittest
 
+from nti.common.cypher import is_base64
 from nti.common.cypher import get_plaintext
 from nti.common.cypher import make_ciphertext
 
@@ -25,3 +26,8 @@ class TestCypher(unittest.TestCase):
         assert_that(ciphertext, is_not(text))
         plaintext = get_plaintext(ciphertext)
         assert_that(plaintext, is_(text))
+
+    def test_isb64(self):
+        text = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()'
+        assert_that(is_base64(text), is_(False))
+        assert_that(is_base64('TjN4dFRoMHVnaHQhIUM='), is_(True))

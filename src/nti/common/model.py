@@ -15,6 +15,7 @@ from zope import interface
 
 from nti.common._compat import text_
 
+from nti.common.cypher import is_base64
 from nti.common.cypher import get_plaintext
 
 from nti.common.interfaces import ILDAP
@@ -41,14 +42,6 @@ class AWSKey(SchemaConfigured):
     access_key = alias('PublicAccessKey')
     secret_key = alias('SecretAccessKey')
 
-    def __setattr__(self, name, value):
-        if name in ("secret_key", "SecretAccessKey"):
-            try:
-                value = text_(get_plaintext(value))
-            except (TypeError, StandardError):
-                pass
-        return SchemaConfigured.__setattr__(self, name, value)
-
 
 @EqHash('ID')
 @interface.implementer(ILDAP)
@@ -64,8 +57,9 @@ class LDAP(SchemaConfigured):
     def __setattr__(self, name, value):
         if name in ("Password", "password"):
             try:
-                value = text_(get_plaintext(value))
-            except (TypeError, StandardError):
+                if is_base64(value):
+                    value = text_(get_plaintext(value))
+            except Exception:
                 pass
         return SchemaConfigured.__setattr__(self, name, value)
 
@@ -84,7 +78,8 @@ class OAuthKeys(SchemaConfigured):
     def __setattr__(self, name, value):
         if name in ("apiKey", "APIKey", "secretKey", "SecretKey", 'id'):
             try:
-                value = text_(get_plaintext(value))
-            except (TypeError, StandardError):
+                if is_base64(value):
+                    value = text_(get_plaintext(value))
+            except Exception:
                 pass
         return SchemaConfigured.__setattr__(self, name, value)

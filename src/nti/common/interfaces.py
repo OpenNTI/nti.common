@@ -18,3 +18,17 @@ class IAWSKey(interface.Interface):
     BucketName = ValidTextLine(title=u"Bucket name", required=False)
     PublicAccessKey = ValidTextLine(title=u"Public Access Key", required=True)
     SecretAccessKey = ValidTextLine(title=u"Secret access Key", required=True)
+
+
+class ILDAP(interface.Interface):
+    ID = ValidTextLine(title=u"LDAP identifier", required=True)
+    URL = ValidTextLine(title=u"LDAP URL", required=True)
+    Username = ValidTextLine(title=u"Bind username", required=True)
+    Password = ValidTextLine(title=u"Bind password flag", required=True)
+    BaseDN = ValidTextLine(title=u"Base DN", required=False)
+    BackupURL = ValidTextLine(title=u"Backup LDAP URL", required=False)
+
+
+class IOAuthKeys(interface.Interface):
+    APIKey = ValidTextLine(title=u"API Key", required=True)
+    SecretKey = ValidTextLine(title=u"Secret Key", required=True)

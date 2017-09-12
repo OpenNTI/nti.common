@@ -20,7 +20,7 @@ from nti.common.interfaces import IAWSKey
 
 import nti.testing.base
 
-KEY_ZCML_STRING = u"""
+AWS_ZCML_STRING = u"""
 <configure xmlns="http://namespaces.zope.org/zope"
 	xmlns:zcml="http://namespaces.zope.org/zcml"
 	xmlns:aws="http://nextthought.com/ntp/aws"
@@ -44,7 +44,7 @@ KEY_ZCML_STRING = u"""
 class TestZcml(nti.testing.base.ConfiguringTestBase):
 
 	def test_aws_registration(self):
-		self.configure_string(KEY_ZCML_STRING)
+		self.configure_string(AWS_ZCML_STRING)
 		awskey = component.queryUtility(IAWSKey, "S3")
 		assert_that(awskey, is_not(none()))
 		assert_that(awskey, verifiably_provides(IAWSKey))

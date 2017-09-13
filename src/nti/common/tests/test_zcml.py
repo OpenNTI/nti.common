@@ -61,8 +61,8 @@ LDAP_ZCML_STRING = HEAD_ZCML_STRING + u"""
 
 OAUTHKEYS_ZCML_STRING = HEAD_ZCML_STRING + u"""
 	<oauth:registerOAuthKeys
-		apiKey="abcd1234"
-		secretKey="efgh5678" />
+		apiKey="abcd12345"
+		secretKey="efgh56789" />
 </configure>
 """
 
@@ -101,5 +101,5 @@ class TestZcml(nti.testing.base.ConfiguringTestBase):
         self.configure_string(OAUTHKEYS_ZCML_STRING)
         keys = component.getUtility(IOAuthKeys)
         assert_that(keys, verifiably_provides(IOAuthKeys))
-        assert_that(keys, has_property('APIKey', "abcd1234"))
-        assert_that(keys, has_property('SecretKey', "efgh5678"))
+        assert_that(keys, has_property('APIKey', "abcd12345"))
+        assert_that(keys, has_property('SecretKey', "efgh56789"))

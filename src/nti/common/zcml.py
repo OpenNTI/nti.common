@@ -12,8 +12,12 @@ __docformat__ = "restructuredtext en"
 logger = __import__('logging').getLogger(__name__)
 
 import base64
-import urllib
 import functools
+
+try:
+    from urllib import unquote
+except ImportError:
+    from urllib.parse import unquote
 
 from zope import schema
 from zope import interface
@@ -84,7 +88,7 @@ def registerLDAP(_context, url, username, password, baseDN=None,
     """
     encoding = encoding or ''
     if encoding.lower() == URL_QUOTE:
-        password = urllib.unquote(password)
+        password = unquote(password)
     elif encoding.lower() == BASE_64:
         password = base64.decodestring(password)
 
@@ -112,5 +116,5 @@ def registerOAuthKeys(_context, apiKey, secretKey, **kwargs):
     name = kwargs.get('name') or kwargs.get('id') or ''
     factory = functools.partial(OAuthKeys,
                                 APIKey=text_(apiKey),
-                                SecretKey=secretKey)
+                                SecretKey=text_(secretKey))
     utility(_context, provides=IOAuthKeys, factory=factory, name=name)

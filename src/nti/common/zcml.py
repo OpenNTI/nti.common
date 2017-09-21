@@ -6,10 +6,9 @@ Directives to be used in ZCML: registering static keys.
 .. $Id$
 """
 
-from __future__ import print_function, absolute_import, division
-__docformat__ = "restructuredtext en"
-
-logger = __import__('logging').getLogger(__name__)
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 import base64
 import functools
@@ -39,6 +38,8 @@ from nti.common.model import OAuthKeys
 BASE_64 = 'base64'
 URL_QUOTE = 'urlquote'
 PASSWORD_ENCODING = (URL_QUOTE, BASE_64)
+
+logger = __import__('logging').getLogger(__name__)
 
 
 class IRegisterAWSKey(interface.Interface):

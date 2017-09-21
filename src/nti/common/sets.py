@@ -6,8 +6,9 @@ Utilities for working with sets.
 .. $Id$
 """
 
-from __future__ import print_function, absolute_import, division
-__docformat__ = "restructuredtext en"
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 logger = __import__('logging').getLogger(__name__)
 
@@ -30,6 +31,7 @@ def discard(the_set, the_value):
             the_set.remove(the_value)  # BTrees..[Tree]Set. Also, python list
         except (KeyError, ValueError):
             pass
+    return the_set
 
 
 def discard_p(the_set, the_value):

@@ -4,10 +4,11 @@
 .. $Id$
 """
 
-from __future__ import print_function, absolute_import, division
-__docformat__ = "restructuredtext en"
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
-logger = __import__('logging').getLogger(__name__)
+import zope.deferredimport
 
 resource_filename = __import__('pkg_resources').resource_filename
 
@@ -35,6 +36,8 @@ TRUE_VALUES = ('1', 'y', 'yes', 't', 'true', 'on')
 #: False values chars
 FALSE_VALUES = ('0', 'n', 'no', 'f', 'false', 'off')
 
+logger = __import__('logging').getLogger(__name__)
+
 
 def is_true(t):
     result = bool(t and str(t).lower() in TRUE_VALUES)
@@ -46,7 +49,6 @@ def is_false(t):
     return result
 
 
-import zope.deferredimport
 zope.deferredimport.initialize()
 
 zope.deferredimport.deprecated(

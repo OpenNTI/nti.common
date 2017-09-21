@@ -4,10 +4,9 @@
 .. $Id$
 """
 
-from __future__ import print_function, absolute_import, division
-__docformat__ = "restructuredtext en"
-
-logger = __import__('logging').getLogger(__name__)
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 import hmac
 import hashlib
@@ -16,6 +15,8 @@ from nti.common._compat import bytes_
 
 from nti.common.codec import hex_encode
 from nti.common.codec import base64_encode
+
+logger = __import__('logging').getLogger(__name__)
 
 
 def sha1_digest(*inputs):

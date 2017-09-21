@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
-SPHINXPROJ    = nticommon
+SPHINXPROJ    = nticommon 
 SOURCEDIR     = .
 BUILDDIR      = _build
 

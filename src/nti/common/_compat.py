@@ -12,14 +12,8 @@ from __future__ import absolute_import
 
 import six
 
-import zope.deferredimport
-
 from zope import interface
-
-if six.PY3:  # pragma: no cover
-    def _unicode(s): return str(s)
-else:
-    _unicode = unicode
+from zope import deferredimport
 
 
 def text_(s, encoding='utf-8', err='strict'):
@@ -27,7 +21,7 @@ def text_(s, encoding='utf-8', err='strict'):
     Decode a byte sequence and unicode result
     """
     s = s.decode(encoding, err) if isinstance(s, bytes) else s
-    return _unicode(s) if s is not None else None
+    return six.text_type(s) if s is not None else None
 
 
 def bytes_(s, encoding='utf-8', errors='strict'):
@@ -40,41 +34,8 @@ def bytes_(s, encoding='utf-8', errors='strict'):
     return s
 
 
-try:
-    UNICODE_TYPE = unicode
-    BASESTRING_TYPE = basestring
-except NameError:
-    UNICODE_TYPE = str
-    BASESTRING_TYPE = (str, bytes)
-
-# Fake byte literals for python2.5
-if str is UNICODE_TYPE:
-    def byte_literal(literal):
-        return literal.encode("latin1")
-else:
-    def byte_literal(literal):
-        return literal
-
-ZERO_BYTE = byte_literal("\x00")
-DIGIT_ZERO_BYTE = byte_literal("0")
-
-
-# Deprecations
-
-zope.deferredimport.initialize()
-
-zope.deferredimport.deprecated(
-    "Import from nti.base._compat instead",
-    safestr='nti.base._compat:text_',
-    unicode_='nti.base._compat:text_',
-    to_unicode='nti.base._compat:text_',)
-
-zope.deferredimport.deprecated(
-    "Import from nti.base._compat instead",
-    native_='nti.base._compat:native_',)
-
-
 # BWC
+
 
 try:
     from Acquisition.interfaces import IAcquirer
@@ -123,3 +84,19 @@ except ImportError:
 slee = sleep
 Queue = Queue
 Greenlet = Greenlet
+
+
+# Deprecations
+
+
+deferredimport.initialize()
+deferredimport.deprecated(
+    "Import from nti.base._compat instead",
+    safestr='nti.base._compat:text_',
+    unicode_='nti.base._compat:text_',
+    to_unicode='nti.base._compat:text_',)
+
+deferredimport.deprecated(
+    "Import from nti.base._compat instead",
+    native_='nti.base._compat:native_',)
+

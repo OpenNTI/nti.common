@@ -14,6 +14,7 @@ import six
 
 import zope.deferredimport
 
+from zope import interface
 
 if six.PY3:  # pragma: no cover
     def _unicode(s): return str(s)
@@ -74,9 +75,6 @@ zope.deferredimport.deprecated(
 
 
 # BWC
-
-
-from zope import interface
 
 try:
     from Acquisition.interfaces import IAcquirer

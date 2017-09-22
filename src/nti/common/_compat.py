@@ -29,7 +29,7 @@ def bytes_(s, encoding='utf-8', errors='strict'):
     If ``s`` is an instance of ``text_type``, return
     ``s.encode(encoding, errors)``, otherwise return ``s``
     """
-    if isinstance(s, six.text_type):
+    if not isinstance(s, bytes) and s is not None:
         return s.encode(encoding, errors)
     return s
 

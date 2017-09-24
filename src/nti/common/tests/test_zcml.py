@@ -33,7 +33,6 @@ HEAD_ZCML_STRING = u"""
 
 	<include package="zope.component" />
 	<include package="zope.annotation" />
-	<include package="z3c.baseregistry" file="meta.zcml" />
 	
 	<include package="." file="meta.zcml" />
 

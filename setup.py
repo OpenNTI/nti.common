@@ -8,7 +8,6 @@ entry_points = {
 
 TESTS_REQUIRE = [
     'nti.testing',
-    'z3c.baseregistry',
     'zope.dottedname',
     'zope.testrunner',
 ]

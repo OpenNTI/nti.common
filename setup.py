@@ -66,12 +66,6 @@ setup(
             'repoze.sphinx.autointerface',
             'sphinx_rtd_theme',
         ],
-        ':platform_python_implementation=="CPython"': [
-            'cytoolz >= 0.8.2',
-        ],
-        ':platform_python_implementation=="PyPy"': [
-            'toolz',
-        ],
     },
     entry_points=entry_points,
 )

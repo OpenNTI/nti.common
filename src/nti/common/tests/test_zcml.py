@@ -53,8 +53,8 @@ LDAP_ZCML_STRING = HEAD_ZCML_STRING + u"""
 		id="nti-ldap"
 		url="ldaps://ldaps.nextthought.com:636"
 		username="jason.madden@nextthougt.com"
-		password="NTI%26123"
-		encoding="urlquote"
+		password="aWNoaWdv\n"
+		encoding="base64"
 		baseDN="OU=Accounts" />
 </configure>
 """
@@ -94,7 +94,7 @@ class TestZcml(nti.testing.base.ConfiguringTestBase):
 					has_property('URL', "ldaps://ldaps.nextthought.com:636"))
         assert_that(ldap, 
 					has_property('Username', "jason.madden@nextthougt.com"))
-        assert_that(ldap, has_property('Password', "NTI&123"))
+        assert_that(ldap, has_property('Password', "ichigo"))
         assert_that(ldap, has_property('BaseDN', "OU=Accounts"))
 
     def test_oauth_registration(self):

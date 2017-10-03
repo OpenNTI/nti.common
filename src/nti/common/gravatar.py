@@ -9,10 +9,7 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 import hashlib
-try:
-    from urlparse import urlunparse
-except ImportError:
-    from urllib.parse import urlunparse
+from six.moves import urllib_parse
 
 from nti.common._compat import bytes_
 
@@ -65,5 +62,5 @@ def create_gravatar_url(username,
     params = ''
     query = 's=%s&d=%s' % (size, defaultGravatarType)
     fragment = ''
-    result = str(urlunparse((scheme, netloc, path, params, query, fragment)))
+    result = str(urllib_parse.urlunparse((scheme, netloc, path, params, query, fragment)))
     return result

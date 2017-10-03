@@ -50,7 +50,6 @@ def is_false(t):
 
 
 zope.deferredimport.initialize()
-
 zope.deferredimport.deprecated(
     "Import from nti.base._compat instead",
     safestr='nti.base._compat:text_',

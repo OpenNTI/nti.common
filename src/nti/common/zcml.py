@@ -13,11 +13,6 @@ from __future__ import absolute_import
 import base64
 import functools
 
-try:
-    from urllib import unquote
-except ImportError:
-    from urllib.parse import unquote
-
 from zope import schema
 from zope import interface
 
@@ -36,8 +31,7 @@ from nti.common.model import AWSKey
 from nti.common.model import OAuthKeys
 
 BASE_64 = 'base64'
-URL_QUOTE = 'urlquote'
-PASSWORD_ENCODING = (URL_QUOTE, BASE_64)
+PASSWORD_ENCODING = (BASE_64,)
 
 logger = __import__('logging').getLogger(__name__)
 
@@ -88,16 +82,14 @@ def registerLDAP(_context, url, username, password, baseDN=None,
     Register an ldap
     """
     encoding = encoding or ''
-    if encoding.lower() == URL_QUOTE:
-        password = unquote(password)
-    elif encoding.lower() == BASE_64:
+    if encoding.lower() == BASE_64:
         password = base64.decodestring(password)
 
     name = kwargs.get('name') or kwargs.get('id') or ''
     factory = functools.partial(LDAP,
                                 ID=text_(name),
                                 URL=text_(url),
-                                Password=password,
+                                Password=text_(password),
                                 Username=text_(username),
                                 BaseDN=text_(baseDN),
                                 BackupURL=text_(backupURL))

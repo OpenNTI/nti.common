@@ -112,7 +112,7 @@ def hmac_sha1_digest(key, data):
     :returns:
             HMAC SHA-1 Digest.
     """
-    return hmac.new(key, bytes_(data), hashlib.sha1).digest()
+    return hmac.new(bytes_(key), bytes_(data), hashlib.sha1).digest()
 
 
 def hmac_sha1_base64_digest(key, data):

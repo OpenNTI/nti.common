@@ -21,6 +21,7 @@ from zope.component.zcml import utility
 from zope.configuration import fields
 
 from nti.common._compat import text_
+from nti.common._compat import bytes_
 
 from nti.common.interfaces import ILDAP
 from nti.common.interfaces import IAWSKey
@@ -83,7 +84,7 @@ def registerLDAP(_context, url, username, password, baseDN=None,
     """
     encoding = encoding or ''
     if encoding.lower() == BASE_64:
-        password = base64.decodestring(password)
+        password = base64.decodestring(bytes_(password))
 
     name = kwargs.get('name') or kwargs.get('id') or ''
     factory = functools.partial(LDAP,

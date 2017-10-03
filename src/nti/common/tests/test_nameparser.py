@@ -16,13 +16,14 @@ from hamcrest import has_property
 import unittest
 
 from nti.common.nameparser import human_name
+from nti.common.nameparser import all_prefixes
 from nti.common.nameparser import all_suffixes
 from nti.common.nameparser import get_suffixes
 
-
 class TestNameParser(unittest.TestCase):
-
+        
     def test_name_parser(self):
+        assert_that(all_prefixes(), has_length(22))
         assert_that(all_suffixes(), has_length(103))
         assert_that(get_suffixes(), has_length(103))
 

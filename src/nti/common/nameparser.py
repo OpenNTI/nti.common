@@ -43,10 +43,7 @@ def constants(prefixes=(), extra_suffixes=(), emoji=False):
     constants = Constants(prefixes=prefixes,
                           suffix_acronyms=acronyms,
                           suffix_not_acronyms=not_acronyms)
-    try:
-        constants.regexes.emoji = emoji
-    except AttributeError:
-        pass
+    constants.regexes.emoji = emoji
     return constants
 
 

@@ -46,7 +46,7 @@ class AWSKey(SchemaConfigured):
 @interface.implementer(ILDAP)
 class LDAP(SchemaConfigured):
     createDirectFieldProperties(ILDAP)
-    
+
     name = id = alias('ID')
     password = alias('Password')
 

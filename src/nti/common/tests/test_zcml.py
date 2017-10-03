@@ -8,6 +8,7 @@ from __future__ import absolute_import
 # disable: accessing protected members, too many methods
 # pylint: disable=W0212,R0904
 
+from hamcrest import is_
 from hamcrest import none
 from hamcrest import is_not
 from hamcrest import assert_that
@@ -92,6 +93,7 @@ class TestZcml(nti.testing.base.ConfiguringTestBase):
         assert_that(ldap, verifiably_provides(ILDAP))
         assert_that(ldap, 
 					has_property('URL', "ldaps://ldaps.nextthought.com:636"))
+        assert_that(str(ldap), is_("ldaps://ldaps.nextthought.com:636"))
         assert_that(ldap, 
 					has_property('Username', "jason.madden@nextthougt.com"))
         assert_that(ldap, has_property('Password', "ichigo"))
@@ -103,3 +105,4 @@ class TestZcml(nti.testing.base.ConfiguringTestBase):
         assert_that(keys, verifiably_provides(IOAuthKeys))
         assert_that(keys, has_property('APIKey', "abcd12345"))
         assert_that(keys, has_property('SecretKey', "efgh56789"))
+        assert_that(str(keys), is_("abcd12345"))

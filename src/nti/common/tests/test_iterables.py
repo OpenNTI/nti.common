@@ -56,13 +56,21 @@ class TestIterables(unittest.TestCase):
         l = [2, 2, 2, 2, 1, 1, 2]
         r = list(unique(l))
         assert_that(r, is_([2, 1]))
+        
+        r = list(unique([[]]))
+        assert_that(r, is_([[]]))
 
     def test_flatten(self):
         l1 = ([2, 1], [3, 4], (5.5,))
         r = list(flatten(l1, tuple))
         assert_that(r, is_([2, 1, 3, 4, (5.5,)]))
+        
+        l1 = (['ab'], [3, 4])
+        r = list(flatten(l1, tuple))
+        assert_that(r, is_(['a', 'b', 3, 4]))
 
     def test_to_list(self):
+        assert_that(to_list(None, ()), is_(()))
         l = (5.5,)
         assert_that(to_list(l), is_([5.5]))
         l = (5, 5)

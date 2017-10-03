@@ -13,14 +13,12 @@ from __future__ import absolute_import
 from six import binary_type
 from six import string_types
 
+from six.moves import filter
+
 from collections import Iterable
 
 from itertools import tee
 from itertools import islice
-try:
-    from itertools import ifilter as filter
-except ImportError:
-    pass
 
 logger = __import__('logging').getLogger(__name__)
 

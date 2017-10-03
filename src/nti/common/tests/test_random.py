@@ -43,6 +43,8 @@ class TestRandom(unittest.TestCase):
         with self.assertRaises(ValueError):
             generate_random_uint_between(3, 3)
 
+        generate_random_uint_between(1, 10000)
+
     def test_generate_random_sequence(self):
         with self.assertRaises(TypeError):
             generate_random_sequence(3.5, ())

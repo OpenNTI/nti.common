@@ -15,20 +15,10 @@ from hamcrest import has_property
 import fudge
 import unittest
 
-from nti.common.model import LDAP
 from nti.common.model import OAuthKeys
 
 
 class TestModel(unittest.TestCase):
-
-    @fudge.patch('nti.common.model.is_base64',
-                 'nti.common.model.get_plaintext')
-    def test_ldap(self, mock_ib64, mock_gpt):
-        mock_ib64.is_callable().with_args().returns(True)
-        mock_gpt.is_callable().with_args().raises(TypeError())
-        m = LDAP()
-        m.password = u'L7oCETo='  # base64; bad cypher text
-        assert_that(m, has_property('password', is_('L7oCETo=')))
 
     @fudge.patch('nti.common.model.is_base64',
                  'nti.common.model.get_plaintext')

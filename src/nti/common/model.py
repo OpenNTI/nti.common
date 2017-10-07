@@ -53,15 +53,6 @@ class LDAP(SchemaConfigured):
     def __str__(self):
         return self.URL
 
-    def __setattr__(self, name, value):
-        if name in ("Password", "password"):
-            try:
-                if is_base64(value):
-                    value = text_(get_plaintext(value))
-            except Exception:
-                pass
-        return SchemaConfigured.__setattr__(self, name, value)
-
 
 @EqHash('APIKey', 'SecretKey')
 @interface.implementer(IOAuthKeys)

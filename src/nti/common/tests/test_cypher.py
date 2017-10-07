@@ -32,3 +32,4 @@ class TestCypher(unittest.TestCase):
         text = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()'
         assert_that(is_base64(text), is_(False))
         assert_that(is_base64('TjN4dFRoMHVnaHQhIUM='), is_(True))
+        assert_that(is_base64(u'いちご='), is_(False))

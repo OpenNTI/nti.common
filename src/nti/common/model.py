@@ -10,11 +10,6 @@ from __future__ import absolute_import
 
 from zope import interface
 
-from nti.common._compat import text_
-
-from nti.common.cypher import is_base64
-from nti.common.cypher import get_plaintext
-
 from nti.common.interfaces import ILDAP
 from nti.common.interfaces import IAWSKey
 from nti.common.interfaces import IOAuthKeys
@@ -64,12 +59,3 @@ class OAuthKeys(SchemaConfigured):
 
     def __str__(self):
         return self.APIKey
-
-    def __setattr__(self, name, value):
-        if name in ("apiKey", "APIKey", "secretKey", "SecretKey", 'id'):
-            try:
-                if is_base64(value):
-                    value = text_(get_plaintext(value))
-            except Exception:
-                pass
-        return SchemaConfigured.__setattr__(self, name, value)

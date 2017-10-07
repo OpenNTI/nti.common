@@ -30,6 +30,7 @@ from nti.common.interfaces import IOAuthKeys
 from nti.common.model import LDAP
 from nti.common.model import AWSKey
 from nti.common.model import OAuthKeys
+from nti.common.cypher import get_plaintext
 
 BASE_64 = 'base64'
 PASSWORD_ENCODING = (BASE_64,)
@@ -101,14 +102,21 @@ class IRegisterOAuthKeys(interface.Interface):
     """
     The arguments needed for registering oauth keys
     """
-    id = fields.TextLine(title=u"ouath identifier", required=False)
+    id = fields.TextLine(title=u"OAuth identifier", required=False)
     apiKey = fields.TextLine(title=u"API key", required=True)
-    secretKey = fields.TextLine(title=u"secrent key", required=True)
+    secretKey = fields.TextLine(title=u"Secret key", required=True)
+
+
+def decode(key):
+    try:
+        return get_plaintext(key)
+    except Exception:
+        return key
 
 
 def registerOAuthKeys(_context, apiKey, secretKey, **kwargs):
     name = kwargs.get('name') or kwargs.get('id') or ''
     factory = functools.partial(OAuthKeys,
                                 APIKey=text_(apiKey),
-                                SecretKey=text_(secretKey))
+                                SecretKey=text_(decode(secretKey)))
     utility(_context, provides=IOAuthKeys, factory=factory, name=name)

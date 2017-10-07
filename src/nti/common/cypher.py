@@ -18,7 +18,7 @@ from nti.common._compat import bytes_
 logger = __import__('logging').getLogger(__name__)
 
 
-if six.PY3:
+if six.PY3:  # pragma: no cover
     def _ord(x): return x
     def _convert(x): return bytes_(x)
 else:

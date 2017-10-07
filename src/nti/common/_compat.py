@@ -40,13 +40,13 @@ def bytes_(s, encoding='utf-8', errors='strict'):
 
 try:
     from Acquisition.interfaces import IAcquirer
-except ImportError:
+except ImportError:   # pragma: no cover
     class IAcquirer(interface.Interface):
         pass
 
 try:
     from Acquisition import Implicit
-except ImportError:
+except ImportError:  # pragma: no cover
     @interface.implementer(IAcquirer)
     class Implicit(object):
         pass
@@ -54,37 +54,42 @@ Implicit = Implicit
 
 try:
     from ExtensionClass import Base
-except ImportError:
+except ImportError:  # pragma: no cover
     class Base(object):
         pass
 Base = Base  # pylint
 
 try:
     from Acquisition import aq_base
-except ImportError:
+except ImportError:  # pragma: no cover
     def aq_base(o):
         return o
 aq_base = aq_base
 
 try:
     from gevent import sleep
+except ImportError:  # pragma: no cover
+    from time import sleep
+sleep = sleep
+
+try:
     from gevent import Greenlet
-    from gevent.queue import Queue
-except ImportError:
-    try:
-        from Queue import Queue
-    except ImportError:
-        from asyncio import Queue
+except ImportError:  # pragma: no cover
     try:
         from greenlet import greenlet as Greenlet
     except ImportError:
         class Greenlet(object):
             pass
-    from time import sleep
-
-slee = sleep
-Queue = Queue
 Greenlet = Greenlet
+
+try:
+    from gevent.queue import Queue
+except ImportError:  # pragma: no cover
+    try:
+        from Queue import Queue
+    except ImportError:
+        from asyncio import Queue
+Queue = Queue
 
 
 # Deprecations
@@ -100,4 +105,3 @@ deferredimport.deprecated(
 deferredimport.deprecated(
     "Import from nti.base._compat instead",
     native_='nti.base._compat:native_',)
-

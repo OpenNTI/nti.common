@@ -12,7 +12,6 @@ import six
 import base64
 from itertools import cycle
 
-from nti.common._compat import text_
 from nti.common._compat import bytes_
 
 logger = __import__('logging').getLogger(__name__)
@@ -24,14 +23,6 @@ if six.PY3:  # pragma: no cover
 else:
     _ord = ord
     def _convert(x): return x
-
-
-def is_base64(s):
-    try:
-        return text_(base64.b64encode(_convert(base64.b64decode(s)))) == text_(s)
-    except Exception:
-        pass
-    return False
 
 
 def _XOR(text, key):

@@ -25,8 +25,8 @@ setup(
     author_email='jason@nextthought.com',
     description="NTI common utilities",
     long_description=(
-        _read('README.rst') 
-        + '\n\n' 
+        _read('README.rst')
+        + '\n\n'
         + _read("CHANGES.rst")
     ),
     license='Apache',
@@ -51,18 +51,18 @@ setup(
     namespace_packages=['nti'],
     tests_require=TESTS_REQUIRE,
     install_requires=[
-		'setuptools',
-		'emoji',
-		'nameparser',
+        'setuptools',
+        'emoji',
+        'nameparser',
         'nti.property',
         'nti.schema',
-		'six',
+        'six',
         'zope.component',
         'zope.configuration',
-		'zope.deprecation',
-		'zope.deferredimport',
-		'zope.dottedname',
-		'zope.interface',
+        'zope.deprecation',
+        'zope.deferredimport',
+        'zope.dottedname',
+        'zope.interface',
     ],
     extras_require={
         'test': TESTS_REQUIRE,

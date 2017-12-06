@@ -44,6 +44,7 @@ def _limit(lower, upper):
         raise Exception("Illegal argument to _limit")
     return u"{%d,%d}" % (lower, upper)
 
+
 #: Build the MATCHING_BRACKETS and PATTERN regular expression patterns. The
 #: building blocks below exist to make the patterns more easily understood.
 _OPENING_PARENS = u"(\\[\uFF08\uFF3B"
@@ -201,10 +202,10 @@ def fullmatch(pattern, string):
     # matched expression (as per the final doctest above).
     grouped_pattern = re.compile(r"^(?:%s)$" % pattern.pattern, pattern.flags)
     m = grouped_pattern.match(string)
-    if m and m.end() < len(string):
+    if m and m.end() < len(string):  # pragma: no cover
         # Incomplete match (which should never happen because of the $ at the
         # end of the regexp), treat as failure.
-        m = None  # pragma no cover
+        m = None
     return m
 
 

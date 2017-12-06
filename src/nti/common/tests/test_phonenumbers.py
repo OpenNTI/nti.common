@@ -9,6 +9,8 @@ from __future__ import absolute_import
 # pylint: disable=W0212,R0904
 
 from hamcrest import is_
+from hamcrest import raises
+from hamcrest import calling
 from hamcrest import assert_that
 
 import unittest
@@ -18,7 +20,17 @@ from nti.common import phonenumbers
 
 class TestPhoneNumbers(unittest.TestCase):
 
+    def test_limit(self):
+        assert_that(calling(phonenumbers._limit).with_args(2,1),
+                    raises(Exception))
+
     def test_is_viable_phone_number(self):
+        assert_that(phonenumbers.is_viable_phone_number('1'),
+                    is_(False))
+
+        assert_that(phonenumbers.is_viable_phone_number('(14)a'),
+                    is_(False))
+
         assert_that(phonenumbers.is_viable_phone_number('14052497426'),
                     is_(True))
 

@@ -23,9 +23,9 @@ from nti.common.nameparser import get_suffixes
 class TestNameParser(unittest.TestCase):
         
     def test_name_parser(self):
-        assert_that(all_prefixes(), has_length(22))
-        assert_that(all_suffixes(), has_length(103))
-        assert_that(get_suffixes(), has_length(103))
+        assert_that(all_prefixes(), has_length(28))
+        assert_that(all_suffixes(), has_length(104))
+        assert_that(get_suffixes(), has_length(104))
 
     def test_human_name(self):
         realname = "Ichigo Kurosaki, cfa"

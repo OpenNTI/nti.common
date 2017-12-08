@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 """
-Directives to be used in ZCML: registering static keys.
-
 .. $Id$
 """
 

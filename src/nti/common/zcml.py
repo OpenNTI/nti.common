@@ -13,9 +13,9 @@ from __future__ import absolute_import
 # pylint: disable=inherit-non-class
 
 try:
-    from base64 import decodestring as decodebytes
-except ImportError:  # pragma: no cover
     from base64 import decodebytes
+except ImportError:  # pragma: no cover
+    from base64 import decodestring as decodebytes
 
 import functools
 

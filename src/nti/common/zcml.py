@@ -12,7 +12,10 @@ from __future__ import absolute_import
 
 # pylint: disable=inherit-non-class
 
-import base64
+try:
+    from base64 import decodestring as decodebytes
+except ImportError:  # pragma: no cover
+    from base64 import decodebytes
 import functools
 
 from zope import schema
@@ -87,7 +90,7 @@ def registerLDAP(_context, url, username, password, baseDN=None,
     """
     encoding = encoding or ''
     if encoding.lower() == BASE_64:
-        password = base64.decodestring(bytes_(password))
+        password = decodebytes(bytes_(password))
 
     name = kwargs.get('name') or kwargs.get('id') or ''
     factory = functools.partial(LDAP,

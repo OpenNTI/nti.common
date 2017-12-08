@@ -46,7 +46,7 @@ class LDAP(SchemaConfigured):
     password = alias('Password')
 
     def __str__(self):
-        return self.URL
+        return self.URL  # pylint: disable=no-member
 
 
 @EqHash('APIKey', 'SecretKey')
@@ -58,4 +58,4 @@ class OAuthKeys(SchemaConfigured):
     secretKey = alias('SecretKey')
 
     def __str__(self):
-        return self.APIKey
+        return self.APIKey  # pylint: disable=no-member

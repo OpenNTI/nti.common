@@ -62,5 +62,7 @@ def create_gravatar_url(username,
     params = ''
     query = 's=%s&d=%s' % (size, defaultGravatarType)
     fragment = ''
-    result = str(urllib_parse.urlunparse((scheme, netloc, path, params, query, fragment)))
+    # pylint: disable=too-many-function-args
+    result = urllib_parse.urlunparse((scheme, netloc, path, params, query, fragment))
+    result = str(result)
     return result

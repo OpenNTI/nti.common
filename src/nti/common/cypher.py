@@ -19,17 +19,23 @@ logger = __import__('logging').getLogger(__name__)
 
 
 if six.PY3:  # pragma: no cover
-    def _ord(x): return x
-    def _convert(x): return bytes_(x)
+    def _ord(x): 
+        return x
+
+    def _convert(x): 
+        return bytes_(x)
 else:
     _ord = ord
-    def _convert(x): return x
+
+    def _convert(x): 
+        return x
 
 
 def is_base64(s):
     try:
-        return text_(base64.b64encode(_convert(base64.b64decode(s)))) == text_(s)
-    except Exception:
+        cb64 = _convert(base64.b64decode(s))
+        return text_(base64.b64encode(cb64)) == text_(s)
+    except Exception:  # pylint: disable=broad-except
         pass
     return False
 

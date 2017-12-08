@@ -50,7 +50,7 @@ def discard_p(the_set, the_value):
     try:
         # Both set and OOSet support remove with the same semantics
         the_set.remove(the_value)
-        # TODO: Is there a more useful value to return? If so document it
+        # Is there a more useful value to return? If so document it
         return True
     except KeyError:
         return False

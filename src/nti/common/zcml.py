@@ -10,6 +10,8 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import absolute_import
 
+# pylint: disable=inherit-non-class
+
 import base64
 import functools
 
@@ -110,7 +112,7 @@ class IRegisterOAuthKeys(interface.Interface):
 def decode(key):
     try:
         return get_plaintext(key)
-    except Exception:
+    except Exception:  # pylint: disable=broad-except
         return key
 
 

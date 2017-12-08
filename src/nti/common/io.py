@@ -61,6 +61,7 @@ def extract_all(source):
         target = os.path.join(tempfile.mkdtemp(), name)
         tar = tarfile.TarFile(source)
         tar.extractall(target)
+        tar.close()
         files = os.listdir(target)
         if files and len(files) == 1:
             target = os.path.join(target, files[0])
@@ -72,6 +73,7 @@ def extract_all(source):
         target = os.path.join(tempfile.mkdtemp(), name)
         zf = zipfile.ZipFile(source)
         zf.extractall(target)
+        zf.close()
         files = os.listdir(target)
         if files and len(files) == 1:
             target = os.path.join(target, files[0])

@@ -16,6 +16,7 @@ try:
     from base64 import decodestring as decodebytes
 except ImportError:  # pragma: no cover
     from base64 import decodebytes
+
 import functools
 
 from zope import schema

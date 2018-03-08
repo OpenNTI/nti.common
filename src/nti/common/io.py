@@ -46,12 +46,12 @@ def extract_all(source):
         return source
     if is_gzip(source):
         target, _ = os.path.splitext(source)
-        with gzip.open(source, "rb") as f_in, open(target, "wb") as f_out:
+        with gzip.open(source, "rb") as f_in, open(target, "w") as f_out:
             shutil.copyfileobj(f_in, f_out)
         return extract_all(target)
     elif is_bz2(source):
         target, _ = os.path.splitext(source)
-        with bz2.BZ2File(source) as f_in, open(target, "wb") as f_out:
+        with bz2.BZ2File(source) as f_in, open(target, "w") as f_out:
             shutil.copyfileobj(f_in, f_out)
         return extract_all(target)
     elif tarfile.is_tarfile(source):

@@ -8,6 +8,11 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import absolute_import
 
+import six
+import unicodedata
+
+from nti.common._compat import text_
+
 import zope.deferredimport
 
 resource_filename = __import__('pkg_resources').resource_filename
@@ -49,6 +54,16 @@ def is_false(t):
     return result
 
 
+if six.PY3:  # pragma: no cover
+    def normalize_caseless(text):
+        return unicodedata.normalize("NFKD", text.casefold())
+else:
+    def normalize_caseless(text):
+        return unicodedata.normalize("NFKD", text_(text).lower())
+
+def equals_ignore_case(left, right):
+    return (left == right) or normalize_caseless(left) == normalize_caseless(right)
+    
 zope.deferredimport.initialize()
 zope.deferredimport.deprecated(
     "Import from nti.base._compat instead",

@@ -33,7 +33,7 @@ class TestIO(unittest.TestCase):
 
     def test_is_gzip(self):
         bio = BytesIO()
-        with gzip.GzipFile(fileobj=bio, mode="wb") as fp:
+        with gzip.GzipFile(fileobj=bio, mode="w") as fp:
             fp.write(self.data)
         assert_that(is_gzip(bio), is_(True))
 
@@ -41,7 +41,7 @@ class TestIO(unittest.TestCase):
         tmp_dir = tempfile.mkdtemp()
         try:
             out_name = os.path.join(tmp_dir, 'data.dat')
-            with bz2.BZ2File(out_name, mode="wb") as fp:
+            with bz2.BZ2File(out_name, mode="w") as fp:
                 fp.write(self.data)
             assert_that(is_bz2(out_name), is_(True))
         finally:
@@ -71,7 +71,7 @@ class TestIO(unittest.TestCase):
         tmp_dir = tempfile.mkdtemp()
         try:
             out_name = os.path.join(tmp_dir, 'data.dat.bz2')
-            with bz2.BZ2File(out_name, mode="wb") as fp:
+            with bz2.BZ2File(out_name, mode="w") as fp:
                 fp.write(self.data)
             source = extract_all(out_name)
             assert_that(source, is_not(none()))

@@ -49,7 +49,7 @@ def _XOR(text, key):
     result = []
     key = cycle(_convert(key))
     for t in _convert(text):
-        t = chr(_ord(t) ^ _ord(next(key)))
+        t = chr(_ord(t) ^ _ord(next(key)) % 256)
         result.append(t)
     result = u''.join(result)
     return result

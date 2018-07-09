@@ -24,8 +24,8 @@ class TestCypher(unittest.TestCase):
         text = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()'
         ciphertext = make_ciphertext(text)
         assert_that(ciphertext, is_not(text))
-        plaintext = get_plaintext(ciphertext)
-        assert_that(plaintext, is_(text))
+        assert_that(get_plaintext(ciphertext), is_(text))
+        assert_that(get_plaintext('J1AQHTMH'), is_('ichigo'))
 
     def test_isb64(self):
         text = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()'

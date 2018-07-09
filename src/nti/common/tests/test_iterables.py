@@ -20,6 +20,7 @@ from nti.common.iterables import flatten
 from nti.common.iterables import isorted
 from nti.common.iterables import to_list
 from nti.common.iterables import IterableWrapper
+from nti.common.iterables import is_nonstr_iterable
 
 
 class TestIterables(unittest.TestCase):
@@ -82,3 +83,16 @@ class TestIterables(unittest.TestCase):
         assert_that(to_list(l), is_(same_instance(l)))
         l = object()
         assert_that(to_list(l), is_([l]))
+
+    def test_is_nonstr_iterable(self):
+        assert_that(is_nonstr_iterable('d'), is_(False))
+        assert_that(is_nonstr_iterable(object()), is_(False))
+        
+        assert_that(is_nonstr_iterable(set()), is_(True))
+        assert_that(is_nonstr_iterable(list()), is_(True))
+        assert_that(is_nonstr_iterable(tuple()), is_(True))
+
+        def sample():
+            yield 5
+            
+        assert_that(is_nonstr_iterable(sample()), is_(True))

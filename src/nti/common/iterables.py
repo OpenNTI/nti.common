@@ -122,11 +122,6 @@ def to_list(items=None, default=None):
     return result
 
 
-import zope.deferredimport
-zope.deferredimport.initialize()
-
-zope.deferredimport.deprecatedFrom(
-    "Use to pyramid.compat",
-    "pyramid.compat",
-    "is_nonstr_iter",
-)
+def is_nonstr_iterable(s):
+    return isinstance(s, Iterable) and not isinstance(s, string_types)
+is_nonstr_iter = is_nonstr_iterable

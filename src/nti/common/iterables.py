@@ -123,5 +123,6 @@ def to_list(items=None, default=None):
 
 
 def is_nonstr_iterable(s):
-    return isinstance(s, Iterable) and not isinstance(s, string_types)
+    return (hasattr(s, '__iter__') or isinstance(s, Iterable)) \
+       and not isinstance(s, string_types)
 is_nonstr_iter = is_nonstr_iterable

@@ -10,12 +10,12 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import absolute_import
 
+from collections import Iterable
+
 from six import binary_type
 from six import string_types
 
 from six.moves import filter
-
-from collections import Iterable
 
 from itertools import tee
 from itertools import islice

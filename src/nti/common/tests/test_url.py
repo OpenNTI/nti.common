@@ -7,10 +7,10 @@ from __future__ import division
 
 import unittest
 
-from hamcrest import is_, assert_that
+from hamcrest import assert_that
+from hamcrest import is_
 
 from nti.common.url import safe_add_query_params
-
 
 logger = __import__('logging').getLogger(__name__)
 

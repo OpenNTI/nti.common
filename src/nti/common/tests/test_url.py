@@ -19,8 +19,6 @@ class TestUrl(unittest.TestCase):
 
     def test_safe_add_query_params(self):
 
-        from IPython.terminal.debugger import set_trace;set_trace()
-
         # Test basic add params
         test_url = 'http://alpha.dev:8082/dataserver2'
         params = {'test': 'encode'}
@@ -37,10 +35,10 @@ class TestUrl(unittest.TestCase):
         test_url = 'http://alpha.dev:8082/dataserver2'
         params = {'test': 'encode space'}
         new_url = safe_add_query_params(test_url, params)
-        assert_that(new_url, is_('http://alpha.dev:8082/dataserver2?test=encode%20space'))
+        assert_that(new_url, is_('http://alpha.dev:8082/dataserver2?test=encode+space'))
 
         # Test percent encoded spaces to existing params
         test_url = 'http://alpha.dev:8082/dataserver2?error=no+error'
         params = {'test': 'encode space'}
         new_url = safe_add_query_params(test_url, params)
-        assert_that(new_url, is_('http://alpha.dev:8082/dataserver2?test=encode%20space&error=no%20error'))
+        assert_that(new_url, is_('http://alpha.dev:8082/dataserver2?test=encode+space&error=no+error'))

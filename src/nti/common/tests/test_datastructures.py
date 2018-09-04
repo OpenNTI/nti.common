@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import division
 from __future__ import print_function
 from __future__ import absolute_import
-from __future__ import division
+
+# pylint: disable=protected-access,too-many-public-methods
+
+from hamcrest import is_
+from hamcrest import assert_that
 
 import unittest
 
-from hamcrest import assert_that
-from hamcrest import is_
-
 from nti.common.datastructures import ObjectHierarchyTree
-
-logger = __import__('logging').getLogger(__name__)
 
 
 class Root(object):
@@ -35,6 +35,7 @@ class TestDatastructures(unittest.TestCase):
         tree.add(root, None)
         assert_that(tree.height, is_(0))
 
+        # pylint: disable=attribute-defined-outside-init
         child = Child()
         child.__parent__ = root
         tree.add(child, root)

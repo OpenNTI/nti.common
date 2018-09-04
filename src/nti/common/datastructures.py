@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
+.. $Id$
+"""
 
+from __future__ import division
 from __future__ import print_function
 from __future__ import absolute_import
-from __future__ import division
 
 from anytree import find_by_attr
 from anytree import NodeMixin
@@ -30,20 +33,23 @@ class ObjectHierarchyTree(NodeMixin):
         if parent is None:
             parent = getattr(obj, '__parent__', None)
             if not parent:
-                raise KeyError(u'Parent parameter must be passed or defined on object.')
+                raise KeyError(
+                    u'Parent parameter must be passed or defined on object.'
+                )
 
         parent_name = id(parent)
         parent_node = find_by_attr(self, parent_name)
         if not parent_node:
-            raise KeyError(u'The provided object\'s parent cannot be found in the tree')
+            raise KeyError(
+                u'The provided object\'s parent cannot be found in the tree'
+            )
         ObjectHierarchyTree(name=id(obj), parent=parent_node, obj=obj)
 
     def remove(self, obj):
         node = find_by_attr(self, id(obj))
         parent_node = node.parent
         # Remove this branch
-        parent_children = list(parent_node.children)
-        parent_children.remove(node)
+        parent_children = [x for x in parent_node.children if x != node]
         # Update the parent's children
         parent_node.children = parent_children
 
@@ -52,7 +58,7 @@ class ObjectHierarchyTree(NodeMixin):
 
     def _get_objects_from_nodes(self, nodes):
         objects = []
-        for node in nodes:
+        for node in nodes or ():
             objects.append(self._get_object_from_node(node))
         return tuple(objects)
 

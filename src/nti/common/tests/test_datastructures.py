@@ -83,3 +83,12 @@ class TestDatastructures(unittest.TestCase):
         assert_that(gc_tree.parent_object, is_(child))
         assert_that(gc_tree.sibling_objects, is_((gc2,)))
         assert_that(gc_tree.ancestor_objects, is_((root, child)))
+
+        # Test assertions
+        with self.assertRaises(KeyError):
+            tree.add({'noparent', 'obj'})
+
+        with self.assertRaises(KeyError):
+            foster_child = Child()
+            foster_child.__parent__ = u'WrongRoot'
+            tree.add(foster_child)

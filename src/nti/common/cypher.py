@@ -19,15 +19,15 @@ logger = __import__('logging').getLogger(__name__)
 
 
 if six.PY3:  # pragma: no cover
-    def _ord(x): 
+    def _ord(x):
         return x
 
-    def _convert(x): 
+    def _convert(x):
         return bytes_(x)
-else:
+else:  # pragma: no cover
     _ord = ord
 
-    def _convert(x): 
+    def _convert(x):
         return x
 
 

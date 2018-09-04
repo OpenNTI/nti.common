@@ -51,6 +51,7 @@ setup(
     namespace_packages=['nti'],
     tests_require=TESTS_REQUIRE,
     install_requires=[
+        'anytree',
         'setuptools',
         'emoji',
         'nameparser',

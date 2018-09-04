@@ -15,7 +15,7 @@ from hamcrest import assert_that
 from nti.common.url import safe_add_query_params
 
 
-class TestUrl(unittest.TestCase):
+class TestURL(unittest.TestCase):
 
     def test_safe_add_query_params(self):
         # Test basic add params
@@ -30,7 +30,7 @@ class TestUrl(unittest.TestCase):
         params = {'test': 'encode'}
         new_url = safe_add_query_params(test_url, params)
         assert_that(new_url,
-                    is_('http://alpha.dev:8082/dataserver2?test=encode&error=none'))
+                    is_('http://alpha.dev:8082/dataserver2?error=none&test=encode'))
 
         # Test percent encoded spaces
         test_url = 'http://alpha.dev:8082/dataserver2'
@@ -44,4 +44,4 @@ class TestUrl(unittest.TestCase):
         params = {'test': 'encode space'}
         new_url = safe_add_query_params(test_url, params)
         assert_that(new_url,
-                    is_('http://alpha.dev:8082/dataserver2?test=encode+space&error=no+error'))
+                    is_('http://alpha.dev:8082/dataserver2?error=no+error&test=encode+space'))

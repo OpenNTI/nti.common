@@ -93,6 +93,6 @@ class TestIterables(unittest.TestCase):
         assert_that(is_nonstr_iterable(tuple()), is_(True))
 
         def sample():
-            yield 5
+            yield 5  # pragma: no cover
             
         assert_that(is_nonstr_iterable(sample()), is_(True))

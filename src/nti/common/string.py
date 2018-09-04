@@ -57,13 +57,15 @@ def is_false(t):
 if six.PY3:  # pragma: no cover
     def normalize_caseless(text):
         return unicodedata.normalize("NFKD", text.casefold())
-else:
+else:  # pragma: no cover
     def normalize_caseless(text):
         return unicodedata.normalize("NFKD", text_(text).lower())
 
+
 def equals_ignore_case(left, right):
     return (left == right) or normalize_caseless(left) == normalize_caseless(right)
-    
+
+
 zope.deferredimport.initialize()
 zope.deferredimport.deprecated(
     "Import from nti.base._compat instead",

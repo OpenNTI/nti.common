@@ -32,23 +32,22 @@ class ObjectHierarchyTree(NodeMixin):
 
         if parent is None:
             parent = getattr(obj, '__parent__', None)
-            if not parent:
+            if parent is None:
                 raise KeyError(
                     u'Parent parameter must be passed or defined on object.'
                 )
 
         parent_name = id(parent)
         parent_node = find_by_attr(self, parent_name)
-        if not parent_node:
+        if parent_node is None:
             raise KeyError(
                 u'The provided object\'s parent cannot be found in the tree'
             )
         node_name = id(obj)
         node = find_by_attr(self, node_name)
         # If a node for this object already exists don't duplicate it
-        if node:
-            return
-        ObjectHierarchyTree(name=node_name, parent=parent_node, obj=obj)
+        if node is None:
+            ObjectHierarchyTree(node_name, parent_node, obj)
 
     def remove(self, obj):
         node = find_by_attr(self, id(obj))

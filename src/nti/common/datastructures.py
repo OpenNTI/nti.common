@@ -43,7 +43,12 @@ class ObjectHierarchyTree(NodeMixin):
             raise KeyError(
                 u'The provided object\'s parent cannot be found in the tree'
             )
-        ObjectHierarchyTree(name=id(obj), parent=parent_node, obj=obj)
+        node_name = id(obj)
+        node = find_by_attr(self, node_name)
+        # If a node for this object already exists don't duplicate it
+        if node:
+            return
+        ObjectHierarchyTree(name=node_name, parent=parent_node, obj=obj)
 
     def remove(self, obj):
         node = find_by_attr(self, id(obj))

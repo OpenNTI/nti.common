@@ -10,6 +10,8 @@ from __future__ import absolute_import
 from hamcrest import is_
 from hamcrest import assert_that
 
+from anytree import CountError
+
 import unittest
 
 from nti.common.datastructures import ObjectHierarchyTree
@@ -49,12 +51,20 @@ class TestDatastructures(unittest.TestCase):
         tree.add(gc2, child)
         assert_that(tree.height, is_(2))
 
+        # Test duplicate object
+        try:
+            tree.add(child)
+            tree.add(gc1)
+        except CountError:
+            self.fail(u'Failed to add duplicate object to tree')
+
         # Test remove bottom node
         assert_that(tree.height, is_(2))
         tree.remove(gc1)
         assert_that(tree.height, is_(2))
         tree.remove(gc2)
         assert_that(tree.height, is_(1))
+
         # Test remove nested node
         tree.add(gc1)
         tree.add(gc2)

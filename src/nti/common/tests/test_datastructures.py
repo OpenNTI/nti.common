@@ -55,7 +55,7 @@ class TestDatastructures(unittest.TestCase):
         try:
             tree.add(child)
             tree.add(gc1)
-        except CountError:
+        except CountError:  # pragma: no cover
             self.fail(u'Failed to add duplicate object to tree')
 
         # Test remove bottom node

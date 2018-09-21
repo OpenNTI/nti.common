@@ -169,9 +169,9 @@ def patch_in_debugger(v, item):
 class WithDebugger(GroupingContextDecorator):
 
     def __getattr__(self, item, **kw):  # pylint: disable=arguments-differ
-        v = super(WithDebugger, self).__getattr__(item, **kw)
+        result = super(WithDebugger, self).__getattr__(item, **kw)
         if self.context.hasFeature("devmode"):
-            return patch_in_debugger(v, item)
+            result = patch_in_debugger(result, item)
         else:
             logger.warning(u'A ZCML debugger has been left in %s', self.info)
-            return v
+        return result

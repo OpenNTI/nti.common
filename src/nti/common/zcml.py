@@ -168,10 +168,10 @@ def patch_in_debugger(v, item):
 @interface.implementer(IConfigurationContext, IWithDebugger)
 class WithDebugger(GroupingContextDecorator):
 
-    def __getattr__(self, item, **kw):
+    def __getattr__(self, item, **kw):  # pylint: disable=arguments-differ
         v = super(WithDebugger, self).__getattr__(item, **kw)
         if self.context.hasFeature("devmode"):
             return patch_in_debugger(v, item)
         else:
-            logger.warn(u'A ZCML debugger has been left in %s' % self.info)
+            logger.warning(u'A ZCML debugger has been left in %s', self.info)
             return v

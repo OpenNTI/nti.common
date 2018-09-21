@@ -146,15 +146,17 @@ class WithDebugger(GroupingContextDecorator):
             # This is just reading into the parent configuration machine
             def patch_configuration_machine(*args, **kwargs):
                 result = v(*args, **kwargs)
+
                 # Here the stack item gets created.
                 # We can now access the handler function
                 # so we patch in our debugger
                 def patch_stack(*args, **kwargs):
                     stack = result(*args, **kwargs)
                     default_handler = stack.handler
+
                     def debug(*args, **kwargs):
                         # The handler for this registration is about to be called
-                        from IPython.terminal.debugger import set_trace;set_trace()
+                        import pdb; pdb.set_trace()
                         return default_handler(*args, **kwargs)
                     stack.handler = debug
                     return stack

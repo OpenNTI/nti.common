@@ -6,16 +6,19 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 # pylint: disable=protected-access,too-many-public-methods
-
 from hamcrest import is_
 from hamcrest import none
 from hamcrest import is_not
 from hamcrest import assert_that
 from hamcrest import has_property
 
+import fudge
+
 from nti.testing.matchers import verifiably_provides
 
 from zope import component
+
+from nti.app.testing.layers import NonDevmodeSharedConfiguringTestLayer
 
 from nti.common.interfaces import ILDAP
 from nti.common.interfaces import IAWSKey
@@ -29,6 +32,7 @@ HEAD_ZCML_STRING = u"""
 	xmlns:aws="http://nextthought.com/ntp/aws"
 	xmlns:ldap="http://nextthought.com/ntp/ldap"
 	xmlns:oauth="http://nextthought.com/ntp/oauth"
+	xmlns:debug="http://nextthought.com/ntp/debug"
 	i18n_domain='nti.dataserver'>
 
 	<include package="zope.component" />
@@ -63,6 +67,13 @@ OAUTHKEYS_ZCML_STRING = HEAD_ZCML_STRING + u"""
 	<oauth:registerOAuthKeys
 		apiKey="abcd12345"
 		secretKey="efgh56789" />
+</configure>
+"""
+
+DEBUG_ZCML_STRING = HEAD_ZCML_STRING + u"""
+    <debug:withDebugger>
+        <utility factory="nti.appserver.policies.site_policies.GenericSitePolicyEventListener" />
+    </debug:withDebugger>
 </configure>
 """
 
@@ -105,3 +116,21 @@ class TestZcml(nti.testing.base.ConfiguringTestBase):
         assert_that(keys, has_property('APIKey', "abcd12345"))
         assert_that(keys, has_property('SecretKey', "efgh56789"))
         assert_that(str(keys), is_("abcd12345"))
+
+    @fudge.patch('nti.common.zcml.pdb.set_trace')
+    def test_debugger(self, mock_debugger):
+        # When the method exits, fudge will assert this was called
+        mock_debugger.expects_call()
+        self.configure_string(DEBUG_ZCML_STRING)
+
+
+class TestNonDevmodeZCML(nti.testing.base.ConfiguringTestBase):
+
+    layer = NonDevmodeSharedConfiguringTestLayer
+
+    @fudge.patch('nti.common.zcml.pdb.set_trace')
+    def test_debugger(self, mock_debugger):
+        # When the method exits, fudge will assert this was called
+        mock_debugger.is_callable().raises(Exception)
+        with self.assertRaises(Exception):
+            self.configure_string(DEBUG_ZCML_STRING)

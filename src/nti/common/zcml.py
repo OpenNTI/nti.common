@@ -9,9 +9,6 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 # pylint: disable=inherit-non-class
-from zope.configuration.config import GroupingContextDecorator
-from zope.configuration.interfaces import IConfigurationContext
-
 try:
     from base64 import decodebytes
 except ImportError:  # pragma: no cover
@@ -19,12 +16,18 @@ except ImportError:  # pragma: no cover
 
 import functools
 
+import pdb
+
 from zope import schema
 from zope import interface
 
 from zope.component.zcml import utility
 
 from zope.configuration import fields
+
+from zope.configuration.config import GroupingContextDecorator
+
+from zope.configuration.interfaces import IConfigurationContext
 
 from nti.common._compat import text_
 from nti.common._compat import bytes_
@@ -135,31 +138,40 @@ class IWithDebugger(interface.Interface):
     """
 
 
+def patch_in_debugger(v, item):
+    # We only want to do this when we are
+    # getting the directive factory from the registry
+    if item == 'factory':
+        # This is just reading into the parent configuration machine
+        def patch_configuration_machine(*args, **kwargs):
+            result = v(*args, **kwargs)
+
+            # Here the stack item gets created.
+            # We can now access the handler function
+            # so we patch in our debugger
+            def patch_stack(*args, **kwargs):
+                stack = result(*args, **kwargs)
+                default_handler = stack.handler
+
+                def debug(*args, **kwargs):
+                    # The handler for this registration is about to be called
+                    pdb.set_trace()
+                    return default_handler(*args, **kwargs)
+
+                stack.handler = debug
+                return stack
+            return patch_stack
+        return patch_configuration_machine
+    return v
+
+
 @interface.implementer(IConfigurationContext, IWithDebugger)
 class WithDebugger(GroupingContextDecorator):
 
     def __getattr__(self, item, **kw):
         v = super(WithDebugger, self).__getattr__(item, **kw)
-        # We only want to do this when we are
-        # getting the directive factory from the registry
-        if item =='factory':
-            # This is just reading into the parent configuration machine
-            def patch_configuration_machine(*args, **kwargs):
-                result = v(*args, **kwargs)
-
-                # Here the stack item gets created.
-                # We can now access the handler function
-                # so we patch in our debugger
-                def patch_stack(*args, **kwargs):
-                    stack = result(*args, **kwargs)
-                    default_handler = stack.handler
-
-                    def debug(*args, **kwargs):
-                        # The handler for this registration is about to be called
-                        import pdb; pdb.set_trace()
-                        return default_handler(*args, **kwargs)
-                    stack.handler = debug
-                    return stack
-                return patch_stack
-            return patch_configuration_machine
-        return v
+        if self.context.hasFeature("devmode"):
+            return patch_in_debugger(v, item)
+        else:
+            logger.warn(u'A ZCML debugger has been left in %s' % self.info)
+            return v

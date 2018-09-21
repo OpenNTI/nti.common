@@ -19,4 +19,10 @@
 						handler=".zcml.registerOAuthKeys" />
 	</meta:directives>
 
+	<meta:directives namespace="http://nextthought.com/ntp/debug">
+		<meta:groupingDirective name="withDebugger"
+						schema=".zcml.IWithDebugger"
+						handler=".zcml.WithDebugger" />
+	</meta:directives>
+
 </configure>

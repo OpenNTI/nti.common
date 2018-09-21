@@ -9,6 +9,8 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 # pylint: disable=inherit-non-class
+from zope.configuration.config import GroupingContextDecorator
+from zope.configuration.interfaces import IConfigurationContext
 
 try:
     from base64 import decodebytes
@@ -124,3 +126,40 @@ def registerOAuthKeys(_context, apiKey, secretKey, **kwargs):
                                 APIKey=text_(apiKey),
                                 SecretKey=text_(decode(secretKey)))
     utility(_context, provides=IOAuthKeys, factory=factory, name=name)
+
+
+class IWithDebugger(interface.Interface):
+    """
+    A ZCML directive that starts a debugging session
+    before the handler is called for a simple zcml directive
+    """
+
+
+@interface.implementer(IConfigurationContext, IWithDebugger)
+class WithDebugger(GroupingContextDecorator):
+
+    def __getattr__(self, item, **kw):
+        v = super(WithDebugger, self).__getattr__(item, **kw)
+        # We only want to do this when we are
+        # getting the directive factory from the registry
+        if item =='factory':
+            # This is just reading into the parent configuration machine
+            def patch_configuration_machine(*args, **kwargs):
+                result = v(*args, **kwargs)
+
+                # Here the stack item gets created.
+                # We can now access the handler function
+                # so we patch in our debugger
+                def patch_stack(*args, **kwargs):
+                    stack = result(*args, **kwargs)
+                    default_handler = stack.handler
+
+                    def debug(*args, **kwargs):
+                        # The handler for this registration is about to be called
+                        import pdb; pdb.set_trace()
+                        return default_handler(*args, **kwargs)
+                    stack.handler = debug
+                    return stack
+                return patch_stack
+            return patch_configuration_machine
+        return v

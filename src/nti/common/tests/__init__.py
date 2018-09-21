@@ -14,12 +14,12 @@ from nti.testing.layers import ConfiguringLayerMixin
 import zope.testing.cleanup
 
 
-class NonDevmodeSharedConfiguringTestLayer(ZopeComponentLayer,
-                                           GCLayerMixin,
-                                           ConfiguringLayerMixin):
+class NonDevmodeConfiguringTestLayer(ZopeComponentLayer,
+                                     GCLayerMixin,
+                                     ConfiguringLayerMixin):
 
     features = ()
-    set_up_packages = ()
+    set_up_packages = ("nti.common",)
 
     @classmethod
     def setUp(cls):

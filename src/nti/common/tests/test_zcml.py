@@ -6,6 +6,7 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 # pylint: disable=protected-access,too-many-public-methods
+
 from hamcrest import is_
 from hamcrest import none
 from hamcrest import is_not
@@ -22,57 +23,57 @@ from nti.common.interfaces import ILDAP
 from nti.common.interfaces import IAWSKey
 from nti.common.interfaces import IOAuthKeys
 
-from nti.common.tests import NonDevmodeSharedConfiguringTestLayer
-
 import nti.testing.base
 
 HEAD_ZCML_STRING = u"""
 <configure xmlns="http://namespaces.zope.org/zope"
-	xmlns:zcml="http://namespaces.zope.org/zcml"
-	xmlns:aws="http://nextthought.com/ntp/aws"
-	xmlns:ldap="http://nextthought.com/ntp/ldap"
-	xmlns:oauth="http://nextthought.com/ntp/oauth"
-	xmlns:debug="http://nextthought.com/ntp/debug"
-	i18n_domain='nti.dataserver'>
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:aws="http://nextthought.com/ntp/aws"
+    xmlns:ldap="http://nextthought.com/ntp/ldap"
+    xmlns:oauth="http://nextthought.com/ntp/oauth"
+    xmlns:debug="http://nextthought.com/ntp/debug"
+    i18n_domain='nti.dataserver'>
 
-	<include package="zope.component" />
-	<include package="zope.annotation" />
-	
-	<include package="." file="meta.zcml" />
+    <include package="zope.component" />
+    <include package="zope.annotation" />
+    
+    <include package="nti.common" file="meta.zcml" />
 
 """
 
 AWS_ZCML_STRING = HEAD_ZCML_STRING + u"""
-	<aws:registerAWSKey
-		purpose="S3"
-		grant="private-read-write"
-		bucket_name="nti-dataserver-dev"
-		access_key="AKIAIYVGOCPVO6AQRILQ"
-		secret_key="aws_s3_secret_access_key" />
+    <aws:registerAWSKey
+        purpose="S3"
+        grant="private-read-write"
+        bucket_name="nti-dataserver-dev"
+        access_key="AKIAIYVGOCPVO6AQRILQ"
+        secret_key="aws_s3_secret_access_key" />
 </configure>
 """
 
 LDAP_ZCML_STRING = HEAD_ZCML_STRING + u"""
-	<ldap:registerLDAP
-		id="nti-ldap"
-		url="ldaps://ldaps.nextthought.com:636"
-		username="jason.madden@nextthougt.com"
-		password="aWNoaWdv\n"
-		encoding="base64"
-		baseDN="OU=Accounts" />
+    <ldap:registerLDAP
+        id="nti-ldap"
+        url="ldaps://ldaps.nextthought.com:636"
+        username="jason.madden@nextthougt.com"
+        password="aWNoaWdv\n"
+        encoding="base64"
+        baseDN="OU=Accounts" />
 </configure>
 """
 
 OAUTHKEYS_ZCML_STRING = HEAD_ZCML_STRING + u"""
-	<oauth:registerOAuthKeys
-		apiKey="abcd12345"
-		secretKey="efgh56789" />
+    <oauth:registerOAuthKeys
+        apiKey="abcd12345"
+        secretKey="efgh56789" />
 </configure>
 """
 
 DEBUG_ZCML_STRING = HEAD_ZCML_STRING + u"""
     <debug:withDebugger>
-        <utility factory="nti.appserver.policies.site_policies.GenericSitePolicyEventListener" />
+        <oauth:registerOAuthKeys
+            apiKey="xyx345"
+            secretKey="efgh56789" />
     </debug:withDebugger>
 </configure>
 """
@@ -102,10 +103,10 @@ class TestZcml(nti.testing.base.ConfiguringTestBase):
         assert_that(ldap, is_not(none()))
         assert_that(ldap, verifiably_provides(ILDAP))
         assert_that(ldap, 
-					has_property('URL', "ldaps://ldaps.nextthought.com:636"))
+                    has_property('URL', "ldaps://ldaps.nextthought.com:636"))
         assert_that(str(ldap), is_("ldaps://ldaps.nextthought.com:636"))
         assert_that(ldap, 
-					has_property('Username', "jason.madden@nextthougt.com"))
+                    has_property('Username', "jason.madden@nextthougt.com"))
         assert_that(ldap, has_property('Password', "ichigo"))
         assert_that(ldap, has_property('BaseDN', "OU=Accounts"))
 
@@ -124,13 +125,18 @@ class TestZcml(nti.testing.base.ConfiguringTestBase):
         self.configure_string(DEBUG_ZCML_STRING)
 
 
-class TestNonDevmodeZCML(nti.testing.base.ConfiguringTestBase):
+import unittest
 
-    layer = NonDevmodeSharedConfiguringTestLayer
+from zope.configuration import xmlconfig
 
-    @fudge.patch('nti.common.zcml.pdb.set_trace')
-    def test_debugger(self, mock_debugger):
-        # When the method exits, fudge will assert this was called
-        mock_debugger.is_callable().raises(Exception)
-        with self.assertRaises(Exception):
-            self.configure_string(DEBUG_ZCML_STRING)
+from nti.common.tests import NonDevmodeConfiguringTestLayer
+
+class TestNonDevmodeZCML(unittest.TestCase):
+
+    layer = NonDevmodeConfiguringTestLayer
+
+    def configure_string(self, zcml_string):
+        return xmlconfig.string(zcml_string, self.layer.configuration_context)
+
+    def test_debugger(self):
+        self.configure_string(DEBUG_ZCML_STRING)

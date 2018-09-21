@@ -18,11 +18,11 @@ from nti.testing.matchers import verifiably_provides
 
 from zope import component
 
-from nti.app.testing.layers import NonDevmodeSharedConfiguringTestLayer
-
 from nti.common.interfaces import ILDAP
 from nti.common.interfaces import IAWSKey
 from nti.common.interfaces import IOAuthKeys
+
+from nti.common.tests import NonDevmodeSharedConfiguringTestLayer
 
 import nti.testing.base
 

@@ -15,14 +15,18 @@ logger = __import__('logging').getLogger(__name__)
 
 
 class ObjectHierarchyTree(NodeMixin):
+    """
+    Lookup_func should be a function that takes an object and returns a unique key
+    """
 
-    def __init__(self, name=None, parent=None, obj=None):
+    def __init__(self, name=None, parent=None, obj=None, lookup_func=id):
         self.name = name
         self.parent = parent
         self.obj = obj
+        self.lookup_func = lookup_func
 
     def set_root(self, obj):
-        self.name = id(obj)
+        self.name = self.lookup_func(obj)
         self.obj = obj
 
     def add(self, obj, parent=None):
@@ -37,20 +41,20 @@ class ObjectHierarchyTree(NodeMixin):
                     u'Parent parameter must be passed or defined on object.'
                 )
 
-        parent_name = id(parent)
+        parent_name = self.lookup_func(parent)
         parent_node = find_by_attr(self, parent_name)
         if parent_node is None:
             raise KeyError(
                 u'The provided object\'s parent cannot be found in the tree'
             )
-        node_name = id(obj)
+        node_name = self.lookup_func(obj)
         node = find_by_attr(self, node_name)
         # If a node for this object already exists don't duplicate it
         if node is None:
             ObjectHierarchyTree(node_name, parent_node, obj)
 
     def remove(self, obj):
-        node = find_by_attr(self, id(obj))
+        node = find_by_attr(self, self.lookup_func(obj))
         parent_node = node.parent
         # Remove this branch
         parent_children = [x for x in parent_node.children if x != node]
@@ -67,7 +71,7 @@ class ObjectHierarchyTree(NodeMixin):
         return tuple(objects)
 
     def get_node_from_object(self, obj):
-        node = find_by_attr(self, id(obj))
+        node = find_by_attr(self, self.lookup_func(obj))
         return node
 
     @property

@@ -26,7 +26,7 @@ class ObjectHierarchyTree(NodeMixin):
         self.lookup_func = lookup_func
 
     def set_root(self, obj):
-        self.name = id(obj)
+        self.name = self.lookup_func(obj)
         self.obj = obj
 
     def add(self, obj, parent=None):

@@ -8,14 +8,16 @@ from __future__ import absolute_import
 # pylint: disable=protected-access,too-many-public-methods
 
 from hamcrest import is_
+from hamcrest import none
 from hamcrest import assert_that
-
-from anytree import CountError
+from hamcrest import has_properties
 
 import unittest
 
-from nti.common.datastructures import ObjectHierarchyTree
+from anytree import CountError
 
+from nti.common.datastructures import create_tree
+from nti.common.datastructures import ObjectHierarchyTree
 
 class Root(object):
     __name__ = u'Root'
@@ -32,7 +34,7 @@ class GrandChild(Child):
 class TestDatastructures(unittest.TestCase):
 
     def test_object_tree(self):
-        tree = ObjectHierarchyTree()
+        tree = create_tree()
         root = Root()
         tree.add(root, None)
         assert_that(tree.height, is_(0))
@@ -103,3 +105,14 @@ class TestDatastructures(unittest.TestCase):
             foster_child = Child()
             foster_child.__parent__ = u'WrongRoot'
             tree.add(foster_child)
+
+    def test_properties(self):
+        def myId(x):
+            return id(x)
+        tree = ObjectHierarchyTree("tree", None, "x", myId)
+        assert_that(tree,
+                    has_properties("name", "tree",
+                                   "parent", is_(none()),
+                                   "obj", "x",
+                                   "lookup_func", is_(myId)))
+        

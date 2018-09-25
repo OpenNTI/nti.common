@@ -9,6 +9,7 @@ from __future__ import absolute_import
 
 from hamcrest import is_
 from hamcrest import none
+from hamcrest import is_not
 from hamcrest import assert_that
 from hamcrest import has_properties
 
@@ -111,9 +112,15 @@ class TestDatastructures(unittest.TestCase):
     def test_properties(self):
         def myId(x):
             return id(x)
-        tree = ObjectHierarchyTree("tree", None, "x", myId)
+        root = Root()
+        tree = ObjectHierarchyTree("tree", None, None, myId)
         assert_that(tree,
                     has_properties("name", "tree",
                                    "parent", is_(none()),
-                                   "obj", "x",
+                                   "obj", is_(none()),
                                    "lookup_func", is_(myId)))
+        tree.add(root, None)
+        # pylint: disable=attribute-defined-outside-init
+        child = Child()
+        child.__parent__ = root
+        assert_that(tree.add(child, root), is_not(none()))

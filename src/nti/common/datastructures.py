@@ -51,7 +51,7 @@ class ObjectHierarchyTree(NodeMixin):
         node = find_by_attr(self, node_name)
         # If a node for this object already exists don't duplicate it
         if node is None:
-            ObjectHierarchyTree(node_name, parent_node, obj, self.lookup_func)
+            return ObjectHierarchyTree(node_name, parent_node, obj, self.lookup_func)
 
     def remove(self, obj):
         node = find_by_attr(self, self.lookup_func(obj))
@@ -93,3 +93,7 @@ class ObjectHierarchyTree(NodeMixin):
     @property
     def parent_object(self):
         return self._get_object_from_node(self.parent)
+
+
+def create_tree(name=None, lookup_func=id):
+    return ObjectHierarchyTree(name, None, None, lookup_func)

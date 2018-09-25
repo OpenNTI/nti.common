@@ -8,12 +8,16 @@ from __future__ import absolute_import
 # pylint: disable=protected-access,too-many-public-methods
 
 from hamcrest import is_
+from hamcrest import none
+from hamcrest import is_not
 from hamcrest import assert_that
-
-from anytree import CountError
+from hamcrest import has_properties
 
 import unittest
 
+from anytree import CountError
+
+from nti.common.datastructures import create_tree
 from nti.common.datastructures import ObjectHierarchyTree
 
 
@@ -32,11 +36,12 @@ class GrandChild(Child):
 class TestDatastructures(unittest.TestCase):
 
     def test_object_tree(self):
-        tree = ObjectHierarchyTree()
+        tree = create_tree()
         root = Root()
         tree.add(root, None)
-        assert_that(tree.height, is_(0))
-
+        assert_that(tree,
+                    has_properties('height', is_(0),
+                                   'lookup_func', is_(id)))
         # pylint: disable=attribute-defined-outside-init
         child = Child()
         child.__parent__ = root
@@ -103,3 +108,19 @@ class TestDatastructures(unittest.TestCase):
             foster_child = Child()
             foster_child.__parent__ = u'WrongRoot'
             tree.add(foster_child)
+
+    def test_properties(self):
+        def myId(x):
+            return id(x)
+        root = Root()
+        tree = ObjectHierarchyTree("tree", None, None, myId)
+        assert_that(tree,
+                    has_properties("name", "tree",
+                                   "parent", is_(none()),
+                                   "obj", is_(none()),
+                                   "lookup_func", is_(myId)))
+        tree.add(root, None)
+        # pylint: disable=attribute-defined-outside-init
+        child = Child()
+        child.__parent__ = root
+        assert_that(tree.add(child, root), is_not(none()))

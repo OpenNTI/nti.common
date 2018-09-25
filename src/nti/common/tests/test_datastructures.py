@@ -19,6 +19,7 @@ from anytree import CountError
 from nti.common.datastructures import create_tree
 from nti.common.datastructures import ObjectHierarchyTree
 
+
 class Root(object):
     __name__ = u'Root'
 
@@ -37,8 +38,9 @@ class TestDatastructures(unittest.TestCase):
         tree = create_tree()
         root = Root()
         tree.add(root, None)
-        assert_that(tree.height, is_(0))
-
+        assert_that(tree,
+                    has_properties('height', is_(0),
+                                   'lookup_func', is_(id)))
         # pylint: disable=attribute-defined-outside-init
         child = Child()
         child.__parent__ = root
@@ -115,4 +117,3 @@ class TestDatastructures(unittest.TestCase):
                                    "parent", is_(none()),
                                    "obj", "x",
                                    "lookup_func", is_(myId)))
-        

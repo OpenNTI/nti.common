@@ -18,16 +18,16 @@ import functools
 
 import pdb
 
-from zope import schema
 from zope import interface
 
 from zope.component.zcml import utility
 
-from zope.configuration import fields
-
 from zope.configuration.config import GroupingContextDecorator
 
 from zope.configuration.interfaces import IConfigurationContext
+
+from zope.schema import Password
+from zope.schema import TextLine
 
 from nti.common._compat import text_
 from nti.common._compat import bytes_
@@ -51,11 +51,11 @@ class IRegisterAWSKey(interface.Interface):
     """
     The arguments needed for registering an AWS key
     """
-    grant = fields.TextLine(title=u"rant type", required=False)
-    bucket_name = fields.TextLine(title=u"Bucket name", required=False)
-    purpose = fields.TextLine(title=u"Key purpose", required=True)
-    access_key = fields.TextLine(title=u"Access key", required=True)
-    secret_key = fields.TextLine(title=u"Secret key", required=True)
+    grant = TextLine(title=u"rant type", required=False)
+    bucket_name = TextLine(title=u"Bucket name", required=False)
+    purpose = TextLine(title=u"Key purpose", required=True)
+    access_key = TextLine(title=u"Access key", required=True)
+    secret_key = TextLine(title=u"Secret key", required=True)
 
 
 def registerAWSKey(_context, access_key, secret_key, purpose,
@@ -78,13 +78,13 @@ class IRegisterLDAP(interface.Interface):
     """
     The arguments needed for registering an ldap
     """
-    id = fields.TextLine(title=u"ldap identifier", required=False)
-    url = fields.TextLine(title=u"ldap url", required=True)
-    username = fields.TextLine(title=u"Bind username", required=True)
-    password = schema.Password(title=u"Bind password", required=True)
-    baseDN = fields.TextLine(title=u"Base DN", required=False)
-    encoding = fields.TextLine(title=u"Password encoding", required=False)
-    backupURL = fields.TextLine(title=u"ldap backup url", required=False)
+    id = TextLine(title=u"ldap identifier", required=False)
+    url = TextLine(title=u"ldap url", required=True)
+    username = TextLine(title=u"Bind username", required=True)
+    password = Password(title=u"Bind password", required=True)
+    baseDN = TextLine(title=u"Base DN", required=False)
+    encoding = TextLine(title=u"Password encoding", required=False)
+    backupURL = TextLine(title=u"ldap backup url", required=False)
 
 
 def registerLDAP(_context, url, username, password, baseDN=None,
@@ -111,9 +111,9 @@ class IRegisterOAuthKeys(interface.Interface):
     """
     The arguments needed for registering oauth keys
     """
-    id = fields.TextLine(title=u"OAuth identifier", required=False)
-    apiKey = fields.TextLine(title=u"API key", required=True)
-    secretKey = fields.TextLine(title=u"Secret key", required=True)
+    id = TextLine(title=u"OAuth identifier", required=False)
+    apiKey = TextLine(title=u"API key", required=True)
+    secretKey = TextLine(title=u"Secret key", required=True)
 
 
 def decode(key):

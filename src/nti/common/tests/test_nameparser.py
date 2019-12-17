@@ -20,11 +20,11 @@ from nti.common.nameparser import all_suffixes
 from nti.common.nameparser import get_suffixes
 
 class TestNameParser(unittest.TestCase):
-        
+
     def test_name_parser(self):
         assert_that(all_prefixes(), has_length(30))
-        assert_that(all_suffixes(), has_length(106))
-        assert_that(get_suffixes(), has_length(106))
+        assert_that(all_suffixes(), has_length(621))
+        assert_that(get_suffixes(), has_length(621))
 
     def test_human_name(self):
         realname = "Ichigo Kurosaki, cfa"

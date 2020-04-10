@@ -26,6 +26,7 @@ from zope.configuration.config import GroupingContextDecorator
 
 from zope.configuration.interfaces import IConfigurationContext
 
+from zope.schema import URI
 from zope.schema import Password
 from zope.schema import TextLine
 
@@ -35,10 +36,15 @@ from nti.common._compat import bytes_
 from nti.common.interfaces import ILDAP
 from nti.common.interfaces import IAWSKey
 from nti.common.interfaces import IOAuthKeys
+from nti.common.interfaces import IOAuthService
+from nti.common.interfaces import IContentSigner
+
 
 from nti.common.model import LDAP
 from nti.common.model import AWSKey
 from nti.common.model import OAuthKeys
+from nti.common.model import ContentSigner
+from nti.common.model import ProxyOAuthService
 from nti.common.cypher import get_plaintext
 
 BASE_64 = 'base64'
@@ -175,3 +181,39 @@ class WithDebugger(GroupingContextDecorator):
         else:
             logger.warning(u'A ZCML debugger has been left in %s', self.info)
         return result
+
+
+class IRegisterOAuthService(interface.Interface):
+    """
+    The arguments needed for registering an OAuth service
+    """
+    id = TextLine(title=u"Service identifier", required=False)
+    authorization_url = URI(title=u"Authorization Endpoint",
+                            description=u"URL for the authorization request")
+
+
+def registerOAuthService(_context, authorization_url, **kwargs):
+    name = kwargs.get('id') or ''
+    factory = functools.partial(ProxyOAuthService,
+                                authorization_url=text_(authorization_url))
+    utility(_context, provides=IOAuthService, factory=factory, name=name)
+
+
+class IRegisterSigner(interface.Interface):
+    """
+    The arguments needed for registering the signer.
+    """
+    id = TextLine(title=u"Signer identifier", required=False)
+    secret = TextLine(title=u"Shared secret", required=True)
+    salt = TextLine(title=u"Namespace used when creating the hash", required=False)
+
+
+def registerContentSigner(_context, id=None, secret=None, salt=None):
+    """
+    Register the signer.
+    """
+    name = id or ''
+    factory = functools.partial(ContentSigner,
+                                secret=secret,
+                                salt=salt)
+    utility(_context, provides=IContentSigner, factory=factory, name=name)

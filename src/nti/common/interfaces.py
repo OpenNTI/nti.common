@@ -12,6 +12,8 @@ from __future__ import absolute_import
 
 from zope import interface
 
+from zope.schema import URI
+
 from nti.schema.field import TextLine as ValidTextLine
 
 
@@ -35,3 +37,41 @@ class ILDAP(interface.Interface):
 class IOAuthKeys(interface.Interface):
     APIKey = ValidTextLine(title=u"API Key", required=True)
     SecretKey = ValidTextLine(title=u"Secret Key", required=True)
+
+
+class IContentSigner(interface.Interface):
+    """
+    Allow secure delivery of information that can be decoded and verified
+    later, e.g. during proxy of an OAuth request in OAuth portal.
+    """
+
+    def encode(content):
+        """
+        Encode and sign content for later verification and decoding.
+        :return:
+        """
+
+    def decode(encoded_content):
+        """
+        Decode the signed content.  Throws exception if signature doesn't match.
+        :return:
+        """
+
+
+class IOAuthService(interface.Interface):
+
+    AuthorizationEndpoint = URI(title=u"Authorization Endpoint",
+                                description=u"URL for the authorization request")
+
+    def authorization_request_uri(client_id=None,
+                                  state=None,
+                                  scope=None,
+                                  redirect_uri=None,
+                                  response_type=None,
+                                  **extra_params
+                                  ):
+        """
+        Build the URI for the initial OAuth authorization request.
+
+        :return:
+        """

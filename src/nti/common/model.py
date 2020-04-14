@@ -66,8 +66,8 @@ class LDAP(SchemaConfigured):
 class OAuthKeys(SchemaConfigured):
     createDirectFieldProperties(IOAuthKeys)
 
-    id = apiKey = alias('APIKey')
-    secretKey = alias('SecretKey')
+    ClientId = id = apiKey = alias('APIKey')
+    ClientSecret = secretKey = alias('SecretKey')
 
     def __str__(self):
         return self.APIKey  # pylint: disable=no-member

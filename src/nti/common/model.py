@@ -129,6 +129,7 @@ class ProxyOAuthService(object):
                 "state": state,
                 "redirect_uri": redirect_uri
             })
+            params["redirect_uri"] = redirect_uri
 
         params.update(extra_params)
 

@@ -18,6 +18,10 @@ from six.moves import urllib_parse
 from zope import component
 from zope import interface
 
+from zope.container.contained import Contained
+
+from nti.dublincore.datastructures import PersistentCreatedModDateTrackingObject
+
 from nti.common.cypher import get_plaintext
 
 from nti.common.interfaces import ILDAP
@@ -25,6 +29,7 @@ from nti.common.interfaces import IAWSKey
 from nti.common.interfaces import IOAuthKeys
 from nti.common.interfaces import IOAuthService
 from nti.common.interfaces import IContentSigner
+from nti.common.interfaces import IPersistentOAuthKeys
 
 from nti.property.property import alias
 
@@ -71,6 +76,13 @@ class OAuthKeys(SchemaConfigured):
 
     def __str__(self):
         return self.APIKey  # pylint: disable=no-member
+
+
+@interface.implementer(IPersistentOAuthKeys)
+class PersistentOAuthKeys(PersistentCreatedModDateTrackingObject,
+                          Contained,
+                          OAuthKeys):
+    createDirectFieldProperties(IPersistentOAuthKeys)
 
 
 @interface.implementer(IContentSigner)

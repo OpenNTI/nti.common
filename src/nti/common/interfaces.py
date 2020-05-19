@@ -39,6 +39,12 @@ class IOAuthKeys(interface.Interface):
     SecretKey = ValidTextLine(title=u"Secret Key", required=True)
 
 
+class IPersistentOAuthKeys(IOAuthKeys):
+    """
+    Provides persistent IOAuthKeys.
+    """
+
+
 class IContentSigner(interface.Interface):
     """
     Allow secure delivery of information that can be decoded and verified

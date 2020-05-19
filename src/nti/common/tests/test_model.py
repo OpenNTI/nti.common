@@ -14,6 +14,7 @@ from hamcrest import has_property
 import unittest
 
 from nti.common.model import OAuthKeys
+from nti.common.model import PersistentOAuthKeys
 
 
 class TestModel(unittest.TestCase):
@@ -22,3 +23,10 @@ class TestModel(unittest.TestCase):
         m = OAuthKeys()
         m.secretKey = u'L7oCETo='
         assert_that(m, has_property('secretKey', is_('L7oCETo=')))
+
+    def test_persitent_oauthkeys(self):
+        m = PersistentOAuthKeys()
+        m.secretKey = u'L7oCETo='
+        m.apiKey = u'test-api-key'
+        assert_that(m, has_property('secretKey', is_('L7oCETo=')))
+        assert_that(m, has_property('apiKey', is_('test-api-key')))

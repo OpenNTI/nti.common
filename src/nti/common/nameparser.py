@@ -8,7 +8,7 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import absolute_import
 
-# pylint: disable=redefined-outer-name 
+# pylint: disable=redefined-outer-name
 
 from nameparser import HumanName
 
@@ -39,16 +39,17 @@ def all_prefixes():
     return prefixes.PREFIXES
 
 
-def constants(prefixes=(), extra_suffixes=(), emoji=False):
+def constants(prefixes=(), extra_suffixes=(), emoji=False, titles=()):
     not_acronyms = suffix_not_acronyms()
     acronyms = suffix_acronyms() | set(extra_suffixes)
     constants = Constants(prefixes=prefixes,
                           suffix_acronyms=acronyms,
+                          titles=titles,
                           suffix_not_acronyms=not_acronyms)
     constants.regexes.emoji = emoji
     return constants
 
 
-def human_name(realname, prefixes=(), extra_suffixes=(), remove_emoji=False):
+def human_name(realname, prefixes=(), extra_suffixes=(), remove_emoji=False, titles=()):
     return HumanName(realname,
-                     constants=constants(prefixes, extra_suffixes, emoji=remove_emoji))
+                     constants=constants(prefixes, extra_suffixes, emoji=remove_emoji, titles=titles))

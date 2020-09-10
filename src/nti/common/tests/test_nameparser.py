@@ -11,6 +11,7 @@ from hamcrest import is_
 from hamcrest import has_length
 from hamcrest import assert_that
 from hamcrest import has_property
+from hamcrest import has_properties
 
 import unittest
 
@@ -30,3 +31,14 @@ class TestNameParser(unittest.TestCase):
         realname = "Ichigo Kurosaki, cfa"
         name = human_name(realname, extra_suffixes=('cfa',))
         assert_that(name, has_property('suffix', is_('cfa')))
+
+    def test_titles(self):
+        realname = "British Echols"
+        name = human_name(realname)
+        assert_that(name, has_property('first', is_('British')))
+
+        realname = "Mister British Echols"
+        name = human_name(realname)
+        assert_that(name, has_properties('first', is_('Mister'),
+                                         'middle', is_('British'),
+                                         'last', is_('Echols')))

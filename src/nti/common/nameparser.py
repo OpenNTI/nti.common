@@ -53,6 +53,9 @@ def _create_constants(prefixes=(), extra_suffixes=(), emoji=False, use_titles=Tr
     constants.regexes.emoji = emoji
     return constants
 
+#: BWC
+constants = _create_constants
+
 
 def human_name(realname, prefixes=(), extra_suffixes=(), remove_emoji=False):
     """

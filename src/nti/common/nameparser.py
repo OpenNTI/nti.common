@@ -39,17 +39,32 @@ def all_prefixes():
     return prefixes.PREFIXES
 
 
-def constants(prefixes=(), extra_suffixes=(), emoji=False, titles=()):
+def _create_constants(prefixes=(), extra_suffixes=(), emoji=False, use_titles=True):
+    """
+    Create a `Constants` object with our overrides.
+    """
     not_acronyms = suffix_not_acronyms()
     acronyms = suffix_acronyms() | set(extra_suffixes)
     constants = Constants(prefixes=prefixes,
                           suffix_acronyms=acronyms,
-                          titles=titles,
                           suffix_not_acronyms=not_acronyms)
+    if not use_titles:
+        constants.titles = ()
     constants.regexes.emoji = emoji
     return constants
 
 
-def human_name(realname, prefixes=(), extra_suffixes=(), remove_emoji=False, titles=()):
-    return HumanName(realname,
-                     constants=constants(prefixes, extra_suffixes, emoji=remove_emoji, titles=titles))
+def human_name(realname, prefixes=(), extra_suffixes=(), remove_emoji=False):
+    """
+    Returns a `HumanName` for the given realname.
+
+    We are lenient here. If we have a `title` but not a proper first and last name,
+    we will ignore titles.
+    """
+    constants = _create_constants(prefixes, extra_suffixes, emoji=remove_emoji)
+    result = HumanName(realname, constants=constants)
+    if result.title and not result.first:
+        constants = _create_constants(prefixes, extra_suffixes,
+                                      emoji=remove_emoji, use_titles=False)
+        result = HumanName(realname, constants=constants)
+    return result

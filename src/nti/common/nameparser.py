@@ -66,7 +66,7 @@ def human_name(realname, prefixes=(), extra_suffixes=(), remove_emoji=False):
     """
     constants = _create_constants(prefixes, extra_suffixes, emoji=remove_emoji)
     result = HumanName(realname, constants=constants)
-    if result.title and not result.first:
+    if result.title and (not result.first or not result.last):
         constants = _create_constants(prefixes, extra_suffixes,
                                       emoji=remove_emoji, use_titles=False)
         result = HumanName(realname, constants=constants)

@@ -42,3 +42,13 @@ class TestNameParser(unittest.TestCase):
         assert_that(name, has_properties('first', is_('Mister'),
                                          'middle', is_('British'),
                                          'last', is_('Echols')))
+
+        realname = "King William"
+        name = human_name(realname)
+        assert_that(name, has_property('first', is_('King')))
+
+        realname = "King William Orange"
+        name = human_name(realname)
+        assert_that(name, has_properties('title', is_('King'),
+                                         'first', is_('William'),
+                                         'last', is_('Orange')))
